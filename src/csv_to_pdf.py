@@ -44,7 +44,7 @@ def main(csv_file, settings_file):
         i = 0 
         for row in reader: 
             text_object = pdf.beginText(
-                #The measurements below are for Avery Label Paper Presta 94207 (10 labels per page)
+                #The measurements below are for Avery Label Paper Presta 94207 (10 labels per page) instead. 
                 #(5/32 + 0.50 + (133/32)*(i%2))*inch, 
                 #-(0.5 + 0.25 + 2*(math.floor((i/2)%5)))*inch, 
 
@@ -53,11 +53,12 @@ def main(csv_file, settings_file):
                 (
                     settings["xmargin"] + settings["xpadding"] + settings["sticker-width"]*(i%2)
                     ) * inch, 
-                (
+
+                -(
                     settings["ymargin"] + settings["ypadding"] + 
                     settings["sticker-height"]*math.floor(((i/2) % (settings["labels"]/2)))
                     ) * inch,
-                    
+
                 )
             text_object.setFont(settings["font"], settings["font-size"])
 
