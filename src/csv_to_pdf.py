@@ -2,27 +2,27 @@
 A simple Python script to convert orders for the UAHS Subshop App 
 from a CSV to a printable PDF. 
 
-(Uses reportlab to create the pdf; target template is Avery Presta 94207)
+(Uses reportlab to create the pdf; target template is Avery Presta 9
+4215 w/ 6 labels per page)
 
 Written November 2024. 
 '''
 
 import csv 
+import json 
 import datetime 
 import math 
 
 from reportlab.pdfgen import canvas 
 from reportlab.lib.pagesizes import letter 
-from reportlab.lib.pagesizes import inch 
+from reportlab.lib.pagesizes import inch  
 
+def get_settings(json_file): 
+    '''Opens and returns a json data as a dict.'''
+    with open(json_file) as f: 
+        return json.load(f) 
 
-#DO-TO: 
-#fix overlapping text - either use an offset or a paragraph 
-#print test page 
-#add more rows to the CSV file 
-
-
-def main(csv_file): 
+def main(csv_file, settings_file): 
     """
     See module docstring for more details. 
 
@@ -36,6 +36,7 @@ def main(csv_file):
     #This puts the origin in the top left corner, though the 
     # disavantage is that negative y values are neeeded. 
 
+    settings = get_settings(settings_file)
 
     with open(csv_file) as f: 
         reader = csv.DictReader(f) 
@@ -43,19 +44,29 @@ def main(csv_file):
         i = 0 
         for row in reader: 
             text_object = pdf.beginText(
-                #The measurements below are for Avery Label Paper Presta 94207 (10 labels per page )
-                (5/32 + 0.50 + (133/32)*(i%2))*inch, 
-                -(0.5 + 0.25 + 2*(math.floor((i/2)%5))  )*inch, 
+                #The measurements below are for Avery Label Paper Presta 94207 (10 labels per page)
+                #(5/32 + 0.50 + (133/32)*(i%2))*inch, 
+                #-(0.5 + 0.25 + 2*(math.floor((i/2)%5)))*inch, 
+
                 #(margin + padding + appropriate displacement for the ith box)*inch
+
+                (
+                    settings["xmargin"] + settings["xpadding"] + settings["sticker-width"]*(i%2)
+                    ) * inch, 
+                (
+                    settings["ymargin"] + settings["ypadding"] + 
+                    settings["sticker-height"]*math.floor(((i/2) % (settings["labels"]/2)))
+                    ) * inch,
+                    
                 )
-            text_object.setFont("Times-Roman", 10)
+            text_object.setFont(settings["font"], settings["font-size"])
 
             for h in headers: 
                 text = f"{h}: {row[h]}" 
                 print(text)
                 text_object.textLine(text)
                     
-            if (i != 0) and (i%10 == 0): 
+            if (i != 0) and (i % settings["labels"] == 0): 
                 #i.e., go to next page if this is the last box on a page 
                 pdf.showPage() 
                 pdf.translate(0, height) 
@@ -74,4 +85,4 @@ def main(csv_file):
 
 if __name__ == "__main__": 
     print(f"Running csv_to_pdf.py at {str(datetime.datetime.now())}.")
-    main ("orders.csv")
+    main ("orders.csv", "settings.json")

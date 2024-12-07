@@ -1,0 +1,15 @@
+{
+    //These settings are for Avery Presta 94215 label paper. 
+    "font" : "Times-Roman",
+    "font-size": 10, 
+    //Two columns is assumed.  
+    "labels" : 6,
+    "sticker-height" : 3.3333, 
+    //Adjusted for space between stickers. 
+    "sticker-width" : 4.1888, 
+    "xmargin" : 0.1563,
+    "ymargin" : 0.5000,   
+    "xpadding" : 0.5000, 
+    "ypadding" : 0.2500 
+    
+}
