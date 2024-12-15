@@ -1,0 +1,79 @@
+/* import official ua colors */
+:root {
+    --ua-gold: #f8d000;
+    --ua-teal:  #017d8f;
+}
+
+* {
+    margin: 0 ;
+    font-family: Montserrat, Verdana, Geneva, Tahoma, sans-serif;
+    box-sizing: border-box;
+}
+
+html {
+    width: 100%;
+}
+
+h1 {
+    background-color: var(--ua-gold);
+    border-bottom: solid 4px var(--ua-teal);
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    box-shadow: 0px 2px 5px 2px lightgray;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+hr {
+    height: 8px;
+    background-color: var(--ua-teal);
+    border: none;
+}
+p {
+    margin: 15px 10px;
+    font-size: 1.2em;
+    text-align: center;
+}
+.flex {
+    display: flex;
+    justify-content: space-evenly;
+    vertical-align: middle;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.button {
+    background-color: white;
+    color: var(--ua-teal);
+    border: solid 5px var(--ua-gold);
+    width: 40%;
+    margin: 20px;
+    padding: 6vh 2vh;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: 550;
+    font-size: 24px;
+    box-shadow: 0px 5px 5px lightgray;
+}
+
+@media only screen and (max-width: 600px) {
+    .button {
+        width: 80%;
+    }
+  }
+
+.fa-solid {
+    padding: 8px;
+    font-size: 24px;
+}
+
+.button:hover {
+    background-color: var(--ua-teal);
+    transition: 0.1s;
+    color: var(--ua-gold);
+    border-color: black;
+}
+
+.button:not(:hover) {
+    transition: 0.1s;
+}
