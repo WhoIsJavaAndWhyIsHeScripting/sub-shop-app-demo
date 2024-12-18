@@ -1,0 +1,57 @@
+/* create variables for custom colors */
+:root {
+    --ua-gold: #f8d000;
+    --ua-teal: #017d8f;
+}
+
+* {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Montserrat, Verdana, Geneva, Tahoma, sans-serif;
+}
+
+h1 {
+    background-color: var(--ua-gold);
+    padding: 10px;
+    text-align: center;
+    font-weight: 600;
+}
+
+p {
+    padding: 10px;
+    font-size: 1.2em;
+}
+
+form {
+    background-color: lightgray;
+}
+
+fieldset {
+    border-style: none;
+    border-bottom: solid 2px black;
+    margin: 0px 10px;
+    padding: 5px 0;
+}
+
+legend {
+    font-weight: 500;
+    padding-top: 10px;
+}
+/* each option takes up an entire line */
+label {
+    display: block;
+    border: solid gray;
+    border-width: 1px 0 0 0 ;
+}
+/* changes background color of checked box */
+input {
+    accent-color: var(--ua-teal);
+    margin: 10px 8px;
+}
+/* styling a label if its cooresponding checkbox is checked */
+label:has(input:checked) {
+    text-decoration: line-through;
+}
