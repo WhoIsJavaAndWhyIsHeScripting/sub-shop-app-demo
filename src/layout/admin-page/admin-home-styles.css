@@ -14,26 +14,47 @@ html {
     width: 100%;
 }
 
-h1 {
+.headerbar {
+    position: fixed;
+    display: flex;
     background-color: var(--ua-gold);
-    border-bottom: solid 4px var(--ua-teal);
+    padding: 5px;
     width: 100%;
-    text-align: center;
+    font-weight: 500;
+    font-size: 1.2em;
+    align-items: center;;
+}
+
+.headerbar a {
+    margin: 5px;
+    color: black;
+    text-decoration: none;
+}
+.headerbar img {
+    height: 40px;
+    clip-path: circle();
+    margin: 5px;
+}
+
+main {
+    margin-top: 40px;
+}
+
+h1 {
+    background-color: white;
+    width: 100%;
     padding: 10px;
-    box-shadow: 0px 2px 5px 2px lightgray;
     font-weight: 600;
-    text-transform: uppercase;
 }
 
 hr {
-    height: 8px;
+    height: 5px;
     background-color: var(--ua-teal);
     border: none;
 }
 p {
-    margin: 15px 10px;
+    margin: 10px;
     font-size: 1.2em;
-    text-align: center;
 }
 .flex {
     display: flex;
@@ -82,3 +103,5 @@ a {
 .button:not(:hover) {
     transition: 0.1s;
 }
+
+
