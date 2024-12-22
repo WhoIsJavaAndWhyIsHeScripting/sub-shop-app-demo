@@ -16,13 +16,14 @@ html {
 
 .headerbar {
     position: fixed;
+    top: 0;
     display: flex;
     background-color: var(--ua-gold);
     padding: 5px;
     width: 100%;
     font-weight: 500;
     font-size: 1.2em;
-    align-items: center;;
+    align-items: center;
 }
 
 .headerbar a {
@@ -37,7 +38,7 @@ html {
 }
 
 main {
-    margin-top: 40px;
+    margin-top: 60px;
 }
 
 h1 {
@@ -54,8 +55,10 @@ hr {
 }
 p {
     margin: 10px;
+    margin-bottom: 15px;
     font-size: 1.2em;
 }
+/* position navigation buttons */
 .flex {
     display: flex;
     justify-content: space-evenly;
@@ -63,7 +66,8 @@ p {
     flex-wrap: wrap;
     align-items: center;
 }
-.button {
+/* style navigation buttons */
+.navbutton {
     background-color: white;
     color: var(--ua-teal);
     border: solid 5px var(--ua-gold);
@@ -80,9 +84,9 @@ p {
 a {
     color: var(--ua-teal);
 }
-
+/* display buttons vertically on small screens */
 @media only screen and (max-width: 600px) {
-    .button {
+    .navbutton {
         width: 80%;
     }
   }
@@ -91,16 +95,16 @@ a {
     padding: 8px;
     font-size: 24px;
 }
-
-.button:hover, .button:hover a {
+/* button changes color with 
+transition when you hover */
+.navbutton:hover {
     background-color: var(--ua-teal);
     transition: 0.1s;
     color: var(--ua-gold);
     border-color: black;
 }
-
-
-.button:not(:hover) {
+/* transition when you stop hovering */
+.navbutton:not(:hover) {
     transition: 0.1s;
 }
 
