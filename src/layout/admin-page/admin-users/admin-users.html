@@ -10,7 +10,7 @@
     </head>
     <body>
         <header>
-
+            <div class="headerbar"><img src="/src/assets/bearbiteslogo.png"><a href="admin-home.html">Bear Bites</a></div>
         </header>
         <main>
             <h1>Manage Users</h1>
@@ -25,8 +25,9 @@
                 when you are done to save your changes to the 
                 no-access list.
             </p>
+            <hr>
             <label for="banned-name">Name of student to add: 
-            <input type="text" id="banned-name" name="banned-name"></label> <button onclick="addUser()">Add User</button>
+            <input type="text" id="banned-name" name="banned-name"></label> <button id="addButton" onclick="addUser()">Add User</button>
             <h2>No-access list</h2>
             <p>
                 In the case of a mistake, you can click on 

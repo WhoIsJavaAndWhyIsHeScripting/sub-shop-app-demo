@@ -25,12 +25,13 @@ html {
     font-size: 1.2em;
     align-items: center;
 }
-
+/* get rid of default link styles for header bar */
 .headerbar a {
     margin: 5px;
     color: black;
     text-decoration: none;
 }
+
 .headerbar img {
     height: 40px;
     clip-path: circle();
@@ -53,6 +54,7 @@ hr {
     background-color: var(--ua-teal);
     border: none;
 }
+
 p {
     margin: 10px;
     margin-bottom: 15px;
