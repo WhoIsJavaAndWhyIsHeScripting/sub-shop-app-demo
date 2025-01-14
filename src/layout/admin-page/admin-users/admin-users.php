@@ -47,7 +47,7 @@
                 the "X" next to a student's name to 
                 remove them from the no-access list.
             </p>
-            <p id="demo">sdfghj</p>
+            <p id="demo">sdhj</p>
             <ul id="ban-list">
                 <?php 
                     $i = 0;
