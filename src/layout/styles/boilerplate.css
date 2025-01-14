@@ -1,0 +1,42 @@
+:root {
+    --ua-gold: #f8d000;
+    --ua-teal:  #017d8f;
+}
+
+* {
+    margin: 0 ;
+    font-family: Montserrat, Verdana, Geneva, Tahoma, sans-serif;
+    box-sizing: border-box;
+}
+
+html {
+    width: 100%;
+}
+
+.headerbar {
+    position: fixed;
+    top: 0;
+    display: flex;
+    background-color: var(--ua-gold);
+    padding: 5px;
+    width: 100%;
+    font-weight: 500;
+    font-size: 1.2em;
+    align-items: center;
+}
+/* get rid of default link styles for header bar */
+.headerbar a {
+    margin: 5px;
+    color: black;
+    text-decoration: none;
+}
+
+.headerbar img {
+    height: 40px;
+    clip-path: circle();
+    margin: 5px;
+}
+
+main {
+    margin-top: 60px;
+}
