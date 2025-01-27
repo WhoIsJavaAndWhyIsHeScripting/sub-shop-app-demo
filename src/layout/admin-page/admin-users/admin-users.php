@@ -5,19 +5,15 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="admin-users-styles.css" rel="stylesheet">
-        <!--import js-->
-        <script src="admin-users-script.js"></script>
     </head>
     <?php 
     $banlist = fopen("ban-list.csv", "r");
     if (filesize("ban-list.csv") > 0) {
-        $ban = fread($banlist, filesize("ban-list.csv") - 1);
+        $ban = fread($banlist, filesize("ban-list.csv"));
     } else {
         $ban = "";
     }
     $banexploded = explode(",", $ban);
-    var_dump($banexploded);
-    var_dump($ban);
     ?>
     <body>
         <header>
@@ -37,7 +33,7 @@
                 no-access list.
             </p>
             <hr>
-            <form action="admin-users-handler.php" method="POST">
+            <form id="users-form" action="admin-users-handler.php" method="POST">
                 <label for="banned-name">Name of student to add: 
                 <input type="text" id="banned-name" name="banned-name"></label> <button type="submit">Add User</button>
             </form>
@@ -47,16 +43,17 @@
                 the "X" next to a student's name to 
                 remove them from the no-access list.
             </p>
-            <p id="demo">sdhj</p>
             <ul id="ban-list">
                 <?php 
                     $i = 0;
                     foreach ($banexploded as $item) {
-                        echo "<li class=\"list\"id=\"list$i\">$item<button class=\"remover\" id=\"remover$i\">X</button></li>";
+                        echo "<li class=\"list\"id=\"list$i\">$item<button class=\"remover\" id=\"remover$i\" onclick=\"remove(this)\">X</button></li>";
                         $i++;
                     }
                 ?>
             </ul>
         </main>
     </body>
+     <!--import js-->
+     <script src="admin-users-script.js"></script>
 </html>
