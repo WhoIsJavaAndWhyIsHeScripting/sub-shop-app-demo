@@ -26,7 +26,13 @@
         array_splice($split, $index, 1);
         $banlistw = fopen("ban-list.csv", "w");
         echo "opened againnnn";
-        fputcsv($banlistw, $split, ",", '"', "\\");
+        foreach ($split as $str) {
+            if ($str == $split[0]) {
+                fwrite($banlistw, "$str");
+            } else {
+                fwrite($banlistw, ",$str");
+            }
+        }
         echo "written";
     }
     //redirect back to page
