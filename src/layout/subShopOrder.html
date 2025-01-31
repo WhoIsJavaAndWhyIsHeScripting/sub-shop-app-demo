@@ -37,7 +37,8 @@ nav{
 	<a href="subShopFront.html" class="myButton">Return to Homepage!</a>
    <hr>
 </nav>
-<form action="/action_page.php" novalidate> <!-- Placeholder Path -->
+<!--<form action="/action_page.php" novalidate> <!-- Placeholder Path -->
+<form novalidate> <!-- Placeholder Path -->
    <!-- Bread Options -->
    <fieldset>
        <legend>Bread Type</legend>
@@ -100,11 +101,11 @@ nav{
    const form = document.querySelector("form"); 
 
    form.addEventListener("submit", (event) => {
-    console.log(countMeatsAndCheeses())
-    if (countMeatsAndCheeses() > 3) {
-        alert("You may only select a total of three meats and cheeses."); 
-        event.preventDefault() 
-    } 
+    total = countMeatsAndCheeses();
+    if (total > 3) {
+        alert("You may only select a total of three meats and cheeses. You have "+total.toString()+"."); 
+        event.preventDefault();  
+    }
    }); 
    
    function countMeatsAndCheeses() {
