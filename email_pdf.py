@@ -29,6 +29,7 @@ def main(recipient, pdf_file, oauth_file=''):
     subject = f"Bear Bites Orders for {date}"
     body = f"Hello! Attached are today's orders." 
 
+    #Create object representing message content 
     message = MIMEMultipart() 
     message["From"] = sender_email 
     message["To"] = recipient 
@@ -49,12 +50,12 @@ def main(recipient, pdf_file, oauth_file=''):
     
     context = ssl.create_default_context() #for encryption 
     with smtplib.SMTP_SSL(server_address, port, context=context) as server: 
-        server.login(sender_email, password=input("password?:")) 
+        server.login(sender_email, password=input("password?:")) #this is a problem if this is to run automatically! 
         server.sendmail(sender_email, recipient, message.as_string())
 
     print(f"Mail sent with orders.pdf at {str(datetime.datetime.now())}.")
 
-
+    #Only needed if using Google oauth
     # contents = [
     #     "Here is today's orders!", 
     #     pdf_file, 
@@ -68,7 +69,7 @@ def main(recipient, pdf_file, oauth_file=''):
     #     )
 
     
-if __name__ == "__main__": #i.e. if not imported 
+if __name__ == "__main__": #i.e. if not imported as a module
     main(
         input("send to?"), 
         "orders.pdf", 
