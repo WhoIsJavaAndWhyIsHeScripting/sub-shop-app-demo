@@ -3,9 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <style type = "text/css">
 body{
-	background-color: #e3b022;
+	background-color: #f8d000;
    font-family: Arial;
 }
 .myButton {
@@ -30,14 +31,22 @@ nav{
 .Submit{
 	width: 100vw;
 }
+
+/* Hides submit button if there is no Javascript. */
+@media (scripting: none) {
+    .myButton[type="submit"] {
+        display: none; 
+    }
+}
+
 </style>
 </head>
 <body>
 <nav>
-	<a href="subShopFront.html" class="myButton">Return to Homepage!</a>
+   <a href="subShopFront.html" class="myButton">Return to Homepage!</a>
    <hr>
 </nav>
-<form action="/action_page.php"> <!-- Placeholder Path -->
+<form action="/action_page.php" novalidate> <!-- Placeholder Path -->
    <!-- Bread Options -->
    <fieldset>
        <legend>Bread Type</legend>
@@ -46,6 +55,9 @@ nav{
        </label><br>
        <label>
            <input type="radio" name="bread" value="white"> White Bread
+       </label>
+       <label>
+           <input type="radio" name="bread" value="salad"> Salad
        </label>
    </fieldset>
 
@@ -90,7 +102,38 @@ nav{
        <label>
            <input type="checkbox" name="cheese" value="shredded_cheddar"> Shredded Cheddar
        </label>
-   </fieldset>
+   </fieldset> 
+
+   <!---Javascript verifying that meats and cheeses total to three.-->
+   <script> 
+   const form = document.querySelector("form"); 
+
+   form.addEventListener("submit", (event) => {
+    total = countMeatsAndCheeses();
+    if (total > 3) {
+        alert("You may only select a total of three meats and cheeses. You have "+total.toString()+"."); 
+        event.preventDefault(); //prevents form submission 
+    }
+   }); 
+   
+   function countMeatsAndCheeses() {
+    var meats = document.getElementsByName("meat"); 
+    var cheeses = document.getElementsByName("cheese"); 
+    var total = 0; 
+    for (let i=0; i < meats.length; ++i) {
+        if (meats[i].checked) {
+            total++; 
+        }
+    }
+    for (let i=0; i < cheeses.length; ++i) {
+        if (cheeses[i].checked) {
+            total++; 
+        }
+    }
+    return total; 
+   }
+   </script> 
+
 
    <!-- Veggie Options -->
    <fieldset>
@@ -146,7 +189,14 @@ nav{
            <input type="checkbox" name="condiments" value="ua_sauce"> UA Sauce
        </label>
    </fieldset>
+
    <input type="submit" value="Submit" class="myButton">
+
+   <!--Only appears if there is no Javascript.-->
+   <noscript> 
+    <h4><i>Javascript is need to submit this form.</i></h4>
+   </noscript>
+
 </form>
 
 </body>
