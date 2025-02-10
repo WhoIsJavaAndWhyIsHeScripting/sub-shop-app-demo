@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel = "stylesheet" type = "text/css" href = "boilerplate.css">
+<!--
 <style type = "text/css">
 body{
 	background-color: #e3b022;
@@ -31,14 +33,61 @@ nav{
 	width: 100vw;
 }
 </style>
+-->
 </head>
 <body>
-<nav>
+<!--Aiden's 
+   <nav>
 	<a href="subShopFront.html" class="myButton">Return to Homepage!</a>
    <hr>
 </nav>
-<form action="/action_page.php"> <!-- Placeholder Path. Data will soon be sent elsewhere. -->
-<input type="submit" value="Submit" class="myButton">
+<form action="/action_page.php"> -->
+   <!-- Placeholder Path. Data will soon be sent elsewhere. -->
+<!--
+   <input type="submit" value="Submit" class="myButton">
 </form>
+-->
+
+
+	<form id = "sub">
+<button type="submit">Submit</button>
+	 
+  <input type="checkbox" id="topping1" name="vehicle1" value="Bike">
+  <label for="topping1"> Meat</label><br>
+  <input type="checkbox" id="topping2" name="vehicle2" value="Car">
+  <label for="topping2"> Cheese</label><br>
+  <input type="checkbox" id="topping3" name="vehicle3" value="Boat">
+  <label for="topping3"> Mustard</label>
+</form> 
+<!--
+   const d = new Date("2015-03-25T12:00:00Z");
+   document.getElementById("demo").innerHTML = d;
+-->
+<script>
+	
+	document.getElementById('sub').addEventListener('submit', function(e){e.preventDefault();
+
+var formData = new FormData(this);  
+var csvContent = "data:text/csv; charset=utf-8,";
+
+var fieldNames = Array.from(formData.keys());
+
+csvContent += fieldNames.join(',') + "\n";
+
+var fieldValues = Array.from(formData.values());
+
+csvContent += fieldValues.join(',')+"\n";
+var link = document.createElement('a');
+link.href = encodeURI(csvContent);
+link.target = '_blank';
+link.download = 'survey_results.csv';
+link.click();
+
+this.reset();
+});
+
+</script>
+
+
 </body>
 </html>
