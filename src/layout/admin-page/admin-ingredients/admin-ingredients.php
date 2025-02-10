@@ -5,6 +5,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="admin-ingredients-styles.css" rel="stylesheet">
+        <link href="/src/layout/styles/boilerplate.css" rel="stylesheet">
         <!--add in Montserrat font, font used on the uaschools website-->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -36,7 +37,7 @@ function loadData($ingr, $label, &$explodedtext) {
 
     <body>
         <header>
-            <div class="headerbar"><img src="/src/assets/bearbiteslogo.png"><a href="admin-home.html">Bear Bites</a></div>
+            <div class="headerbar"><img src="/src/assets/bearbiteslogo.png"><a href="../admin-home/admin-home.html">Bear Bites</a></div>
         </header>
         <main>
             <h1>Manage Ingredients</h1>

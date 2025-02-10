@@ -1,12 +1,21 @@
 <?php 
+ini_set('display_errors', 'On');
+error_reporting(E_ALL);
+    echo "hi";
+    var_dump(isset($_POST["banned-name"]));
 // get name to add from input and write their name into the csv
     if (isset($_POST["banned-name"]) && $_POST["banned-name"] != "") {
+        echo "a";
             $user = $_POST["banned-name"];
+            echo "b";
             $banlist = fopen("ban-list.csv", "a");
+            echo "c";
         if (filesize("ban-list.csv") == 0) {
             fwrite($banlist, "$user");
+            echo "d";
         } else {
             fwrite($banlist, ",$user");
+            echo "e";
         }
     }
     echo "hi";

@@ -17,7 +17,7 @@
     ?>
     <body>
         <header>
-            <div class="headerbar"><img src="/src/assets/bearbiteslogo.png"><a href="/admin-home/admin-home.html">Bear Bites</a></div>
+            <div class="headerbar"><img src="/src/assets/bearbiteslogo.png"><a href="../admin-home/admin-home.html">Bear Bites</a></div>
         </header>
         <main>
             <h1>Manage Users</h1>
