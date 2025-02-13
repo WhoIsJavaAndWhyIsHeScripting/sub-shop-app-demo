@@ -1,0 +1,89 @@
+:root {
+    --pale-blue: hsl(225, 100%, 94%);
+    --bright-blue: hsl(245, 75%, 52%);
+    --very-pale-blue: hsl(225, 100%, 98%);
+    --desaturated-blue: hsl(224, 23%, 55%);
+    --dark-blue: hsl(223, 47%, 23%);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+
+
+
+
+body {
+    background-color: lightskyblue;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: var(--pale-blue);
+    font-family:Arial, Helvetica, sans-serif;
+    font-size: 16px;
+
+}
+
+.card {
+   width: 450px;
+   background-color: white;
+   color: var(--desaturated-blue);
+   border-radius: 20px;
+   overflow: hidden;
+   margin: 50px auto;
+}
+
+.title {
+  color: var(--dark-blue);
+  font-weight: 900;
+  font-size: 32px;
+}
+
+.sub-image {
+    width: 100%;
+}
+
+.container {
+    padding: 30px;
+}
+.container > * {
+    margin: 13px 0;
+}
+
+.order-description {
+  line-height: 25px;  
+}
+
+button {
+
+    width:100%;
+    font-weight:700;
+    font-size: 0.9rem;
+    border-radius: 12px;
+    cursor: pointer;
+    border: none;
+}
+
+.proceed-button {
+    background-color: var(--bright-blue);
+    padding: 1rem 0;
+    color: white;
+    box-shadow: 0 20px 30px -8px rgb(197 189 245);
+}
+
+.proceed-button:hover {
+    opacity: 0.8;
+}
+
+.cancel-button {
+    background-color: white;
+    color: var(--desaturated-blue);
+    margin-top: 22px;
+}
+
+.cancel-button:hover {
+    color:black;
+}
