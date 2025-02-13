@@ -1,10 +1,3 @@
-:root {
-    --pale-blue: hsl(225, 100%, 94%);
-    --bright-blue: hsl(245, 75%, 52%);
-    --very-pale-blue: hsl(225, 100%, 98%);
-    --desaturated-blue: hsl(224, 23%, 55%);
-    --dark-blue: hsl(223, 47%, 23%);
-}
 
 * {
     margin: 0;
@@ -12,13 +5,8 @@
     box-sizing: border-box;
 }
 
-
-
-
-
-
 body {
-    background-color: lightskyblue;
+    background-color: white;
     background-repeat: no-repeat;
     background-size: cover;
     background-color: var(--pale-blue);
@@ -27,31 +15,24 @@ body {
 
 }
 
-.card {
-   width: 450px;
-   background-color: white;
-   color: var(--desaturated-blue);
-   border-radius: 20px;
-   overflow: hidden;
-   margin: 50px auto;
+main {
+    padding-top: 30px;
 }
+
+.flex {
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
 
 .title {
-  color: var(--dark-blue);
-  font-weight: 900;
+  color: var(--ua-teal);
+  font-weight: 700;
   font-size: 32px;
+  display: inline;
+  margin: 20px;
 }
 
-.sub-image {
-    width: 100%;
-}
-
-.container {
-    padding: 30px;
-}
-.container > * {
-    margin: 13px 0;
-}
 
 .order-description {
   line-height: 25px;  
@@ -59,7 +40,6 @@ body {
 
 button {
 
-    width:100%;
     font-weight:700;
     font-size: 0.9rem;
     border-radius: 12px;
@@ -68,10 +48,10 @@ button {
 }
 
 .proceed-button {
-    background-color: var(--bright-blue);
+    background-color: var(--ua-teal);
     padding: 1rem 0;
     color: white;
-    box-shadow: 0 20px 30px -8px rgb(197 189 245);
+    box-shadow: 0 4px 10px 0px lightgray;
 }
 
 .proceed-button:hover {
@@ -79,8 +59,8 @@ button {
 }
 
 .cancel-button {
-    background-color: white;
-    color: var(--desaturated-blue);
+    background-color: gray;
+    color: white;
     margin-top: 22px;
 }
 
