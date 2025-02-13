@@ -1,0 +1,114 @@
+/* create variables for custom colors */
+:root {
+    --ua-gold: #f8d000;
+    --ua-teal: #017d8f;
+}
+
+* {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Montserrat, Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.headerbar {
+    position: fixed;
+    top: 0;
+    display: flex;
+    background-color: var(--ua-gold);
+    padding: 5px;
+    width: 100%;
+    font-weight: 500;
+    font-size: 1.2em;
+    align-items: center;
+}
+/* get rid of default link styles in header bar */
+.headerbar a {
+    margin: 5px;
+    color: black;
+    text-decoration: none;
+}
+.headerbar img {
+    height: 40px;
+    clip-path: circle();
+    margin: 5px;
+}
+
+main {
+    margin-top: 60px;
+}
+
+h1 {
+    background-color: white;
+    padding: 10px;
+    font-weight: 600;
+}
+
+p {
+    padding: 10px;
+    font-size: 1.2em;
+}
+
+form {
+    border-top: solid 5px var(--ua-teal)
+}
+
+fieldset {
+    border-style: none;
+    border-bottom: solid 2px black;
+    margin: 0px 10px;
+    padding: 5px 0;
+}
+/* style titles for each section */
+legend {
+    font-weight: 500;
+    padding-top: 10px;
+    font-size: 1.2em;
+}
+/* each option takes up an entire line */
+label {
+    display: block;
+    border: solid var(--ua-gold);
+    border-width: 1px 0 0 0 ;
+}
+/* subtle visual effect when hovering */
+label:hover {
+    background-color: #eeeeee;
+}
+/* changes background color of checked box */
+input {
+    accent-color: var(--ua-teal);
+    margin: 10px 8px;
+}
+/* styling a label if its cooresponding checkbox is checked */
+label:has(input:checked) {
+    text-decoration: line-through;
+    color: gray;
+}
+
+.submit {
+    display: block;
+    margin: 10px auto;
+    font-size: 1.2em;
+    background-color: var(--ua-gold);
+    border-style: none;
+    padding: 5px;
+    font-family: inherit;
+    border-radius: 10px;
+    border: solid 3px var(--ua-teal)
+}
+/* submit button changes colors when hovering */
+.submit:hover {
+    transition: 0.1s;
+    border-color: black;
+    background-color: var(--ua-teal);
+    color: var(--ua-gold);
+}
+/* submit button returns to 
+original colors when not hovering */
+.submit:not(:hover) {
+    transition: 0.1s;
+}
+

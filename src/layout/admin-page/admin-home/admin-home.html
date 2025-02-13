@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--page intended for staff only, will have to figure out some form of authentication-->
+<html lang="en-US">
+    <head>
+        <title>Admin Home</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+         <!--add in Montserrat font, font used on the uaschools website-->
+         <link rel="preconnect" href="https://fsonts.googleapis.com">
+         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+         <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+         <link href="admin-home-styles.css" rel="stylesheet" type="text/css">
+         <link href="../../styles/boilerplate.css" rel="stylesheet" type="text/css">
+        <!--import icons-->
+        <script src="https://kit.fontawesome.com/36248effc5.js" crossorigin="anonymous"></script>
+
+    </head>
+    <body>
+        <header>
+            <div class="headerbar"><img src="/img/bearbiteslogo.png"><a href="admin-home.html">Bear Bites</a></div>
+        </header>
+        <main>
+            <h1>Staff Home</h1>
+            <p>
+                To indicate that ingredients are out of stock, navigate to the "Manage Ingredients" page. To modify 
+                who is and is not allowed to pre-order, navigate to the "Manage Users" page.
+            </p>
+            <hr>
+            <div class="flex">
+                <a href="../admin-ingredients/admin-ingredients.php" class="navbutton"><i class="fa-solid fa-bread-slice"></i>Manage Ingredients</a>
+                <a href="../admin-users/admin-users.php" class="navbutton"><i class="fa-solid fa-circle-user"></i>Manage Users</a>
+            </div>
+    </main>
+    </body>
+</html>
