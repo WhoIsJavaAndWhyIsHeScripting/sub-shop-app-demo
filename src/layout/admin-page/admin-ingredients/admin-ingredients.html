@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <title>Manage Ingredients</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="admin-ingredients-styles.css" rel="stylesheet">
+        <link href="/src/layout/styles/boilerplate.css" rel="stylesheet">
+        <!--add in Montserrat font, font used on the uaschools website-->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    </head>
+<script>
+    var fs = require('fs');
+    function loadData(id, name, parent) {
+        alert(id);
+        var checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.id = `"${id}"`;
+        checkbox.name = "ingredients[]";
+        checkbox.value = `"${id}"`;
+        var title = document.createTextNode(name);
+        checkbox.appendChild(title);
+
+        var thing = fs.readFile('out-of-stock.csv', (err, dt) => {
+            let split = dt.split(",");
+            for (str in split) {
+                if (id == split) {
+                    checkbox.checked = true;
+                }
+            }
+        })
+        document.body.appendChild(checkbox);
+    }
+</script>
+    <body>
+        <header>
+            <div class="headerbar"><img src="/src/assets/bearbiteslogo.png"><a href="../admin-home/admin-home.html">Bear Bites</a></div>
+        </header>
+        <main>
+            <h1>Manage Ingredients</h1>
+            <p>
+                Check a box to mark an ingredent as out of stock. 
+                Uncheck a box to mark an ingredient as in stock. 
+                Click "Save" when you are done to save your changes 
+                to the website.
+            </p>
+            <form action="admin-form-handling.php" method="POST">
+                <fieldset id="bread-group">
+                    <legend>Bread</legend>
+                    <script>
+                        loadData("white-bread", "White Bread", document.getElementById("bread-group"));
+                        loadData("wheat-bread", "Wheat Bread", document.getElementById("bread-group"));
+                    </script>
+                </fieldset>
+                <fieldset id="protein-group">
+                    <legend>Protein</legend>
+                    <script>
+                     loadData("turkey", "Roasted Turkey", document.getElementById("protein-group"));
+                     loadData("bacon", "Bacon", document.getElementById("protein-group"));
+                     loadData("ham", "Honey Ham", document.getElementById("protein-group"));
+                     loadData("salami", "Salami", document.getElementById("protein-group"));
+                     loadData("pepperoni", "Pepperoni", document.getElementById("protein-group"));
+                     loadData("american", "American Cheese", document.getElementById("protein-group"));
+                     loadData("swiss", "Swiss Cheese", document.getElementById("protein-group"));
+                     loadData("cheddar", "Cheddar Cheese", document.getElementById("protein-group"));
+                     loadData("hot-pepper", "Hot Pepper Cheese", document.getElementById("protein-group"));
+                     loadData("provolone", "Provolone Cheese", document.getElementById("protein-group"));
+                     loadData("shredded-cheddar", "Shredded Cheddar", document.getElementById("protein-group"));
+                    </script>
+                </fieldset>
+                <fieldset id="toppings-group">
+                    <legend>Toppings</legend>
+                    <script>
+                     loadData("onions","Onions",document.getElementById("protein-group"));
+                     loadData("cucumbers","Cucumbers",document.getElementById("protein-group"));
+                     loadData("tomatoes","Tomatoes",document.getElementById("protein-group"));
+                     loadData("olives","Olives",document.getElementById("protein-group"));
+                     loadData("spinach","Spinach",document.getElementById("protein-group"));
+                     loadData("lettuce","Lettuce",document.getElementById("protein-group"));
+                     loadData("pickles","Pickles",document.getElementById("protein-group"));
+                     loadData("jalapeno","Jalepeños",document.getElementById("protein-group"));
+                     loadData("green-peppers","Green Peppers",document.getElementById("protein-group"));
+                     loadData("hummus","Hummus",document.getElementById("protein-group"));
+                     loadData("banana-peppers","Banana Peppers",document.getElementById("protein-group"));
+                    </script>
+                </fieldset>
+                <fieldset>
+                    <legend>Sauces</legend>
+                    <script> 
+                     loadData("hot-sauce","Hot Sauce",document.getElementById("protein-group"));
+                     loadData("ranch","Ranch",document.getElementById("protein-group"));
+                     loadData("mayo","Mayonnaise",document.getElementById("protein-group"));
+                     loadData("ua-sauce","UA Sauce",document.getElementById("protein-group"));
+                    </script>
+                </fieldset>
+                <button type="submit" class="submit">Save Changes</button>
+            </form>
+        </main>
+    </body>
+</html>
+
