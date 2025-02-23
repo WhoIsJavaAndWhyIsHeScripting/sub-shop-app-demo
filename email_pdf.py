@@ -51,9 +51,13 @@ def main(recipient, pdf_file, oauth_file=''):
     context = ssl.create_default_context() #for encryption 
     with smtplib.SMTP_SSL(server_address, port, context=context) as server: 
         server.login(sender_email, password=input("password?:")) #this is a problem if this is to run automatically! 
-        server.sendmail(sender_email, recipient, message.as_string())
-
-    print(f"Mail sent with orders.pdf at {str(datetime.datetime.now())}.")
+        try: 
+            server.sendmail(sender_email, recipient, message.as_string()) 
+        except Exception as e:
+            print("There was an error sending the email.")
+            raise e 
+        else: 
+            print(f"Mail sent with orders.pdf at {str(datetime.datetime.now())}.")
 
     #Only needed if using Google oauth
     # contents = [
