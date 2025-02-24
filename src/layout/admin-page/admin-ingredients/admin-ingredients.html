@@ -14,24 +14,25 @@
 <script>
     var fs = require('fs');
     function loadData(id, name, parent) {
-        alert(id);
         var checkbox = document.createElement("input");
         checkbox.type = "checkbox";
-        checkbox.id = `"${id}"`;
+        checkbox.id = id;
         checkbox.name = "ingredients[]";
-        checkbox.value = `"${id}"`;
-        var title = document.createTextNode(name);
-        checkbox.appendChild(title);
+        checkbox.value = id;
+        var label = document.createElement("label");
+        label.textContent = name;
+        label.appendChild(checkbox);
+        
 
-        var thing = fs.readFile('out-of-stock.csv', (err, dt) => {
-            let split = dt.split(",");
-            for (str in split) {
-                if (id == split) {
-                    checkbox.checked = true;
-                }
-            }
-        })
-        document.body.appendChild(checkbox);
+        var data = fs.readFileSync('out-of-stock.csv', 'utf-8');
+        let split = data.split(",");
+        for (str in split) {
+             if (id == str) {
+                checkbox.checked = true;
+             }
+        }
+
+        parent.appendChild(label);
     }
 </script>
     <body>
