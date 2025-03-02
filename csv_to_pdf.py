@@ -22,7 +22,7 @@ def get_settings(json_file):
     with open(json_file) as f: 
         return json.load(f) 
 
-def main(csv_file, settings_file): 
+def main(csv_file, settings_file, debug=False): 
     """
     See module docstring for more details. 
 
@@ -64,7 +64,7 @@ def main(csv_file, settings_file):
 
             for h in headers: 
                 text = f"{h}: {row[h]}" 
-                print(text)
+                if debug: print(text)
                 text_object.textLine(text)
                     
             if (i != 0) and (i % settings["labels"] == 0): 
@@ -86,4 +86,4 @@ def main(csv_file, settings_file):
 
 if __name__ == "__main__": 
     print(f"Running csv_to_pdf.py at {str(datetime.datetime.now())}.")
-    main ("orders.csv", "settings.json")
+    main("orders.csv", "settings.json", debug=True)

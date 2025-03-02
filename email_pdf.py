@@ -20,7 +20,7 @@ from email.mime.text import MIMEText
 
 #import yagmail 
 
-def main(recipient, pdf_file, oauth_file=''): 
+def main(pdf_file, recipient, oauth_file=''): 
     port = 25 #I think this is right, but I am not certain. 
     server_address = "smtp.uaschools.org" 
     sender_email = "EMAIL REMOVED"
@@ -75,7 +75,7 @@ def main(recipient, pdf_file, oauth_file=''):
     
 if __name__ == "__main__": #i.e. if not imported as a module
     main(
-        input("send to?"), 
         "orders.pdf", 
+        input("send to?"), 
         #input("oauth file?"),
         )
