@@ -17,21 +17,26 @@ app.get('/', (req, res) => {
 app.get('/ingredients', (req, res) => {
   res.sendFile(path.join(__dirname, 'layout', 'admin-page', 'admin-ingredients', 'admin-ingredients.html'));
 });
-
+// create request body thing i don't really know how this works
 app.use(express.urlencoded({extended: true}))
+// handle post request when ingredients form submitted
 app.post('/submit', (req, res) => {
+  // get the values of the checked checkboxes
  let ingredients = req.body.ingredients;
+ // turn it into a comma separated list
  let ingredientsText = "";
  ingredientsText += ingredients[0];
  for (let i = 1; i < ingredients.length; i++) {
   ingredientsText += "," + ingredients[i];
  }
+ // replace whatever is in out-of-stock.txt with the new comma separated list
  fs.writeFile(path.join(__dirname, "layout", "admin-page", "admin-ingredients", "out-of-stock.txt"), ingredientsText, (err) => {
   if (err) {
     throw err;
   }
   console.log("yippee");
  })
+ // go back to ingredients page
  res.redirect("/ingredients");
 })
 // Start the server
