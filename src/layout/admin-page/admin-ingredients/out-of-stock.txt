@@ -1,1 +1,1 @@
-white-bread,turkey,ham
+white-bread,swiss-cheese,cucumbers,lettuce,hummus,banana-peppers,ranch,ua-sauce

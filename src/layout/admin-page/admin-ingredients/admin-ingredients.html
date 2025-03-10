@@ -70,7 +70,7 @@
                 Click "Save" when you are done to save your changes 
                 to the website.
             </p>
-            <form action="admin-form-handling.php" method="POST">
+            <form id="ingredients-form" action="/submit" method="POST">
                 <fieldset id="bread-group">
                     <legend>Bread</legend>
                 </fieldset>
@@ -112,6 +112,8 @@
     for (index in sauceIds) {
         loadData(sauceIds[index], sauceNames[index], document.getElementById("sauces-group"));
     }
+
+    
     </script>
 </html>
 

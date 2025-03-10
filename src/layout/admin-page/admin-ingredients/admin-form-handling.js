@@ -1,4 +1,4 @@
-
+/*
 <?php
     // turns list of checked boxes into a csv file
     $ingredients = $_REQUEST['ingredient'];
@@ -8,4 +8,6 @@
     header("Location: admin-ingredients.php");
     exit;
 ?>
+*/
+
 
