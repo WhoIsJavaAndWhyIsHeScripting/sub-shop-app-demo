@@ -1,6 +1,9 @@
 const express = require('express');
+const fs = require('fs');
 const app = express();
 const path = require('path');
+
+app.engine('html', require('ejs').renderFile);
 
 // Serve static files from the 'public' folder
 app.use(express.static(path.join(__dirname, 'layout', 'admin-page', 'admin-ingredients')));

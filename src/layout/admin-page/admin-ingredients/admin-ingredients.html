@@ -12,27 +12,49 @@
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     </head>
 <script>
-    var fs = require('fs');
-    function loadData(id, name, parent) {
+    var data;
+    // fetches the text content from out-of-stock.txt
+    // then turns it into text format
+    // returns the content of out-of-stock.txt
+    async function fetchy() {
+        const fetcher = await fetch("out-of-stock.txt");
+        data = await fetcher.text();
+        return data;
+    }
+    // uses the data from out-of-stock.txt to create a checkbox with a label
+    // idthing: the id of the checkbox element, will be put into and checked against out-of-stock.txt
+    // name: the text that will display on the label next to the checkbox
+    // parent: the html element that the element will be appended to
+    function loadData(idthing, name, parent) {
+        // create a checkbox element
         var checkbox = document.createElement("input");
         checkbox.type = "checkbox";
-        checkbox.id = id;
+        checkbox.id = idthing;
+        //making the name "ingredients[]" allows getting all the data from checkboxes with one request (brackets allow an array)
         checkbox.name = "ingredients[]";
-        checkbox.value = id;
+        checkbox.value = idthing;
+        // create a label
         var label = document.createElement("label");
-        label.textContent = name;
+        // append the checkbox first for alignment
         label.appendChild(checkbox);
-        
-
-        var data = fs.readFileSync('out-of-stock.csv', 'utf-8');
-        let split = data.split(",");
-        for (str in split) {
-             if (id == str) {
-                checkbox.checked = true;
-             }
-        }
-
-        parent.appendChild(label);
+        // create and append the text displayed on the label
+        var textytext = document.createTextNode(name);
+        label.appendChild(textytext);
+        // fetch data from out-of-stock.txt
+        fetchy()
+            .then((dataNew) => {
+                // split the data into an array of ids
+                let split = dataNew.split(",");
+                for (str in split) {
+                /*out-of-stock txt is filled with ids that were previously checked, 
+                separated by commas. so we're checking if this specific checkbox we're
+                creating was checked before, and if so, we're checking it again*/
+                if (idthing == split[str]) {
+                    checkbox.checked = true;
+                } 
+            }
+            parent.appendChild(label);
+            });
     }
 </script>
     <body>
