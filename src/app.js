@@ -3,22 +3,20 @@ const fs = require('fs');
 const app = express();
 const path = require('path');
 
-app.engine('html', require('ejs').renderFile);
-
 // Serve static files from the 'public' folder
 app.use(express.static(path.join(__dirname, 'layout', 'admin-page', 'admin-ingredients')));
 app.use(express.static(path.join(__dirname, 'layout', 'admin-page', 'admin-home')));
 app.use(express.static(path.join(__dirname, 'layout', 'admin-page', 'admin-users')));
-app.use(express.static(path.join(__dirname, 'layout', 'styles')));
-// Route for the root path
+app.use(express.static(__dirname));
+// Route for admin home
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'layout', 'admin-page', 'admin-home', 'admin-home.html'));
 });
-
+// route for ingredients page
 app.get('/ingredients', (req, res) => {
   res.sendFile(path.join(__dirname, 'layout', 'admin-page', 'admin-ingredients', 'admin-ingredients.html'));
 });
-
+// route for users page
 app.get('/users', (req, res) => {
   res.sendFile(path.join(__dirname, 'layout', 'admin-page', 'admin-users', 'admin-users.html'));
 });
@@ -44,10 +42,10 @@ app.post('/submit', (req, res) => {
  // go back to ingredients page
  res.redirect("/ingredients");
 })
-
+// handle post request when users form submitted
 app.post('/submit2', (req, res) => {
+  // handle when a user is ADDED to the list
   var bannedUser = req.body.banned;
-  var epicdata;
   // append the data to the file with a comma before if it's not empty
   if (bannedUser != null) {
   if (fs.statSync(path.join(__dirname, "layout", "admin-page", "admin-users", "ban-list.txt")).size != 0) {
@@ -57,6 +55,7 @@ app.post('/submit2', (req, res) => {
         }
       })
   } else {
+    // otherwise just append the data
     fs.appendFile(path.join(__dirname, "layout", "admin-page", "admin-users", "ban-list.txt"), bannedUser, (err) => {
       if (err) {
         throw err;
@@ -64,25 +63,31 @@ app.post('/submit2', (req, res) => {
     });
   }
 }
+// handle when a user should be REMOVED from the list
   var toBeRemoved = req.body.hidden;
-  console.log(toBeRemoved);
+  
   if (toBeRemoved != null) {
+    // read the banned users list and split by commas
     fs.readFile(path.join(__dirname, "layout", "admin-page", "admin-users", "ban-list.txt"), (err, data) => {
       var commaSplit = data.toString().split(",");
-
+      // check which user name matches the user to be removed
+      // and remove it from the list
       for (guy in commaSplit) {
         if (commaSplit[guy] == req.body.hidden) {
           commaSplit.splice(guy, 1);
-          console.log("1 " + commaSplit);
         }
       }
-      console.log("frick " + commaSplit.length);
+      // recreate the file with the user removed based on length
       if (commaSplit.length == 0) {
+        // if there's no users left, just make the file empty
         fs.writeFileSync(path.join(__dirname, "layout", "admin-page", "admin-users", "ban-list.txt"), "");
       } else if (commaSplit.length == 1) {
+        // if there's one user left, just write their name
       fs.writeFileSync(path.join(__dirname, "layout", "admin-page", "admin-users", "ban-list.txt"),commaSplit[0]);
       } else if (commaSplit.length > 1) {
+        // if there's 2+ users left, write the first user then append all the other users with commas before
         fs.writeFileSync(path.join(__dirname, "layout", "admin-page", "admin-users", "ban-list.txt"),commaSplit[0]);
+        // do not add empty names
         for (let i = 1; i < commaSplit.length; i++) {
           if (commaSplit[i] != "" && commaSplit[i] != undefined) {
             fs.appendFileSync(path.join(__dirname, "layout", "admin-page", "admin-users", "ban-list.txt"), "," + commaSplit[i]);
@@ -91,6 +96,7 @@ app.post('/submit2', (req, res) => {
     }
     });
   }
+  // redirect back to the users page
   res.redirect('/users');
 });
 // Start the server
