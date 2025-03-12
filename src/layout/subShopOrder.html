@@ -4,12 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel = "stylesheet" type = "text/css" href = "boilerplate.css">
-<!--
+
 <style type = "text/css">
-body{
-	background-color: #e3b022;
-   font-family: Arial;
-}
 .myButton {
    box-shadow:inset 0px 1px 0px 0px #e3b022; 
    background-color:#ffbc03;
@@ -29,42 +25,130 @@ body{
 nav{
 	float: center;
 }
+
 .Submit{
 	width: 100vw;
 }
 </style>
--->
+
 </head>
 <body>
-<!--Aiden's 
+Aiden's 
    <nav>
 	<a href="subShopFront.html" class="myButton">Return to Homepage!</a>
    <hr>
 </nav>
-<form action="/action_page.php"> -->
+<form action="/action_page.php"> 
    <!-- Placeholder Path. Data will soon be sent elsewhere. -->
-<!--
+
+   <!-- Length Options-->
+   <fieldset>
+        
+	<legend>Length Type</legend>
+	<label>
+		<input type="radio" name="inch" value="6"> 6 Inch
+	</label><br>
+	<label>
+		<input type="radio" name="inch" value="12"> 12 Inch
+	</label>
+</fieldset>
+
+<!-- Bread Options -->
+<fieldset>
+   <legend>Bread Type</legend>
+   <label>
+	   <input type="radio" name="bread" value="wheat"> Wheat Bread
+   </label><br>
+   <label>
+	   <input type="radio" name="bread" value="white"> White Bread
+   </label>
+   <label>
+	   <input type="radio" name="bread" value="salad"> Salad
+   </label>
+</fieldset>
+
+<!-- Meat Options -->
+<fieldset>
+   <legend>Meat Options</legend>
+   <label>
+	   <input type="checkbox" name="meat" value="oven_roasted_turkey"> Oven Roasted Turkey
+   </label><br>
+   <label>
+	   <input type="checkbox" name="meat" value="bacon"> Bacon
+   </label><br>
+   <label>
+	   <input type="checkbox" name="meat" value="honey_ham"> Honey Ham
+   </label><br>
+   <label>
+	   <input type="checkbox" name="meat" value="salami"> Salami
+   </label><br>
+   <label>
+	   <input type="checkbox" name="meat" value="pepperoni"> Pepperoni
+   </label>
+</fieldset>
+
+<!-- Cheese Options -->
+<fieldset>
+   <legend>Cheese Options</legend>
+   <label>
+	   <input type="checkbox" name="cheese" value="american"> American Cheese
+   </label><br>
+   <label>
+	   <input type="checkbox" name="cheese" value="swiss"> Swiss Cheese
+   </label><br>
+   <label>
+	   <input type="checkbox" name="cheese" value="cheddar"> Cheddar Cheese
+   </label><br>
+   <label>
+	   <input type="checkbox" name="cheese" value="hot_pepper"> Hot Pepper Cheese
+   </label><br>
+   <label>
+	   <input type="checkbox" name="cheese" value="provolone"> Provolone Cheese
+   </label><br>
+   <label>
+	   <input type="checkbox" name="cheese" value="shredded_cheddar"> Shredded Cheddar
+   </label>
+</fieldset> 
    <input type="submit" value="Submit" class="myButton">
 </form>
--->
+
 
 
 	<form id = "sub">
 <button type="submit">Submit</button>
 	 
-  <input type="checkbox" id="topping1" name="vehicle1" value="Bike">
-  <label for="topping1"> Meat</label><br>
-  <input type="checkbox" id="topping2" name="vehicle2" value="Car">
-  <label for="topping2"> Cheese</label><br>
-  <input type="checkbox" id="topping3" name="vehicle3" value="Boat">
-  <label for="topping3"> Mustard</label>
-</form> 
+  
 <!--
    const d = new Date("2015-03-25T12:00:00Z");
    document.getElementById("demo").innerHTML = d;
 -->
 <script>
-	
+const form = document.querySelector("form"); 
+
+form.addEventListener("submit", (event) => {
+ total = countMeatsAndCheeses();
+ if (total > 3) {
+	 alert("You may only select a total of three meats and cheeses. You have "+total.toString()+"."); 
+	 event.preventDefault(); //prevents form submission 
+ }
+}); 
+
+function countMeatsAndCheeses() {
+ var meats = document.getElementsByName("meat"); 
+ var cheeses = document.getElementsByName("cheese"); 
+ var total = 0; 
+ for (let i=0; i < meats.length; ++i) {
+	 if (meats[i].checked) {
+		 total++; 
+	 }
+ }
+ for (let i=0; i < cheeses.length; ++i) {
+	 if (cheeses[i].checked) {
+		 total++; 
+	 }
+ }
+ return total; 
+}
 	document.getElementById('sub').addEventListener('submit', function(e){e.preventDefault();
 
 var formData = new FormData(this);  
