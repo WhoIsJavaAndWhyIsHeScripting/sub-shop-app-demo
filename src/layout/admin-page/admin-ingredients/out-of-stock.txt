@@ -1,1 +1,1 @@
-white-bread,swiss-cheese,cucumbers,lettuce,hummus,banana-peppers,ranch,ua-sauce
+white-bread,wheat-bread,ham,pepperoni,swiss-cheese,cucumbers,lettuce,hummus,banana-peppers,hot-sauce,ranch,ua-sauce
