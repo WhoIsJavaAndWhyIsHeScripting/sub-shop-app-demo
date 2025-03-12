@@ -64,13 +64,24 @@
         var swag;
         fetchy()
             .then((dataNew) => {
+                // take the fetched data and split it by commas
                 swag = dataNew.split(",");
+                // check if the list is not empty before filling with names
+                if (swag[0] != "") {
+                // create a list element for each person on the ban list
                 for (str in swag) {
                     let list = document.createElement('li');
+                    // the label on the list element will be the banned user's name
                     let name = document.createTextNode(swag[str]);
                     list.appendChild(name);
+                    // create remove button
                     let remover = document.createElement('button');
                     remover.onclick = function() {
+                        /* create an input element with the name "hidden"
+                        and the value will be the name of the banned user attached to 
+                        the list item clicked.
+                        this will be sent back to the server so they can remove
+                        the user from the list*/
                         let hiddenInput = document.createElement("input");
                         let textcontent = remover.parentElement.textContent;
                         let subtext = textcontent.substring(0, textcontent.length - 1);
@@ -80,12 +91,15 @@
                         hiddenInput.value = subtext;
                         formUsers.appendChild(hiddenInput);
                         formUsers.submit();
+                        // the data sent to the server will be "hidden: [banned user]"
                     };
                     remover.class = "remover";
                     remover.textContent = "X";
+                    // add the list item to the ban list
                     let banlist = document.getElementById("ban-list");
                     list.appendChild(remover);
                     banlist.appendChild(list);
+            }
             }
             })
     </script>
