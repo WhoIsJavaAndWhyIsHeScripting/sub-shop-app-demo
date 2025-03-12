@@ -1,0 +1,101 @@
+
+h1 {
+    background-color: white;
+    width: 100%;
+    padding: 10px;
+    font-weight: 600;
+}
+
+p {
+    margin: 10px 15px;
+    font-size: 1.2em;
+}
+/* style dividers */
+hr {
+    height: 5px;
+    background-color: var(--ua-teal);
+    border: none;
+    margin: 15px;
+}
+
+h2 {
+    margin: 10px;
+}
+
+label {
+    margin: 10px;
+    font-size: 1em;
+}
+
+input {
+    border: solid 1px gray;
+    border-radius: 2px;
+    font-size: 0.85em;
+    padding: 2px;
+}
+
+input:hover {
+    background-color: #f2f2f2;
+    border-color: #666666;
+}
+/* style inputs while you are typing in them */
+input:focus {
+    all: unset;
+    background-color: #eeeeee;
+    border: solid 1px #666666;
+    border-radius: 2px;
+    font-size: 0.85em;
+    font-family: inherit;
+    padding: 2px;
+    outline: solid 2px var(--ua-gold);
+}
+
+#addButton {
+    all: unset;
+    margin: 10px;
+    background-color: var(--ua-gold);
+    border: solid 2px var(--ua-teal);
+    padding: 5px;
+    border-radius: 5px;
+}
+
+#addButton:hover {
+    background-color: var(--ua-teal);
+    color: var(--ua-gold);
+    cursor: pointer;
+    transition: 50ms;
+}
+
+#addButton:not(:hover) {
+    transition: 50ms;
+}
+
+li {
+    all: unset;
+    margin-left: -20px;
+    margin-right: 20px;
+    border-bottom: solid 1px gray;
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+}
+/* style the lists when you hover over the remove button */
+li:has(.remover:hover) {
+    text-decoration: line-through;
+    color: gray;
+    background-color: #dddddd;
+}
+/* style every other list item to 
+have a different background color */
+li:nth-child(even) {
+    background-color: #eeeeee;
+}
+/* add a top border to the first list item */
+li:first-child {
+    border-top: solid 1px gray;
+}
+/* style remove buttons */
+.remover {
+    all: unset;
+    margin-left: 20px;
+}

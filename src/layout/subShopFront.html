@@ -1,19 +1,30 @@
 <!DOCTYPE html>
 <html>
 <head> 
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style type="text/css">
+<meta charset = "utf-8">
+<meta name = "viewport" content = "width=device-width, initial-scale = 1.0">
+/* add link to global css sheet later - this is a copy*/
+<link rel = "stylesheet" type = "text/css" href = "boilerplate.css">
+
+<style>
+   /*
+* {
+   margin: 0;
+}
+
 p{
+   padding: 20px;
 	text-align: left;
 	margin-right: 150px;
 }
 h1{
 	text-align: center;
+   color: black;
 }
 section{
 	float: left;
-	width: 70%;
+	width: 50%;
+   font-size: xx-large;
 }
 aside{
 	float: right;
@@ -22,7 +33,7 @@ nav{
 	float: center;
 }
 .myButton {
-   box-shadow:inset 0px 1px 0px 0px #e3b022;
+   box-shadow:inset 0px 1px 0px 0px #e3b022; 
    background-color:#ffbc03;
    border-radius:3px;
    border:1px solid #e3b022;
@@ -35,23 +46,42 @@ nav{
    text-decoration:none;
    text-shadow:0px 1px 0px #e3b022;
    text-align: center;
-   width: 500px;
-}
+   width: 100vw;
+   height: 2vw;
 body{
-	
+	background-color: #e3b022;
 } /* Use if necesary! */
+ /*
+footer{
+   background-color: #808080;
+   position: fixed;
+   bottom: 0;
+   height: 10vw;
+   width: 100vw;
+   font-size: xx-large;
+}
+.Front{
+   width: 600px;
+   height: 400px;
+   border: 50px;
+}
+   */
 </style>
+
 </head>
 <body>
 <h1> U.A. Sub Shop </h1>
+<hr>
 <nav>
 	<a href="subShopOrder.html" class="myButton">Order Now!</a>
 </nav>
 <section>
-	<!-- Placeholder Text -->"We the People of the United States, in Order to form a more perfect Union, establish Justice, insure domestic Tranquility, provide for the common defense, promote the general Welfare, and secure the Blessings of Liberty to ourselves and our Posterity, do ordain and establish this Constitution for the United States of America." 
+<strong>
+	Located on the second floor of Upper Arlington High School, Bear Bites offers subs with a variety of fresh ingredients! Since 2021, the sub shop has gained vast popularity amongst students. To solve this, the Computer Science club has created this site to pre-order your sub creations. 
+</strong>
 </section>
 <aside>
-	
+	<img src="SubShopFront.jpeg" class="Front">
 </aside>
 
 
@@ -61,7 +91,7 @@ body{
 
 
 <footer>
-	
+	Got Questions? <a href="mailto:EMAIL REMOVED">Contact Us!</a>
 </footer>
 </body>
 </html>

@@ -1,0 +1,73 @@
+
+h1 {
+    background-color: white;
+    padding: 10px;
+    font-weight: 600;
+}
+
+p {
+    padding: 10px;
+    font-size: 1.2em;
+}
+
+form {
+    border-top: solid 5px var(--ua-teal)
+}
+
+fieldset {
+    border-style: none;
+    border-bottom: solid 2px black;
+    margin: 0px 10px;
+    padding: 5px 0;
+}
+/* style titles for each section */
+legend {
+    font-weight: 500;
+    padding-top: 10px;
+    font-size: 1.2em;
+}
+/* each option takes up an entire line */
+label {
+    display: block;
+    border: solid var(--ua-gold);
+    border-width: 1px 0 0 0 ;
+}
+/* subtle visual effect when hovering */
+label:hover {
+    background-color: #eeeeee;
+}
+/* changes background color of checked box */
+input {
+    accent-color: var(--ua-teal);
+    margin: 10px 8px;
+}
+/* styling a label if its cooresponding checkbox is checked */
+label:has(input:checked) {
+    text-decoration: line-through;
+    color: gray;
+}
+
+.submit {
+    display: block;
+    margin: 10px auto;
+    font-size: 1.2em;
+    background-color: var(--ua-gold);
+    border-style: none;
+    padding: 5px;
+    font-family: inherit;
+    border-radius: 10px;
+    border: solid 3px var(--ua-teal)
+}
+/* submit button changes colors when hovering */
+.submit:hover {
+    transition: 0.1s;
+    border-color: black;
+    background-color: var(--ua-teal);
+    color: var(--ua-gold);
+}
+/* submit button returns to 
+original colors when not hovering */
+.submit:not(:hover) {
+    transition: 0.1s;
+}
+

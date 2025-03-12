@@ -1,0 +1,70 @@
+
+h1 {
+    background-color: white;
+    width: 100%;
+    padding: 10px;
+    font-weight: 600;
+}
+
+hr {
+    height: 5px;
+    background-color: var(--ua-teal);
+    border: none;
+}
+
+p {
+    margin: 10px;
+    margin-bottom: 15px;
+    font-size: 1.2em;
+}
+/* position navigation buttons */
+.flex {
+    display: flex;
+    justify-content: space-evenly;
+    vertical-align: middle;
+    flex-wrap: wrap;
+    align-items: center;
+}
+/* style navigation buttons */
+.navbutton {
+    background-color: white;
+    color: var(--ua-teal);
+    border: solid 5px var(--ua-gold);
+    width: 40%;
+    margin: 20px;
+    padding: 6vh 2vh;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: 550;
+    font-size: 24px;
+    box-shadow: 0px 5px 5px lightgray;
+}
+
+a {
+    color: var(--ua-teal);
+}
+/* display buttons vertically on small screens */
+@media only screen and (max-width: 600px) {
+    .navbutton {
+        width: 80%;
+    }
+  }
+
+.fa-solid {
+    padding: 8px;
+    font-size: 24px;
+}
+/* button changes color with 
+transition when you hover */
+.navbutton:hover {
+    background-color: var(--ua-teal);
+    transition: 0.1s;
+    color: var(--ua-gold);
+    border-color: black;
+}
+/* transition when you stop hovering */
+.navbutton:not(:hover) {
+    transition: 0.1s;
+}
+
+

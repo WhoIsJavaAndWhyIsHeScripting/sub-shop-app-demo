@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <title>Manage Ingredients</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="admin-ingredients-styles.css" rel="stylesheet">
+        <link href="/boilerplate" type="text/css" rel="stylesheet">
+        <!--add in Montserrat font, font used on the uaschools website-->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    </head>
+<script>
+    var data;
+    // fetches the text content from out-of-stock.txt
+    // then turns it into text format
+    // returns the content of out-of-stock.txt
+    async function fetchy() {
+        const fetcher = await fetch("out-of-stock.txt");
+        data = await fetcher.text();
+        return data;
+    }
+    // uses the data from out-of-stock.txt to create a checkbox with a label
+    // idthing: the id of the checkbox element, will be put into and checked against out-of-stock.txt
+    // name: the text that will display on the label next to the checkbox
+    // parent: the html element that the element will be appended to
+    function loadData(idthing, name, parent) {
+        // create a checkbox element
+        var checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.id = idthing;
+        //making the name "ingredients[]" allows getting all the data from checkboxes with one request (brackets allow an array)
+        checkbox.name = "ingredients[]";
+        checkbox.value = idthing;
+        // create a label
+        var label = document.createElement("label");
+        // append the checkbox first for alignment
+        label.appendChild(checkbox);
+        // create and append the text displayed on the label
+        var textytext = document.createTextNode(name);
+        label.appendChild(textytext);
+        // fetch data from out-of-stock.txt
+        fetchy()
+            .then((dataNew) => {
+                // split the data into an array of ids
+                let split = dataNew.split(",");
+                for (str in split) {
+                /*out-of-stock txt is filled with ids that were previously checked, 
+                separated by commas. so we're checking if this specific checkbox we're
+                creating was checked before, and if so, we're checking it again*/
+                if (idthing == split[str]) {
+                    checkbox.checked = true;
+                } 
+            }
+            parent.appendChild(label);
+            });
+        }
+
+</script>
+    <body>
+        <header>
+            <div class="headerbar"><img src="../../../../assets/bearbiteslogo.png""><a href="/">Bear Bites</a></div>
+        </header>
+        <main>
+            <h1>Manage Ingredients</h1>
+            <p>
+                Check a box to mark an ingredent as out of stock. 
+                Uncheck a box to mark an ingredient as in stock. 
+                Click "Save" when you are done to save your changes 
+                to the website.
+            </p>
+            <form id="ingredients-form" action="/submit" method="POST">
+                <fieldset id="bread-group">
+                    <legend>Bread</legend>
+                </fieldset>
+                <fieldset id="protein-group">
+                    <legend>Protein</legend>
+                </fieldset>
+                <fieldset id="toppings-group">
+                    <legend>Toppings</legend>
+                </fieldset>
+                <fieldset id="sauces-group">
+                    <legend>Sauces</legend>
+                </fieldset>
+                <button type="submit" class="submit">Save Changes</button>
+            </form>
+        </main>
+    </body>
+    <script>
+        let breadIds = ["white-bread", "wheat-bread"];
+    let breadNames = ["White Bread", "Wheat Bread"];
+    let proteinIds = ["turkey", "bacon", "ham", "salami", "pepperoni", "american-cheese",
+     "swiss-cheese", "cheddar-cheese", "hot-pepper-cheese", "provolone-cheese", "shredded-cheddar"];
+    let proteinNames = ["Roasted Turkey", "Bacon", "Honey Ham", "Salami", "Pepperoni", 
+    "American Cheese", "Swiss Cheese", "Cheddar Cheese", "Hot Pepper Cheese", "Provolone Cheese", "Shredded Cheddar"];
+    let toppingIds = ["onions", "cucumbers", "tomatoes", "olives", "spinach", "lettuce", 
+    "pickles", "jalapeno", "green-peppers", "hummus", "banana-peppers"];
+    let toppingNames = ["Onions", "Cucumbers", "Tomatoes", "Olives", "Spinach", "Lettuce", "Pickles", "Jalepeños", "Green Peppers", "Hummus", "Banana Peppers"];
+    let sauceIds = ["hot-sauce", "ranch", "mayo", "ua-sauce"];
+    let sauceNames = ["Hot Sauce", "Ranch", "Mayonnaise", "UA Sauce"];
+    // load checkboxes for each fieldset
+    for (index in breadIds) {
+        loadData(breadIds[index], breadNames[index], document.getElementById("bread-group"));
+    }
+    for (index in proteinIds) {
+        loadData(proteinIds[index], proteinNames[index], document.getElementById("protein-group"));
+    }
+    for (index in toppingIds) {
+        loadData(toppingIds[index], toppingNames[index], document.getElementById("toppings-group"));
+    }
+    for (index in sauceIds) {
+        loadData(sauceIds[index], sauceNames[index], document.getElementById("sauces-group"));
+    }
+
+    
+    </script>
+</html>
+

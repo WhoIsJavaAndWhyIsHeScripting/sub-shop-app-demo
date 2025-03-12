@@ -1,11 +1,93 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title></title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel = "stylesheet" type = "text/css" href = "boilerplate.css">
+<!--
+<style type = "text/css">
+body{
+	background-color: #e3b022;
+   font-family: Arial;
+}
+.myButton {
+   box-shadow:inset 0px 1px 0px 0px #e3b022; 
+   background-color:#ffbc03;
+   border-radius:3px;
+   border:1px solid #e3b022;
+   display:inline-block;
+   cursor:pointer;
+   color:#000;
+   font-family:Arial;
+   font-size:13px;
+   padding:15px 24px;
+   text-decoration:none;
+   text-shadow:0px 1px 0px #e3b022;
+   text-align: center;
+   width: 100vw;
+}
+nav{
+	float: center;
+}
+.Submit{
+	width: 100vw;
+}
+</style>
+-->
 </head>
 <body>
+<!--Aiden's 
+   <nav>
+	<a href="subShopFront.html" class="myButton">Return to Homepage!</a>
+   <hr>
+</nav>
+<form action="/action_page.php"> -->
+   <!-- Placeholder Path. Data will soon be sent elsewhere. -->
+<!--
+   <input type="submit" value="Submit" class="myButton">
+</form>
+-->
+
+
+	<form id = "sub">
+<button type="submit">Submit</button>
+	 
+  <input type="checkbox" id="topping1" name="vehicle1" value="Bike">
+  <label for="topping1"> Meat</label><br>
+  <input type="checkbox" id="topping2" name="vehicle2" value="Car">
+  <label for="topping2"> Cheese</label><br>
+  <input type="checkbox" id="topping3" name="vehicle3" value="Boat">
+  <label for="topping3"> Mustard</label>
+</form> 
+<!--
+   const d = new Date("2015-03-25T12:00:00Z");
+   document.getElementById("demo").innerHTML = d;
+-->
+<script>
+	
+	document.getElementById('sub').addEventListener('submit', function(e){e.preventDefault();
+
+var formData = new FormData(this);  
+var csvContent = "data:text/csv; charset=utf-8,";
+
+var fieldNames = Array.from(formData.keys());
+
+csvContent += fieldNames.join(',') + "\n";
+
+var fieldValues = Array.from(formData.values());
+
+csvContent += fieldValues.join(',')+"\n";
+var link = document.createElement('a');
+link.href = encodeURI(csvContent);
+link.target = '_blank';
+link.download = 'survey_results.csv';
+link.click();
+
+this.reset();
+});
+
+</script>
+
 
 </body>
 </html>
