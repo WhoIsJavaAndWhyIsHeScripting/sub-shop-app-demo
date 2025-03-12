@@ -8,6 +8,11 @@ app.use(express.static(path.join(__dirname, 'layout', 'admin-page', 'admin-ingre
 app.use(express.static(path.join(__dirname, 'layout', 'admin-page', 'admin-home')));
 app.use(express.static(path.join(__dirname, 'layout', 'admin-page', 'admin-users')));
 app.use(express.static(__dirname));
+// route for home page
+app.get('/home', (req, res) => {
+  res.sendFile(path.join(__dirname, 'layout', 'subShop'));
+})
+
 // Route for admin home
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'layout', 'admin-page', 'admin-home', 'admin-home.html'));
