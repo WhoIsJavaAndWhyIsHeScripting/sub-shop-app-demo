@@ -20,6 +20,10 @@ app.get('/ingredients', (req, res) => {
 app.get('/users', (req, res) => {
   res.sendFile(path.join(__dirname, 'layout', 'admin-page', 'admin-users', 'admin-users.html'));
 });
+// create route for css boilerplate
+app.get('/boilerplate', (req, res) => {
+  res.sendFile(path.join(__dirname, 'layout', 'styles', 'boilerplate.css'));
+});
 // create request body thing i don't really know how this works
 app.use(express.urlencoded({extended: true}))
 // handle post request when ingredients form submitted
