@@ -9,12 +9,15 @@ app.use(express.static(path.join(__dirname, 'layout', 'admin-page', 'admin-home'
 app.use(express.static(path.join(__dirname, 'layout', 'admin-page', 'admin-users')));
 app.use(express.static(__dirname));
 // route for home page
-app.get('/home', (req, res) => {
-  res.sendFile(path.join(__dirname, 'layout', 'subShop'));
-})
-
-// Route for admin home
 app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'layout', 'subShopFront.html'));
+})
+// route for order page
+app.get('/order', (req, res) => {
+  res.sendFile(path.join(__dirname, 'layout', 'subShopOrder.html'));
+})
+// Route for admin home
+app.get('/admin-home', (req, res) => {
     res.sendFile(path.join(__dirname, 'layout', 'admin-page', 'admin-home', 'admin-home.html'));
 });
 // route for ingredients page
