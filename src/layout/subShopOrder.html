@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel = "stylesheet" type = "text/css" href = "/boilerplate">
 
+<link href="boilerplate.css" rel="stylesheet">
 <style type = "text/css">
 body{
    font-family: Arial;
@@ -33,8 +34,7 @@ nav{
 	width: 100vw;
 }
 .class{
-    width: 70%
-
+    width: 70%;
 }
 /* Hides submit button if there is no Javascript. */
 @media (scripting: none) {
@@ -131,6 +131,12 @@ nav{
     if (total > 3) {
         alert("You may only select a total of three meats and cheeses. You have "+total.toString()+"."); 
         event.preventDefault(); //prevents form submission 
+    } else {
+        const salad = document.querySelector('input[value="salad"]');  
+        const lengths = document.querySelectorAll('input[name="inch"]'); 
+        if (salad.checked && (lengths[0].checked || lengths[1].checked)) {
+            alert("Length is ignored for salads. \n(No 12 inch salads!)");
+        }
     }
    }); 
    
