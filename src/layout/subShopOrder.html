@@ -240,23 +240,23 @@ nav{
    <script>
       function loadSummary() {
          var orderForm = document.getElementById("the-form");
-         var header = document.createElement("h1");
-         orderForm.appendChild(header);
-         var summary = "";
+         var baseText = "";
          var len = findChecked('input[name="inch"]');
          var base = findChecked('input[name="bread"]');
          if (base == "salad") {
-            summary += `\nBase: ${base}`;
+            baseText = `\nBase: ${base}`;
          } else {
-            summary += `\nBase: ${len} ${base}`;
+            baseText = `\nBase: ${len} ${base}`;
          }
          var protein = findChecked('input[name="protein"]');
-         summary += `\n Protein: ${protein}`;
          var toppings = findChecked('input[name="veggies"]');
-         summary += ` Toppings: ${toppings}`
          var sauces = findChecked('input[name="condiments"]');
-         summary += ` Sauce: ${sauces}`
-         orderForm.innerHTML = summary;
+         orderForm.innerHTML = 
+         `<h1>Here is your order:</h1>
+         <p>${baseText}</p>
+         <p>Protein: ${protein}</p>
+         <p>Toppings: ${toppings}</p>
+         <p> Sauces: ${sauces}</p>`;
          var submitter = document.querySelector('input[type="submit"]');
          submitter.style = "visibility: visible";
          var goBack = document.createElement("a");
