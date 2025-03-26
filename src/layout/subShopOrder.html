@@ -122,12 +122,27 @@ nav{
        </label>
    </fieldset> 
 
-   <!---Javascript verifying that meats and cheeses total to three.-->
+   <!---Javascript verifying that meats and cheeses total to three and a base is selected.-->
    <script> 
    const form = document.querySelector("form"); 
 
    form.addEventListener("submit", (event) => {
-    total = countMeatsAndCheeses();
+
+    //Check for a base 
+    var breads = document.getElementsByName("bread"); 
+    var bread_total = 0; 
+    for (let i=0; i < breads.length; ++i) {
+        if (breads[i].checked) {
+            bread_total++; 
+        }
+    }
+    if (bread_total == 0) {
+        alert("You must select a base (bread type)."); 
+        event.preventDefault(); 
+    }
+
+    //Check meats and cheeses 
+    var total = countMeatsAndCheeses();
     if (total > 3) {
         alert("You may only select a total of three meats and cheeses. You have "+total.toString()+"."); 
         event.preventDefault(); //prevents form submission 
