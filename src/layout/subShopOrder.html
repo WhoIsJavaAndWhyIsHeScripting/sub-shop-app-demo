@@ -263,14 +263,21 @@ p {
          var protein = findChecked('input[name="protein"]');
          var toppings = findChecked('input[name="veggies"]');
          var sauces = findChecked('input[name="condiments"]');
-         /*
-         orderForm.innerHTML += 
-         `<h1>Here is your order:</h1><hr>
-         <p>${baseText}</p>
-         <p>Protein: ${protein}</p>
-         <p>Toppings: ${toppings}</p>
-         <p> Sauce: ${sauces}</p>`;
-         */
+         var head = document.createElement('h1');
+         head.textContent = "Here is your order:"
+         orderForm.appendChild(head);
+         var p1 = document.createElement('p');
+         p1.textContent = baseText;
+         orderForm.appendChild(p1);
+         var p2 = document.createElement('p');
+         p2.textContent = "Protein: " + protein;
+         orderForm.appendChild(p2);
+         var p3 = document.createElement('p');
+         p3.textContent = "Toppings: " + toppings;
+         orderForm.appendChild(p3);
+         var p4 = document.createElement('p');
+         p4.textContent = "Sauce: " + sauces;
+         orderForm.appendChild(p4);
          var submitter = document.querySelector('input[type="submit"]');
          submitter.style = "visibility: visible";
          var goBack = document.createElement("a");
