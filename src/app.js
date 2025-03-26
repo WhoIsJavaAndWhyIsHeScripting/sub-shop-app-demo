@@ -111,6 +111,19 @@ app.post('/submit2', (req, res) => {
   // redirect back to the users page
   res.redirect('/users');
 });
+
+app.post('/order-submit', (req, res) => {
+  var time = new Date();
+  var dateAndTime = time.toLocaleString("en-US");
+  var inch = req.body.inch;
+  var bread = req.body.bread;
+  var protein = req.body.protein;
+  var toppings = req.body.veggies;
+  var sauces = req.body.condiments;
+  fs.appendFile(path.join(__dirname, "layout", "sub-orders.csv"), `\n${inch},${bread},${protein},${toppings},${sauces}`, () => {
+    res.redirect('/');
+  })
+})
 // Start the server
 app.listen(3000, () => {
     console.log('Server listening on port 3000');

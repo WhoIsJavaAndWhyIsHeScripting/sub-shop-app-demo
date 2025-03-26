@@ -39,18 +39,28 @@ nav{
    width: 50%;
    padding: 10px 0;
 }
+h1 {
+   font-size: 1.2em;
+   font-weight: 600;
+   padding: 10px;
+}
+p {
+   padding: 10px;
+   border-bottom: solid 1px gray;
+}
 
+#goBack {
+   width: 50%;
+   margin: 10px auto;
+}
 #goBackButton {
    all: unset;
    display: block;
    background-color: gray;
    color: white;
-   margin: 10px auto;
-   padding: 5px 0;
+   padding: 15px 0;
    text-align: center;
    border-radius: 10px;
-   width: 50%;
-   padding: 10px 0;
 }
 #goBackButton:visited {
    all: unset;
@@ -73,7 +83,7 @@ nav{
    <a href="/" class="myButton">Return to Homepage!</a>
    <hr>
 </nav>
-<form action="/order-submit" novalidate> <!-- Placeholder Path -->
+<form action="/order-submit" method="POST" novalidate> <!-- Placeholder Path -->
    <!--this div contains the form minus the submit button, it will be
    replaced with the order summary-->
     <div id="the-form">
@@ -231,15 +241,17 @@ nav{
            <input type="checkbox" name="condiments" value="ua_sauce"> UA Sauce
        </label>
    </fieldset>
-   <button onclick="loadSummary()" type="button">Proceed</button>
+   <button id="proceed" onclick="loadSummary()" type="button">Proceed</button>
    </div>
-   <div style = "display: flex; justify-content: space-around;">
+   <div style = "display: flex; justify-content: space-around; margin: 10px;">
       <input id="submit" type="submit" value="Submit" class="submit" style="visibility: hidden">
       <a id="goBack"></a>
    </div>
    <script>
       function loadSummary() {
          var orderForm = document.getElementById("the-form");
+         Array.prototype.forEach.call(document.getElementsByTagName('fieldset'), (e) => e.style = 'visibility: hidden; max-height: 0; position: fixed; top: 0;');
+         document.getElementById("proceed").style = "visibility: hidden; max-height: 0; position: fixed; top: 0;"
          var baseText = "";
          var len = findChecked('input[name="inch"]');
          var base = findChecked('input[name="bread"]');
@@ -251,12 +263,12 @@ nav{
          var protein = findChecked('input[name="protein"]');
          var toppings = findChecked('input[name="veggies"]');
          var sauces = findChecked('input[name="condiments"]');
-         orderForm.innerHTML = 
-         `<h1>Here is your order:</h1>
+         orderForm.innerHTML += 
+         `<h1>Here is your order:</h1><hr>
          <p>${baseText}</p>
          <p>Protein: ${protein}</p>
          <p>Toppings: ${toppings}</p>
-         <p> Sauces: ${sauces}</p>`;
+         <p> Sauce: ${sauces}</p>`;
          var submitter = document.querySelector('input[type="submit"]');
          submitter.style = "visibility: visible";
          var goBack = document.createElement("a");
@@ -267,17 +279,21 @@ nav{
       }
       function findChecked(query) {
          var itemsAll = document.querySelectorAll(query);
-         var checked = "";
+         var buttonchecked = "";
+         alert("start");
          itemsAll.forEach((item) => {
             if (item.checked == true) {
-               if (checked == "") {
-                  checked += item.parentElement.textContent.trim();
+               alert(item.checked);
+               if (buttonchecked == "") {
+                  buttonchecked += item.parentElement.textContent.trim();
                } else {
-                  checked += ", " + item.parentElement.textContent.trim();
+                  buttonchecked += ", " + item.parentElement.textContent.trim();
                }
+               alert(item.checked);
+               
             }
          })
-         return checked;
+         return buttonchecked;
       }
    </script>
 
