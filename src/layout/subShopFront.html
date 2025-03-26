@@ -4,17 +4,16 @@
 <meta charset = "utf-8">
 <meta name = "viewport" content = "width=device-width, initial-scale = 1.0">
 <link rel = "stylesheet" type = "text/css" href = "/boilerplate">
-
 <style>
+
 * {
    margin: 0;
 }
 
 p{
-   padding: 20px;
+   padding: 30px;
 	text-align: left;
-	margin-right: 150px;
-   padding: 10px;
+   display: inline;
 }
 *{
    margin: 0;
@@ -23,12 +22,21 @@ p{
 h1{
 	text-align: center;
    color: black;
-   background-color: #f8d000;
+}
+
+hr {
+   height: 10px;
+   margin: 10px 0;
+   background-color: var(--ua-teal);
+   border: none;
+}
+.flex {
+   display: flex;
+   justify-content: space-around;
 }
 section{
 	float: left;
-	width: 50%;
-   font-size: xx-large;
+   font-size: medium;
 }
 aside{
 	float: right;
@@ -38,12 +46,12 @@ nav{
 }
 .myButton {
    box-shadow:inset 0px 1px 0px 0px #e3b022; 
-   background-color:#f8d000;
+   background-color: var(--ua-teal);
    border-radius:3px;
    border:1px solid #e3b022;
    display:inline-block;
    cursor:pointer;
-   color:#000;
+   color:#fff;
    font-family:Arial;
    font-size:13px;
    padding:15px 24px;
@@ -51,14 +59,14 @@ nav{
    text-shadow:0px 1px 0px #e3b022;
    text-align: center;
    padding-bottom: 10px;
-   width: 70%;
+   width: 100vw;
 }
 
 footer{
-   background-color: #f8d000;
-   position: fixed;
-   bottom: 0;
+   display: block;
+   background-color: var(--ua-teal);
    font-size: xx-large;
+   width: 100%;
 }
 .Front{
    width: 600px;
@@ -66,32 +74,39 @@ footer{
    border: 50px;
 }
 .box{
-   width: 70%;
+   /* width: 70%; */ 
    margin: auto;
+}
+#sub-shop {
+   float: right;
+   width: 100%;
+   height: auto;
 }
 </style>
 
 </head>
 <body>
-   <header>
-      <div class="headerbar"><img src="../assets/UA.png"><a href="subShopFront.html">Bear Bites</a></div>
-   </header>
-   <main>
    <div class = "box">
+   <header class="headerbar">
+      <img src="../assets/UA.png"><a href="subShopFront.html">Bear Bites</a>
+   </header>
+  <br>
+  
 <h1> U.A. Bear Bites </h1>
 <hr>
 <nav>
-	<a href="/ingredients" class="myButton">Order Now!</a>
+	<a href="/order" class="myButton">Order Now!</a>
 </nav>
+<div class="flex">
 <section>
-<strong>
+<p>
 	Located on the second floor of Upper Arlington High School, Bear Bites offers subs with a variety of fresh ingredients! Since 2021, the sub shop has gained vast popularity amongst students. To solve this, the Computer Science club has created this site to pre-order your sub creations. 
-</strong>
+</p>
 </section>
 <aside>
-	<img src="../assets/SubShopFront.jpeg" class="Front">
+	<img src="../assets/SubShopFront.jpeg" class="Front" id="sub-shop">
 </aside>
-</main>
+
 
 <footer>
 	Got Questions? <a href="mailto:EMAIL REMOVED">Contact Us!</a>

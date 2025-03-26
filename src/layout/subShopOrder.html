@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel = "stylesheet" type = "text/css" href = "/boilerplate">
 
-<link href="boilerplate.css" rel="stylesheet">
+<link href="/boilerplate" rel="stylesheet">
 <style type = "text/css">
 body{
    font-family: Arial;
@@ -30,11 +30,42 @@ nav{
 	float: center;
 }
 
-.Submit{
-	width: 100vw;
+.submit{
+   all: unset;
+   margin: 10px;
+   background-color: var(--ua-gold);
+   text-align: center;
+   border-radius: 10px;
+   width: 50%;
+   padding: 10px 0;
 }
-.class{
-    width: 70%;
+h1 {
+   font-size: 1.2em;
+   font-weight: 600;
+   padding: 10px;
+}
+p {
+   padding: 10px;
+   border-bottom: solid 1px gray;
+}
+
+#goBack {
+   width: 50%;
+   margin: 10px auto;
+}
+#goBackButton {
+   all: unset;
+   display: block;
+   background-color: gray;
+   color: white;
+   padding: 15px 0;
+   text-align: center;
+   border-radius: 10px;
+}
+#goBackButton:visited {
+   all: unset;
+   color: white;
+   text-decoration: none;
 }
 /* Hides submit button if there is no Javascript. */
 @media (scripting: none) {
@@ -92,19 +123,19 @@ nav{
    <fieldset>
        <legend>Meat Options</legend>
        <label>
-           <input type="checkbox" name="meat" value="oven_roasted_turkey"> Oven Roasted Turkey
+           <input type="checkbox" name="protein" value="oven_roasted_turkey"> Oven Roasted Turkey
        </label><br>
        <label>
-           <input type="checkbox" name="meat" value="bacon"> Bacon
+           <input type="checkbox" name="protein" value="bacon"> Bacon
        </label><br>
        <label>
-           <input type="checkbox" name="meat" value="honey_ham"> Honey Ham
+           <input type="checkbox" name="protein" value="honey_ham"> Honey Ham
        </label><br>
        <label>
-           <input type="checkbox" name="meat" value="salami"> Salami
+           <input type="checkbox" name="protein" value="salami"> Salami
        </label><br>
        <label>
-           <input type="checkbox" name="meat" value="pepperoni"> Pepperoni
+           <input type="checkbox" name="protein" value="pepperoni"> Pepperoni
        </label>
    </fieldset>
 
@@ -112,22 +143,22 @@ nav{
    <fieldset>
        <legend>Cheese Options</legend>
        <label>
-           <input type="checkbox" name="cheese" value="american"> American Cheese
+           <input type="checkbox" name="protein" value="american"> American Cheese
        </label><br>
        <label>
-           <input type="checkbox" name="cheese" value="swiss"> Swiss Cheese
+           <input type="checkbox" name="protein" value="swiss"> Swiss Cheese
        </label><br>
        <label>
-           <input type="checkbox" name="cheese" value="cheddar"> Cheddar Cheese
+           <input type="checkbox" name="protein" value="cheddar"> Cheddar Cheese
        </label><br>
        <label>
-           <input type="checkbox" name="cheese" value="hot_pepper"> Hot Pepper Cheese
+           <input type="checkbox" name="protein" value="hot_pepper"> Hot Pepper Cheese
        </label><br>
        <label>
-           <input type="checkbox" name="cheese" value="provolone"> Provolone Cheese
+           <input type="checkbox" name="protein" value="provolone"> Provolone Cheese
        </label><br>
        <label>
-           <input type="checkbox" name="cheese" value="shredded_cheddar"> Shredded Cheddar
+           <input type="checkbox" name="protein" value="shredded_cheddar"> Shredded Cheddar
        </label>
    </fieldset> 
 
@@ -187,16 +218,10 @@ nav{
     }); 
    
    function countMeatsAndCheeses() {
-    var meats = document.getElementsByName("meat"); 
-    var cheeses = document.getElementsByName("cheese"); 
+    var proteins = document.getElementsByName("protein"); 
     var total = 0; 
-    for (let i=0; i < meats.length; ++i) {
-        if (meats[i].checked) {
-            total++; 
-        }
-    }
-    for (let i=0; i < cheeses.length; ++i) {
-        if (cheeses[i].checked) {
+    for (let i=0; i < proteins.length; ++i) {
+        if (proteins[i].checked) {
             total++; 
         }
     }
@@ -259,8 +284,68 @@ nav{
            <input type="checkbox" name="condiments" value="ua_sauce"> UA Sauce
        </label>
    </fieldset>
-
-   <input type="submit" value="Submit" class="myButton">
+   <button id="proceed" onclick="loadSummary()" type="button">Proceed</button>
+   </div>
+   <div style = "display: flex; justify-content: space-around; margin: 10px;">
+      <input id="submit" type="submit" value="Submit" class="submit" style="visibility: hidden">
+      <a id="goBack"></a>
+   </div>
+   <script>
+      function loadSummary() {
+         var orderForm = document.getElementById("the-form");
+         var baseText = "";
+         var len = findChecked('input[name="inch"]');
+         var base = findChecked('input[name="bread"]');
+         if (base == "salad") {
+            baseText = `\nBase: ${base}`;
+         } else {
+            baseText = `\nBase: ${len} ${base}`;
+         }
+         var protein = findChecked('input[name="protein"]');
+         var toppings = findChecked('input[name="veggies"]');
+         var sauces = findChecked('input[name="condiments"]');
+         var head = document.createElement('h1');
+         head.textContent = "Here is your order:"
+         orderForm.appendChild(head);
+         var p1 = document.createElement('p');
+         p1.textContent = baseText;
+         orderForm.appendChild(p1);
+         var p2 = document.createElement('p');
+         p2.textContent = "Protein: " + protein;
+         orderForm.appendChild(p2);
+         var p3 = document.createElement('p');
+         p3.textContent = "Toppings: " + toppings;
+         orderForm.appendChild(p3);
+         var p4 = document.createElement('p');
+         p4.textContent = "Sauce: " + sauces;
+         orderForm.appendChild(p4);
+         var submitter = document.querySelector('input[type="submit"]');
+         submitter.style = "visibility: visible";
+         var goBack = document.createElement("a");
+         goBack.textContent = "Cancel";
+         goBack.href = "/order";
+         goBack.id = "goBackButton";
+         document.getElementById("goBack").appendChild(goBack);
+      }
+      function findChecked(query) {
+         var itemsAll = document.querySelectorAll(query);
+         var buttonchecked = "";
+         alert("start");
+         itemsAll.forEach((item) => {
+            if (item.checked == true) {
+               alert(item.checked);
+               if (buttonchecked == "") {
+                  buttonchecked += item.parentElement.textContent.trim();
+               } else {
+                  buttonchecked += ", " + item.parentElement.textContent.trim();
+               }
+               alert(item.checked);
+               
+            }
+         })
+         return buttonchecked;
+      }
+   </script>
 
    <!--Only appears if there is no Javascript.-->
    <noscript> 
