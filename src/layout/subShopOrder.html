@@ -250,8 +250,6 @@ p {
    <script>
       function loadSummary() {
          var orderForm = document.getElementById("the-form");
-         Array.prototype.forEach.call(document.getElementsByTagName('fieldset'), (e) => e.style = 'visibility: hidden; max-height: 0; position: fixed; top: 0;');
-         document.getElementById("proceed").style = "visibility: hidden; max-height: 0; position: fixed; top: 0;"
          var baseText = "";
          var len = findChecked('input[name="inch"]');
          var base = findChecked('input[name="bread"]');

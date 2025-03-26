@@ -120,7 +120,7 @@ app.post('/order-submit', (req, res) => {
   var protein = req.body.protein;
   var toppings = req.body.veggies;
   var sauces = req.body.condiments;
-  fs.appendFile(path.join(__dirname, "layout", "sub-orders.csv"), `\n${inch},${bread},${protein},${toppings},${sauces}`, () => {
+  fs.appendFile(path.join(__dirname, "layout", "sub-orders.csv"), `\n${dateAndTime},${inch},${bread},${protein},${toppings},${sauces}`, () => {
     res.redirect('/');
   })
 })
