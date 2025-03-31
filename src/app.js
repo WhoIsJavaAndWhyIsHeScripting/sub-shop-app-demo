@@ -32,6 +32,10 @@ app.get('/users', (req, res) => {
 app.get('/boilerplate', (req, res) => {
   res.sendFile(path.join(__dirname, 'layout', 'styles', 'boilerplate.css'));
 });
+// create route for out of stock file
+app.get('/out-of-stock', (req, res) => {
+  res.sendFile(path.join(__dirname, 'layout', 'admin-page', 'admin-ingredients', 'out-of-stock.txt'));
+});
 // create request body thing i don't really know how this works
 app.use(express.urlencoded({extended: true}))
 // handle post request when ingredients form submitted

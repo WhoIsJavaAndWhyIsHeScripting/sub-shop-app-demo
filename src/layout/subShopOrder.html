@@ -49,6 +49,11 @@ p {
    border-bottom: solid 1px gray;
 }
 
+label:has(input:disabled) {
+    text-decoration: line-through;
+    color: gray;
+}
+
 #goBack {
    width: 50%;
    margin: 10px auto;
@@ -77,6 +82,13 @@ p {
 </style>
 
 </head>
+<script>
+    async function fetchy() {
+        const fetcher = await fetch("/out-of-stock");
+        data = await fetcher.text();
+        return data;
+    }
+</script>
 <body>
 <div class = "box">
 <nav>
@@ -92,10 +104,10 @@ p {
         
         <legend>Length Type</legend>
         <label>
-            <input type="radio" name="inch" value="6"> 6 Inch
+            <input type="radio" name="inch" value="6"> 6 Inch</label>
         </label><br>
         <label>
-            <input type="radio" name="inch" value="12"> 12 Inch
+            <input type="radio" name="inch" value="12"> 12 Inch</label>
         </label>
     </fieldset>
     
@@ -103,13 +115,13 @@ p {
    <fieldset>
        <legend>Bread Type</legend>
        <label>
-           <input type="radio" name="bread" value="wheat"> Wheat Bread
+           <input type="radio" id="white-bread" name="bread" value="wheat"> Wheat Bread</label>
        </label><br>
        <label>
-           <input type="radio" name="bread" value="white"> White Bread
+           <input type="radio" id="wheat-bread" name="bread" value="white"> White Bread</label>
        </label>
        <label>
-           <input type="radio" name="bread" value="salad"> Salad
+           <input type="radio" id="salad" name="bread" value="salad"> Salad</label>
        </label>
    </fieldset>
 
@@ -117,19 +129,19 @@ p {
    <fieldset>
        <legend>Meat Options</legend>
        <label>
-           <input type="checkbox" name="protein" value="oven_roasted_turkey"> Oven Roasted Turkey
+           <input type="checkbox" id="turkey" name="protein" value="oven_roasted_turkey"> Oven Roasted Turkey
        </label><br>
        <label>
-           <input type="checkbox" name="protein" value="bacon"> Bacon
+           <input type="checkbox" id="bacon" name="protein" value="bacon"> Bacon
        </label><br>
        <label>
-           <input type="checkbox" name="protein" value="honey_ham"> Honey Ham
+           <input type="checkbox" id="ham" name="protein" value="honey_ham"> Honey Ham
        </label><br>
        <label>
-           <input type="checkbox" name="protein" value="salami"> Salami
+           <input type="checkbox" id="salami" name="protein" value="salami"> Salami
        </label><br>
        <label>
-           <input type="checkbox" name="protein" value="pepperoni"> Pepperoni
+           <input type="checkbox" id="pepperoni" name="protein" value="pepperoni"> Pepperoni
        </label>
    </fieldset>
 
@@ -137,22 +149,22 @@ p {
    <fieldset>
        <legend>Cheese Options</legend>
        <label>
-           <input type="checkbox" name="protein" value="american"> American Cheese
+           <input type="checkbox" id="american-cheese" name="protein" value="american"> American Cheese
        </label><br>
        <label>
-           <input type="checkbox" name="protein" value="swiss"> Swiss Cheese
+           <input type="checkbox" id="swiss-cheese" name="protein" value="swiss"> Swiss Cheese
        </label><br>
        <label>
-           <input type="checkbox" name="protein" value="cheddar"> Cheddar Cheese
+           <input type="checkbox" id="cheddar-cheese" name="protein" value="cheddar"> Cheddar Cheese
        </label><br>
        <label>
-           <input type="checkbox" name="protein" value="hot_pepper"> Hot Pepper Cheese
+           <input type="checkbox" id="hot-pepper-cheese" name="protein" value="hot_pepper"> Hot Pepper Cheese
        </label><br>
        <label>
-           <input type="checkbox" name="protein" value="provolone"> Provolone Cheese
+           <input type="checkbox" id="provolone-cheese" name="protein" value="provolone"> Provolone Cheese
        </label><br>
        <label>
-           <input type="checkbox" name="protein" value="shredded_cheddar"> Shredded Cheddar
+           <input type="checkbox" id="shredded-cheddar" name="protein" value="shredded_cheddar"> Shredded Cheddar
        </label>
    </fieldset> 
 
@@ -191,31 +203,31 @@ p {
    <fieldset>
        <legend>Vegetable Options</legend>
        <label>
-           <input type="checkbox" name="veggies" value="onions"> Onions
+           <input type="checkbox" id="onions" name="veggies" value="onions"> Onions
        </label><br>
        <label>
-           <input type="checkbox" name="veggies" value="cucumbers"> Cucumbers
+           <input type="checkbox" id="cucumbers" name="veggies" value="cucumbers"> Cucumbers
        </label><br>
        <label>
-           <input type="checkbox" name="veggies" value="tomatoes"> Tomatoes
+           <input type="checkbox" id="tomatoes" name="veggies" value="tomatoes"> Tomatoes
        </label><br>
        <label>
-           <input type="checkbox" name="veggies" value="olives"> Olives
+           <input type="checkbox" id="olives" name="veggies" value="olives"> Olives
        </label><br>
        <label>
-           <input type="checkbox" name="veggies" value="spinach"> Spinach
+           <input type="checkbox" id="spinach" name="veggies" value="spinach"> Spinach
        </label><br>
        <label>
-           <input type="checkbox" name="veggies" value="lettuce"> Lettuce
+           <input type="checkbox" id="lettuce" name="veggies" value="lettuce"> Lettuce
        </label><br>
        <label>
-           <input type="checkbox" name="veggies" value="pickles"> Pickles
+           <input type="checkbox" id="pickles" name="veggies" value="pickles"> Pickles
        </label><br>
        <label>
-           <input type="checkbox" name="veggies" value="jalapenos"> Jalapeños
+           <input type="checkbox" id="jalapeno" name="veggies" value="jalapenos"> Jalapeños
        </label><br>
        <label>
-           <input type="checkbox" name="veggies" value="green_peppers"> Green Peppers
+           <input type="checkbox" id="green-peppers" name="veggies" value="green_peppers"> Green Peppers
        </label><br>
    </fieldset>
 
@@ -223,31 +235,49 @@ p {
    <fieldset>
        <legend>Condiment Options</legend>
        <label>
-           <input type="checkbox" name="condiments" value="hummus"> Hummus
+           <input type="checkbox" id="hummus" name="condiments" value="hummus"> Hummus
        </label><br>
        <label>
-           <input type="checkbox" name="condiments" value="banana_peppers"> Banana Peppers
+           <input type="checkbox" id="banana-peppers" name="condiments" value="banana_peppers"> Banana Peppers
        </label><br>
        <label>
-           <input type="checkbox" name="condiments" value="hot_sauce"> Hot Sauce
+           <input type="checkbox" id="hot-sauce" name="condiments" value="hot_sauce"> Hot Sauce
        </label><br>
        <label>
-           <input type="checkbox" name="condiments" value="ranch"> Ranch
+           <input type="checkbox" id="ranch" name="condiments" value="ranch"> Ranch
        </label><br>
        <label>
-           <input type="checkbox" name="condiments" value="mayo"> Mayo
+           <input type="checkbox" id="mayo" name="condiments" value="mayo"> Mayo
        </label><br>
        <label>
-           <input type="checkbox" name="condiments" value="ua_sauce"> UA Sauce
+           <input type="checkbox" id="ua-sauce" name="condiments" value="ua_sauce"> UA Sauce
        </label>
    </fieldset>
+   <script>
+    fetchy()
+        .then((data) => {
+            var dataSplit = data.split(",");
+            var checkboxes = document.querySelectorAll("input[type='checkbox'], input[type='radio']");
+            checkboxes.forEach((checkbox) => {
+                for (i in dataSplit) {
+                    console.log(dataSplit[i]);
+                    console.log(checkbox.id);
+                    if (dataSplit[i] == checkbox.id.trim()) {
+                        checkbox.disabled = true;
+                        alert("WE DID IT")
+                    }
+                }
+            })
+        })
+   </script>
    <button id="proceed" onclick="loadSummary()" type="button">Proceed</button>
    </div>
    <div style = "display: flex; justify-content: space-around; margin: 10px;">
-      <input id="submit" type="submit" value="Submit" class="submit" style="visibility: hidden">
+      <input id="submit" type="submit" value="Submit" class="submit" style="visibility: hidden"></label>
       <a id="goBack"></a>
    </div>
    <script>
+    // fix when clicking proceed button twice, displays double everything
       function loadSummary() {
          var orderForm = document.getElementById("the-form");
          var baseText = "";
@@ -287,16 +317,13 @@ p {
       function findChecked(query) {
          var itemsAll = document.querySelectorAll(query);
          var buttonchecked = "";
-         alert("start");
          itemsAll.forEach((item) => {
             if (item.checked == true) {
-               alert(item.checked);
                if (buttonchecked == "") {
                   buttonchecked += item.parentElement.textContent.trim();
                } else {
                   buttonchecked += ", " + item.parentElement.textContent.trim();
                }
-               alert(item.checked);
                
             }
          })
