@@ -3,77 +3,100 @@
 <head> 
 <meta charset = "utf-8">
 <meta name = "viewport" content = "width=device-width, initial-scale = 1.0">
-<link href="/main-pages-css" rel="stylesheet">
+<link href="../styles/boilerplate.css" rel="stylesheet">
 <style type = "text/css">
+h1{
+	text-align: center;
+   color: black;
+}	
+.myButton {
+   box-shadow:inset 0px 1px 0px 0px #e3b022; 
+   background-color:#ffbc03;
+   border-radius:3px;
+   border:1px solid #e3b022;
+   display:inline-block;
+   cursor:pointer;
+   color:#000;
+   font-family:Arial;
+   font-size:36px;
+   padding:15px 24px;
+   text-decoration:none;
+   text-shadow:0px 1px 0px #e3b022;
+   text-align: center;
+   width: 100vw;
+   height: 2vw;
+}
+
+table, td, th {
+  border: 1px solid black;
+  font-size: 24px;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+td {
+  text-align: center;
+  font-size: 16px;
+}
+th {
+    font-size: 24px;
+}
 </style>
 </head>
 <body>
 <header>
-	<div class="headerbar"><img src="../../assets/icon.svg"><a href="/"> Bear Bites</a></div>
+	<div class="headerbar"><img src="../../assets/icon.svg"><a href="subShopFront.html> Bear Bites</a></div>
 </header>
-<div class="box">
-  <br>
-  <br>
-  <h1> UA Sub Shop Credits</h1>
-  <hr>
-  
-  <section>
-  <br>
-  <table>
-  
-    <tr>
-      <td><strong>Charlie 27'</strong><br>Data Storage<br>Project Leader</td>
-         <td><strong>Michael 25'</strong><br>Data Storage, CSS</td>
-      <td><strong>Aiden 27'</strong><br>Head Web Designer</td>
-      <td><strong>Evan 27'</strong><br>Data Storage, CSS </td>
-  
-  
-    </tr>
-    <tr>
-      <td><strong>Technology Staff Member</strong><br>Tech Support, Back End</td>
-      <td><strong>Computer Science Teacher</strong><br>Club Leader, CSS</td>
-      <td><strong>Kai 27'</strong><br>Content(Leader)</td>
-      <td><strong>Evan B 27'</strong><br>Graphics(Leader)</td>
-    </tr>
-    <tr>
-      <td><strong>Austin 28'</strong><br>Content,Web Designer</td>
-      <td><strong> Charlie G27'</strong><br>Graphics(Project Secretary</td>
-      <td><strong>Parker 26'</strong><br>Backend</td>
-      <td><strong>Mohamed 28'</strong><br>CSS</td>
-    </tr>
-    <tr>
-  
-      <td><strong>Josie 28'</strong><br>Content</td>
-      <td><strong>Dylan 28'</strong><br>Graphics</td>
-      <td><strong>Silas 28'</strong><br>Content </td>
-      <td><strong>Ercheng 28'</strong><br>Graphics</td>
-    </tr>
-    <tr>
-      <td><strong>David 28'</strong><br>CSS</td>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-    </tr>
+<h1> UA Sub Shop Credits</h1>
+<hr>
+<nav>
+	<a href="subShopFront.html" class="myButton"><strong>Return to Homepage!</strong></a>
+</nav>
+<section>
+<br>
+<table>
+  <tr>
+    <th> <Strong> Data Storage/Backend </Strong> </th>
+    <th> <strong> Web Designer </strong> </th>
+    <th> <strong> Content </strong> </th>
+    <th> <strong> Graphics </strong> </th>
+    <th> <Strong> Teachers </strong> </th>
+  </tr>
+  <tr>
+    <td>Charlie Strought - Data Storage (Project Leader)</td>
+    <td>Aiden - Head Web Designer</td>
+    <Td>Kai - Content(Leader)</Td>
+    <td>Evan B- Graphics(Leader)</td>
+    <td> Computer Science Teacher </td>
+  </tr>
+  <tr>
+    <td>Michael - Data Storage,CSS</td>
+    <td>David - CSS</td>
+    <td>Austin - Content,Web Designer</td>
+    <td>Charlie Grau- Graphics(Project Secretary</td>
+    <td>Technology Staff Member</td>
+  </tr>
+  <tr>
+    <td>Parker - Backend</td>
+    <td>Mohamed-CSS</td>
+    <td>Josie- Content</td>
+    <td>Dylan- Graphics</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Evan - Data Storage,CSS </td>
+    <td> </td>
+    <td>Silas Payne- Content </td>
+    <td>Ercheng- Graphics</td>
+    <td></td>
+  </tr>
+  <tr>
+  </tr>
   </table>
-  </section>
-  
-  <br>
-  <br>
-  
-  <br><br><br><br>
-  <!--TODO: make links not ugly-->
-  <button class="myButton">
-    <a href="/" class="myButton"><strong>Return to Homepage!</strong></a>
-  </button>
-  <br>
-  <br>
-  <hr>
-  <br>
-  <br>
-  </div>
-  <footer><small>
-    Made by UAHS Computer Science Club @2025<br>Got Questions? <a href="mailto:EMAIL REMOVED">Contact Us!</a>
-  </small></footer>
-  
+</table>
+</section>
+</aside>
 </body>
 </html>
