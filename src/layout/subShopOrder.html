@@ -3,83 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel = "stylesheet" type = "text/css" href = "/boilerplate">
+<link rel = "stylesheet" type = "text/css" href = "/main-pages-css">
 
-<link href="/boilerplate" rel="stylesheet">
-<style type = "text/css">
-body{
-   font-family: Arial;
-}
-.myButton {
-   box-shadow:inset 0px 1px 0px 0px #e3b022; 
-   background-color:#ffbc03;
-   border-radius:3px;
-   border:1px solid #e3b022;
-   display:inline-block;
-   cursor:pointer;
-   color:#000;
-   font-family:Arial;
-   font-size:13px;
-   padding:15px 24px;
-   text-decoration:none;
-   text-shadow:0px 1px 0px #e3b022;
-   text-align: center;
-   width: 100vw;
-}
-nav{
-	float: center;
-}
-
-.submit{
-   all: unset;
-   margin: 10px;
-   background-color: var(--ua-gold);
-   text-align: center;
-   border-radius: 10px;
-   width: 50%;
-   padding: 10px 0;
-}
-h1 {
-   font-size: 1.2em;
-   font-weight: 600;
-   padding: 10px;
-}
-p {
-   padding: 10px;
-   border-bottom: solid 1px gray;
-}
-
-label:has(input:disabled) {
-    text-decoration: line-through;
-    color: gray;
-}
-
-#goBack {
-   width: 50%;
-   margin: 10px auto;
-}
-#goBackButton {
-   all: unset;
-   display: block;
-   background-color: gray;
-   color: white;
-   padding: 15px 0;
-   text-align: center;
-   border-radius: 10px;
-}
-#goBackButton:visited {
-   all: unset;
-   color: white;
-   text-decoration: none;
-}
-/* Hides submit button if there is no Javascript. */
-@media (scripting: none) {
-    .myButton[type="submit"] {
-        display: none; 
-    }
-}
-
-</style>
+<link href="/main-pages-css" rel="stylesheet">
 
 </head>
 <script>
@@ -91,16 +17,30 @@ label:has(input:disabled) {
     }
 </script>
 <body>
+    <header>
+        <div class="headerbar"><img src="../assets/bearbiteslogo.png"><a href="subShopFront.html">Bear Bites</a></div>
+     </header>
 <div class = "box">
-<nav>
-   <a href="/" class="myButton">Return to Homepage!</a>
-   <hr>
-</nav>
+<br><br>
+<h1>Order A Sub for Today's Lunch</h1>
+<hr>
 <form action="/order-submit" method="POST" novalidate> <!-- Placeholder Path -->
    <!--this div contains the form minus the submit button, it will be
    replaced with the order summary-->
     <div id="the-form">
    <!-- Length Options-->
+    <table>
+        <tr>
+            <td>
+                <fieldset>
+                    <legend>Lunch Period</legend>
+                    <label>
+                        <input type="radio" name="period" value="4th"> 4th Period Lunch
+                    </label><br>
+                    <label>
+                        <input type="radio" name="period" value="5th"> 5th Period Lunch
+                    </label>
+                </fieldset>
     <fieldset>
         
         <legend>Length Type</legend>
@@ -125,6 +65,7 @@ label:has(input:disabled) {
            <input type="radio" id="salad" name="bread" value="salad"> Salad</label>
        </label>
    </fieldset>
+   </td><td>
    <script>
     var breads = document.getElementsByName("bread");
     breads.forEach((bread) => {
@@ -183,7 +124,7 @@ label:has(input:disabled) {
            <input type="checkbox" id="shredded-cheddar" name="protein" value="shredded_cheddar"> Shredded Cheddar
        </label>
    </fieldset> 
-
+   </td><td>
    <!---Javascript verifying that meats and cheeses total to three.-->
    <script> 
    const form = document.querySelector("form"); 
@@ -246,7 +187,7 @@ label:has(input:disabled) {
            <input type="checkbox" id="green-peppers" name="veggies" value="green_peppers"> Green Peppers
        </label><br>
    </fieldset>
-
+   </td><td>
    <!-- Condiment Options -->
    <fieldset>
        <legend>Condiment Options</legend>
@@ -269,6 +210,9 @@ label:has(input:disabled) {
            <input type="checkbox" id="ua-sauce" name="condiments" value="ua_sauce"> UA Sauce
        </label>
    </fieldset>
+   </td>
+   </tr>
+   </table>
    <script>
     // read file
     fetchy()
@@ -285,7 +229,8 @@ label:has(input:disabled) {
             })
         })
    </script>
-   <button id="proceed" onclick="loadSummary()" type="button">Proceed</button>
+   <button class="myButton" id="proceed" style="float: left;" onclick="loadSummary()" type="button"><strong>Review Order</strong></button>
+   <button class="myButton"><a style="text-decoration: none; color: white;"><strong>Return to Homepage!</strong></a></button>
    </div>
    <div style = "display: flex; justify-content: space-around; margin: 10px;">
       <input id="submit" type="submit" value="Submit" class="submit" style="visibility: hidden"></label>

@@ -16,6 +16,10 @@ app.get('/', (req, res) => {
 app.get('/order', (req, res) => {
   res.sendFile(path.join(__dirname, 'layout', 'subShopOrder.html'));
 })
+// route for credits page
+app.get('/credits', (req, res) => {
+  res.sendFile(path.join(__dirname, 'layout', 'Credits.html'));
+})
 // Route for admin home
 app.get('/admin-home', (req, res) => {
     res.sendFile(path.join(__dirname, 'layout', 'admin-page', 'admin-home', 'admin-home.html'));
@@ -31,6 +35,10 @@ app.get('/users', (req, res) => {
 // create route for css boilerplate
 app.get('/boilerplate', (req, res) => {
   res.sendFile(path.join(__dirname, 'layout', 'styles', 'boilerplate.css'));
+});
+// create route for css boilerplate for main pages
+app.get('/main-pages-css', (req, res) => {
+  res.sendFile(path.join(__dirname, 'layout', 'styles', 'main-pages.css'));
 });
 // create route for out of stock file
 app.get('/out-of-stock', (req, res) => {
