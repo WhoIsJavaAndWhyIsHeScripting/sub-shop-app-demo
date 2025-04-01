@@ -83,6 +83,7 @@ label:has(input:disabled) {
 
 </head>
 <script>
+    // read from the out-of-stock file and turn it into text
     async function fetchy() {
         const fetcher = await fetch("/out-of-stock");
         data = await fetcher.text();
@@ -104,10 +105,10 @@ label:has(input:disabled) {
         
         <legend>Length Type</legend>
         <label>
-            <input type="radio" name="inch" value="6"> 6 Inch</label>
+            <input type="radio" id="6-inch" name="inch" value="6"> 6 Inch</label>
         </label><br>
         <label>
-            <input type="radio" name="inch" value="12"> 12 Inch</label>
+            <input type="radio" id="12-inch" name="inch" value="12"> 12 Inch</label>
         </label>
     </fieldset>
     
@@ -124,7 +125,22 @@ label:has(input:disabled) {
            <input type="radio" id="salad" name="bread" value="salad"> Salad</label>
        </label>
    </fieldset>
-
+   <script>
+    var breads = document.getElementsByName("bread");
+    breads.forEach((bread) => {
+        bread.addEventListener("change", () => {
+            if (document.getElementById("salad").checked) {
+                document.getElementById("6-inch").checked = false;
+                document.getElementById("6-inch").disabled = true;
+                document.getElementById("12-inch").checked = false;
+                document.getElementById("12-inch").disabled = true;
+            } else {
+                document.getElementById("6-inch").disabled = false;
+                document.getElementById("12-inch").disabled = false;
+            }
+        })
+    })
+   </script>
    <!-- Meat Options -->
    <fieldset>
        <legend>Meat Options</legend>
@@ -254,17 +270,16 @@ label:has(input:disabled) {
        </label>
    </fieldset>
    <script>
+    // read file
     fetchy()
         .then((data) => {
             var dataSplit = data.split(",");
             var checkboxes = document.querySelectorAll("input[type='checkbox'], input[type='radio']");
             checkboxes.forEach((checkbox) => {
                 for (i in dataSplit) {
-                    console.log(dataSplit[i]);
-                    console.log(checkbox.id);
+                    // for each checkbox, iterate thru the list of out of stock ingredients, and if it matches one, disable it
                     if (dataSplit[i] == checkbox.id.trim()) {
                         checkbox.disabled = true;
-                        alert("WE DID IT")
                     }
                 }
             })
@@ -278,12 +293,19 @@ label:has(input:disabled) {
    </div>
    <script>
     // fix when clicking proceed button twice, displays double everything
+    var loaded = false;
       function loadSummary() {
+        if (loaded == true) {
+            document.getElementById("container").remove();
+        }
          var orderForm = document.getElementById("the-form");
+         var container = document.createElement('div');
+         container.id = "container";
+         orderForm.appendChild(container);
          var baseText = "";
          var len = findChecked('input[name="inch"]');
          var base = findChecked('input[name="bread"]');
-         if (base == "salad") {
+         if (base == "Salad") {
             baseText = `\nBase: ${base}`;
          } else {
             baseText = `\nBase: ${len} ${base}`;
@@ -293,26 +315,29 @@ label:has(input:disabled) {
          var sauces = findChecked('input[name="condiments"]');
          var head = document.createElement('h1');
          head.textContent = "Here is your order:"
-         orderForm.appendChild(head);
+         container.appendChild(head);
          var p1 = document.createElement('p');
          p1.textContent = baseText;
-         orderForm.appendChild(p1);
+         container.appendChild(p1);
          var p2 = document.createElement('p');
          p2.textContent = "Protein: " + protein;
-         orderForm.appendChild(p2);
+         container.appendChild(p2);
          var p3 = document.createElement('p');
          p3.textContent = "Toppings: " + toppings;
-         orderForm.appendChild(p3);
+         container.appendChild(p3);
          var p4 = document.createElement('p');
          p4.textContent = "Sauce: " + sauces;
-         orderForm.appendChild(p4);
-         var submitter = document.querySelector('input[type="submit"]');
-         submitter.style = "visibility: visible";
-         var goBack = document.createElement("a");
-         goBack.textContent = "Cancel";
-         goBack.href = "/order";
-         goBack.id = "goBackButton";
-         document.getElementById("goBack").appendChild(goBack);
+         container.appendChild(p4);
+         if (loaded == false) {
+             var submitter = document.querySelector('input[type="submit"]');
+             submitter.style = "visibility: visible";
+             var goBack = document.createElement("a");
+             goBack.textContent = "Cancel";
+             goBack.href = "/order";
+             goBack.id = "goBackButton";
+             document.getElementById("goBack").appendChild(goBack);
+         }
+         loaded = true;
       }
       function findChecked(query) {
          var itemsAll = document.querySelectorAll(query);

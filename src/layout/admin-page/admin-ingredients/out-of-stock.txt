@@ -1,1 +1,1 @@
-white-bread,wheat-bread,hot-pepper-cheese,shredded-cheddar,cucumbers,tomatoes,olives,lettuce,pickles,jalapeno,hummus,banana-peppers,hot-sauce,ranch,ua-sauce
+ua-sauce,salami
