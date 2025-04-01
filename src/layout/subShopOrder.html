@@ -3,99 +3,52 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel = "stylesheet" type = "text/css" href = "/boilerplate">
+<link rel = "stylesheet" type = "text/css" href = "/main-pages-css">
 
-<link href="/boilerplate" rel="stylesheet">
-<style type = "text/css">
-body{
-   font-family: Arial;
-}
-.myButton {
-   box-shadow:inset 0px 1px 0px 0px #e3b022; 
-   background-color:#ffbc03;
-   border-radius:3px;
-   border:1px solid #e3b022;
-   display:inline-block;
-   cursor:pointer;
-   color:#000;
-   font-family:Arial;
-   font-size:13px;
-   padding:15px 24px;
-   text-decoration:none;
-   text-shadow:0px 1px 0px #e3b022;
-   text-align: center;
-   width: 100vw;
-}
-nav{
-	float: center;
-}
-
-.submit{
-   all: unset;
-   margin: 10px;
-   background-color: var(--ua-gold);
-   text-align: center;
-   border-radius: 10px;
-   width: 50%;
-   padding: 10px 0;
-}
-h1 {
-   font-size: 1.2em;
-   font-weight: 600;
-   padding: 10px;
-}
-p {
-   padding: 10px;
-   border-bottom: solid 1px gray;
-}
-
-#goBack {
-   width: 50%;
-   margin: 10px auto;
-}
-#goBackButton {
-   all: unset;
-   display: block;
-   background-color: gray;
-   color: white;
-   padding: 15px 0;
-   text-align: center;
-   border-radius: 10px;
-}
-#goBackButton:visited {
-   all: unset;
-   color: white;
-   text-decoration: none;
-}
-/* Hides submit button if there is no Javascript. */
-@media (scripting: none) {
-    .myButton[type="submit"] {
-        display: none; 
-    }
-}
-
-</style>
+<link href="/main-pages-css" rel="stylesheet">
 
 </head>
+<script>
+    // read from the out-of-stock file and turn it into text
+    async function fetchy() {
+        const fetcher = await fetch("/out-of-stock");
+        data = await fetcher.text();
+        return data;
+    }
+</script>
 <body>
+    <header>
+        <div class="headerbar"><img src="../assets/bearbiteslogo.png"><a href="subShopFront.html">Bear Bites</a></div>
+     </header>
 <div class = "box">
-<nav>
-   <a href="/" class="myButton">Return to Homepage!</a>
-   <hr>
-</nav>
+<br><br>
+<h1>Order A Sub for Today's Lunch</h1>
+<hr>
 <form action="/order-submit" method="POST" novalidate> <!-- Placeholder Path -->
    <!--this div contains the form minus the submit button, it will be
    replaced with the order summary-->
     <div id="the-form">
    <!-- Length Options-->
+    <table>
+        <tr>
+            <td>
+                <fieldset>
+                    <legend>Lunch Period</legend>
+                    <label>
+                        <input type="radio" name="period" value="4th"> 4th Period Lunch
+                    </label><br>
+                    <label>
+                        <input type="radio" name="period" value="5th"> 5th Period Lunch
+                    </label>
+                </fieldset>
     <fieldset>
         
         <legend>Length Type</legend>
         <label>
-            <input type="radio" name="inch" value="6"> 6 Inch
+            <input type="radio" id="6-inch" name="inch" value="6"> 6 Inch</label>
         </label><br>
         <label>
-            <input type="radio" name="inch" value="12"> 12 Inch
+            <input type="radio" id="12-inch" name="inch" value="12"> 12 Inch</label>
         </label>
     </fieldset>
     
@@ -103,33 +56,49 @@ p {
    <fieldset>
        <legend>Bread Type</legend>
        <label>
-           <input type="radio" name="bread" value="wheat"> Wheat Bread
+           <input type="radio" id="white-bread" name="bread" value="wheat"> Wheat Bread</label>
        </label><br>
        <label>
-           <input type="radio" name="bread" value="white"> White Bread
+           <input type="radio" id="wheat-bread" name="bread" value="white"> White Bread</label>
        </label>
        <label>
-           <input type="radio" name="bread" value="salad"> Salad
+           <input type="radio" id="salad" name="bread" value="salad"> Salad</label>
        </label>
    </fieldset>
-
+   </td><td>
+   <script>
+    var breads = document.getElementsByName("bread");
+    breads.forEach((bread) => {
+        bread.addEventListener("change", () => {
+            if (document.getElementById("salad").checked) {
+                document.getElementById("6-inch").checked = false;
+                document.getElementById("6-inch").disabled = true;
+                document.getElementById("12-inch").checked = false;
+                document.getElementById("12-inch").disabled = true;
+            } else {
+                document.getElementById("6-inch").disabled = false;
+                document.getElementById("12-inch").disabled = false;
+            }
+        })
+    })
+   </script>
    <!-- Meat Options -->
    <fieldset>
        <legend>Meat Options</legend>
        <label>
-           <input type="checkbox" name="protein" value="oven_roasted_turkey"> Oven Roasted Turkey
+           <input type="checkbox" id="turkey" name="protein" value="oven_roasted_turkey"> Oven Roasted Turkey
        </label><br>
        <label>
-           <input type="checkbox" name="protein" value="bacon"> Bacon
+           <input type="checkbox" id="bacon" name="protein" value="bacon"> Bacon
        </label><br>
        <label>
-           <input type="checkbox" name="protein" value="honey_ham"> Honey Ham
+           <input type="checkbox" id="ham" name="protein" value="honey_ham"> Honey Ham
        </label><br>
        <label>
-           <input type="checkbox" name="protein" value="salami"> Salami
+           <input type="checkbox" id="salami" name="protein" value="salami"> Salami
        </label><br>
        <label>
-           <input type="checkbox" name="protein" value="pepperoni"> Pepperoni
+           <input type="checkbox" id="pepperoni" name="protein" value="pepperoni"> Pepperoni
        </label>
    </fieldset>
 
@@ -137,25 +106,25 @@ p {
    <fieldset>
        <legend>Cheese Options</legend>
        <label>
-           <input type="checkbox" name="protein" value="american"> American Cheese
+           <input type="checkbox" id="american-cheese" name="protein" value="american"> American Cheese
        </label><br>
        <label>
-           <input type="checkbox" name="protein" value="swiss"> Swiss Cheese
+           <input type="checkbox" id="swiss-cheese" name="protein" value="swiss"> Swiss Cheese
        </label><br>
        <label>
-           <input type="checkbox" name="protein" value="cheddar"> Cheddar Cheese
+           <input type="checkbox" id="cheddar-cheese" name="protein" value="cheddar"> Cheddar Cheese
        </label><br>
        <label>
-           <input type="checkbox" name="protein" value="hot_pepper"> Hot Pepper Cheese
+           <input type="checkbox" id="hot-pepper-cheese" name="protein" value="hot_pepper"> Hot Pepper Cheese
        </label><br>
        <label>
-           <input type="checkbox" name="protein" value="provolone"> Provolone Cheese
+           <input type="checkbox" id="provolone-cheese" name="protein" value="provolone"> Provolone Cheese
        </label><br>
        <label>
-           <input type="checkbox" name="protein" value="shredded_cheddar"> Shredded Cheddar
+           <input type="checkbox" id="shredded-cheddar" name="protein" value="shredded_cheddar"> Shredded Cheddar
        </label>
    </fieldset> 
-
+   </td><td>
    <!---Javascript verifying that meats and cheeses total to three.-->
    <script> 
    const form = document.querySelector("form"); 
@@ -191,69 +160,97 @@ p {
    <fieldset>
        <legend>Vegetable Options</legend>
        <label>
-           <input type="checkbox" name="veggies" value="onions"> Onions
+           <input type="checkbox" id="onions" name="veggies" value="onions"> Onions
        </label><br>
        <label>
-           <input type="checkbox" name="veggies" value="cucumbers"> Cucumbers
+           <input type="checkbox" id="cucumbers" name="veggies" value="cucumbers"> Cucumbers
        </label><br>
        <label>
-           <input type="checkbox" name="veggies" value="tomatoes"> Tomatoes
+           <input type="checkbox" id="tomatoes" name="veggies" value="tomatoes"> Tomatoes
        </label><br>
        <label>
-           <input type="checkbox" name="veggies" value="olives"> Olives
+           <input type="checkbox" id="olives" name="veggies" value="olives"> Olives
        </label><br>
        <label>
-           <input type="checkbox" name="veggies" value="spinach"> Spinach
+           <input type="checkbox" id="spinach" name="veggies" value="spinach"> Spinach
        </label><br>
        <label>
-           <input type="checkbox" name="veggies" value="lettuce"> Lettuce
+           <input type="checkbox" id="lettuce" name="veggies" value="lettuce"> Lettuce
        </label><br>
        <label>
-           <input type="checkbox" name="veggies" value="pickles"> Pickles
+           <input type="checkbox" id="pickles" name="veggies" value="pickles"> Pickles
        </label><br>
        <label>
-           <input type="checkbox" name="veggies" value="jalapenos"> Jalapeños
+           <input type="checkbox" id="jalapeno" name="veggies" value="jalapenos"> Jalapeños
        </label><br>
        <label>
-           <input type="checkbox" name="veggies" value="green_peppers"> Green Peppers
+           <input type="checkbox" id="green-peppers" name="veggies" value="green_peppers"> Green Peppers
        </label><br>
    </fieldset>
-
+   </td><td>
    <!-- Condiment Options -->
    <fieldset>
        <legend>Condiment Options</legend>
        <label>
-           <input type="checkbox" name="condiments" value="hummus"> Hummus
+           <input type="checkbox" id="hummus" name="condiments" value="hummus"> Hummus
        </label><br>
        <label>
-           <input type="checkbox" name="condiments" value="banana_peppers"> Banana Peppers
+           <input type="checkbox" id="banana-peppers" name="condiments" value="banana_peppers"> Banana Peppers
        </label><br>
        <label>
-           <input type="checkbox" name="condiments" value="hot_sauce"> Hot Sauce
+           <input type="checkbox" id="hot-sauce" name="condiments" value="hot_sauce"> Hot Sauce
        </label><br>
        <label>
-           <input type="checkbox" name="condiments" value="ranch"> Ranch
+           <input type="checkbox" id="ranch" name="condiments" value="ranch"> Ranch
        </label><br>
        <label>
-           <input type="checkbox" name="condiments" value="mayo"> Mayo
+           <input type="checkbox" id="mayo" name="condiments" value="mayo"> Mayo
        </label><br>
        <label>
-           <input type="checkbox" name="condiments" value="ua_sauce"> UA Sauce
+           <input type="checkbox" id="ua-sauce" name="condiments" value="ua_sauce"> UA Sauce
        </label>
    </fieldset>
-   <button id="proceed" onclick="loadSummary()" type="button">Proceed</button>
+   </td>
+   </tr>
+   </table>
+   <script>
+    // read file
+    fetchy()
+        .then((data) => {
+            var dataSplit = data.split(",");
+            var checkboxes = document.querySelectorAll("input[type='checkbox'], input[type='radio']");
+            checkboxes.forEach((checkbox) => {
+                for (i in dataSplit) {
+                    // for each checkbox, iterate thru the list of out of stock ingredients, and if it matches one, disable it
+                    if (dataSplit[i] == checkbox.id.trim()) {
+                        checkbox.disabled = true;
+                    }
+                }
+            })
+        })
+   </script>
+   <button class="myButton" id="proceed" style="float: left;" onclick="loadSummary()" type="button"><strong>Review Order</strong></button>
+   <button class="myButton"><a style="text-decoration: none; color: white;"><strong>Return to Homepage!</strong></a></button>
    </div>
    <div style = "display: flex; justify-content: space-around; margin: 10px;">
-      <input id="submit" type="submit" value="Submit" class="submit" style="visibility: hidden">
+      <input id="submit" type="submit" value="Submit" class="submit" style="visibility: hidden"></label>
       <a id="goBack"></a>
    </div>
    <script>
+    // fix when clicking proceed button twice, displays double everything
+    var loaded = false;
       function loadSummary() {
+        if (loaded == true) {
+            document.getElementById("container").remove();
+        }
          var orderForm = document.getElementById("the-form");
+         var container = document.createElement('div');
+         container.id = "container";
+         orderForm.appendChild(container);
          var baseText = "";
          var len = findChecked('input[name="inch"]');
          var base = findChecked('input[name="bread"]');
-         if (base == "salad") {
+         if (base == "Salad") {
             baseText = `\nBase: ${base}`;
          } else {
             baseText = `\nBase: ${len} ${base}`;
@@ -263,40 +260,40 @@ p {
          var sauces = findChecked('input[name="condiments"]');
          var head = document.createElement('h1');
          head.textContent = "Here is your order:"
-         orderForm.appendChild(head);
+         container.appendChild(head);
          var p1 = document.createElement('p');
          p1.textContent = baseText;
-         orderForm.appendChild(p1);
+         container.appendChild(p1);
          var p2 = document.createElement('p');
          p2.textContent = "Protein: " + protein;
-         orderForm.appendChild(p2);
+         container.appendChild(p2);
          var p3 = document.createElement('p');
          p3.textContent = "Toppings: " + toppings;
-         orderForm.appendChild(p3);
+         container.appendChild(p3);
          var p4 = document.createElement('p');
          p4.textContent = "Sauce: " + sauces;
-         orderForm.appendChild(p4);
-         var submitter = document.querySelector('input[type="submit"]');
-         submitter.style = "visibility: visible";
-         var goBack = document.createElement("a");
-         goBack.textContent = "Cancel";
-         goBack.href = "/order";
-         goBack.id = "goBackButton";
-         document.getElementById("goBack").appendChild(goBack);
+         container.appendChild(p4);
+         if (loaded == false) {
+             var submitter = document.querySelector('input[type="submit"]');
+             submitter.style = "visibility: visible";
+             var goBack = document.createElement("a");
+             goBack.textContent = "Cancel";
+             goBack.href = "/order";
+             goBack.id = "goBackButton";
+             document.getElementById("goBack").appendChild(goBack);
+         }
+         loaded = true;
       }
       function findChecked(query) {
          var itemsAll = document.querySelectorAll(query);
          var buttonchecked = "";
-         alert("start");
          itemsAll.forEach((item) => {
             if (item.checked == true) {
-               alert(item.checked);
                if (buttonchecked == "") {
                   buttonchecked += item.parentElement.textContent.trim();
                } else {
                   buttonchecked += ", " + item.parentElement.textContent.trim();
                }
-               alert(item.checked);
                
             }
          })
