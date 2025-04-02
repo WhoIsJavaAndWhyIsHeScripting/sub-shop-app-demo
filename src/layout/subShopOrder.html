@@ -299,8 +299,8 @@
          container.appendChild(head);
          var p1 = document.createElement('p');
          p1.textContent = baseText;
-         if (baseText == "") {
-            p1.textContent += "None"
+         if (baseText.trim() == "Base:") {
+            p1.textContent += " None"
          }
          container.appendChild(p1);
          var p2 = document.createElement('p');
