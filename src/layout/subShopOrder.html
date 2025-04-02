@@ -66,6 +66,7 @@
    </fieldset>
    </td><td>
    <script>
+    //Disables length if a salad is selected. 
     var breads = document.getElementsByName("bread");
     breads.forEach((bread) => {
         bread.addEventListener("change", () => {
@@ -123,12 +124,13 @@
            <input type="checkbox" id="shredded-cheddar" name="protein" value="shredded_cheddar"> Shredded Cheddar
        </label>
    </fieldset> 
-   </td><td>
+   </td>
    <!---Javascript verifying that meats and cheeses total to three.-->
    <script> 
    const form = document.querySelector("form"); 
 
    form.addEventListener("submit", (event) => {
+    alert("Form being checked.")
     var valid = true; 
 
     //Check for a base 
@@ -191,7 +193,7 @@
    }
    </script> 
 
-
+   <td>
    <!-- Veggie Options -->
    <fieldset>
        <legend>Vegetable Options</legend>
@@ -275,7 +277,9 @@
    <script>
     // fix when clicking proceed button twice, displays double everything
     var loaded = false;
-      function loadSummary() {
+
+    //Shows a summary of the order. 
+    function loadSummary() {
         if (loaded == true) {
             document.getElementById("container").remove();
         }
