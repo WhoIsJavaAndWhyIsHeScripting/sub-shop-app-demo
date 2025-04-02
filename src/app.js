@@ -1,4 +1,5 @@
 const express = require('express');
+const { check } = require('express-validator');
 const fs = require('fs');
 const app = express();
 const path = require('path');
@@ -123,19 +124,31 @@ app.post('/submit2', (req, res) => {
   // redirect back to the users page
   res.redirect('/users');
 });
-
+// populate the sub order csv with the form data
 app.post('/order-submit', (req, res) => {
   var time = new Date();
   var dateAndTime = time.toLocaleString("en-US");
+  var lunchPeriod = req.body.period;
   var inch = req.body.inch;
   var bread = req.body.bread;
   var protein = req.body.protein;
   var toppings = req.body.veggies;
   var sauces = req.body.condiments;
-  fs.appendFile(path.join(__dirname, "layout", "sub-orders.csv"), `\n${dateAndTime},${inch},${bread},${protein},${toppings},${sauces}`, () => {
+  var ingArray = [lunchPeriod, inch, bread, protein, toppings, sauces];
+  var csvRow = dateAndTime;
+  for (let i in ingArray) {
+    if (ingArray[i] != undefined) {
+        csvRow += "," + ingArray[i];
+      }
+    }
+    console.log(ingArray);
+    console.log(csvRow);
+
+  fs.appendFile(path.join(__dirname, "layout", "sub-orders.csv"), `\n${csvRow}`, () => {
     res.redirect('/');
   })
 })
+// check if a value is undefined, then remove it
 // Start the server
 app.listen(3000, () => {
     console.log('Server listening on port 3000');

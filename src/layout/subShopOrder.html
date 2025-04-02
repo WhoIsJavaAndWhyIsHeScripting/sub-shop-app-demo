@@ -299,15 +299,27 @@
          container.appendChild(head);
          var p1 = document.createElement('p');
          p1.textContent = baseText;
+         if (baseText == "") {
+            p1.textContent += "None"
+         }
          container.appendChild(p1);
          var p2 = document.createElement('p');
          p2.textContent = "Protein: " + protein;
+         if (protein == "") {
+            p2.textContent += "None"
+         }
          container.appendChild(p2);
          var p3 = document.createElement('p');
          p3.textContent = "Toppings: " + toppings;
+         if (toppings == "") {
+            p3.textContent += "None"
+         }
          container.appendChild(p3);
          var p4 = document.createElement('p');
          p4.textContent = "Sauce: " + sauces;
+         if (sauces == "") {
+            p4.textContent += "None"
+         }
          container.appendChild(p4);
          if (loaded == false) {
              var submitter = document.querySelector('input[type="submit"]');
