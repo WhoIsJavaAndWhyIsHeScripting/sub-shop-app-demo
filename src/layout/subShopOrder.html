@@ -7,7 +7,16 @@
 
 <link href="/main-pages-css" rel="stylesheet">
 
+<style>
+    @media (scripting: none){
+        .myButton[id="proceed"] {
+            display: none; 
+        }
+    }
+</style>
+
 </head>
+
 <script>
     // read from the out-of-stock file and turn it into text
     async function fetchy() {
@@ -16,6 +25,8 @@
         return data;
     }
 </script>
+
+
 <body>
     <header>
         <div class="headerbar"><img src="../assets/bearbiteslogo.png"><a href="/">Bear Bites</a></div>
@@ -125,74 +136,6 @@
        </label>
    </fieldset> 
    </td>
-   <!---Javascript verifying that meats and cheeses total to three.-->
-   <script> 
-   const form = document.querySelector("form"); 
-
-   form.addEventListener("submit", (event) => {
-    alert("Form being checked.")
-    var valid = true; 
-
-    //Check for a base 
-    var breads = document.getElementsByName("bread"); 
-    var bread_total = 0; 
-    for (let i=0; i < breads.length; ++i) {
-        if (breads[i].checked) {
-            bread_total++; 
-        }
-    }
-    if (bread_total == 0) {
-        alert("You must select a base (bread type)."); 
-        event.preventDefault(); 
-        valid = false; 
-    }
-
-    //Check meats and cheeses 
-    var total = countMeatsAndCheeses();
-    if (total > 3) {
-        alert("You may only select a total of three meats and cheeses. You have "+total.toString()+"."); 
-        event.preventDefault(); //prevents form submission 
-        valid = false; 
-    } else {
-        //Reminds the user that length is ignored when selecting a salad. 
-        const salad = document.querySelector('input[value="salad"]');  
-        const lengths = document.querySelectorAll('input[name="inch"]'); 
-        if (salad.checked && (lengths[0].checked || lengths[1].checked)) {
-            alert("Length is ignored for salads. \n(No 12 inch salads!)");
-        } 
-    }
-
-    //Finally, it thanks the user and reminds them when they can pick it up.
-    if (valid == true) {
-        var periods = document.getElementsByName("period"); 
-        var period = ""; 
-        for (let i=0; i < periods.length; ++i) {
-            if (periods[i].checked) {
-                period = periods[i].value; 
-            }
-        }
-        if (period == "") {
-            event.preventDefault(); 
-            valid = false; 
-            alert("You must select a period to pick up.")
-            return; 
-        }
-        alert("Thank you for your order! \n Please remember to pick up your sandwich during "+period+"th period lunch.");
-    }
-    }); 
-   
-   function countMeatsAndCheeses() {
-    var proteins = document.getElementsByName("protein"); 
-    var total = 0; 
-    for (let i=0; i < proteins.length; ++i) {
-        if (proteins[i].checked) {
-            total++; 
-        }
-    }
-    return total; 
-   }
-   </script> 
-
    <td>
    <!-- Veggie Options -->
    <fieldset>
@@ -268,7 +211,7 @@
         })
    </script>
    <button class="myButton" id="proceed" style="float: left;" onclick="loadSummary()" type="button"><strong>Review Order</strong></button>
-   <button class="myButton"><a style="text-decoration: none; color: white;"><strong>Return to Homepage!</strong></a></button>
+   <button class="myButton"><a style="text-decoration: none; color: white;" href="/"><strong>Return to Homepage!</strong></a></button>
    </div>
    <div style = "display: flex; justify-content: space-around; margin: 10px;">
       <input id="submit" type="submit" value="Submit" class="submit" style="visibility: hidden"></label>
@@ -355,8 +298,85 @@
 
    <!--Only appears if there is no Javascript.-->
    <noscript> 
-    <h4><i>Javascript is need to submit this form.</i></h4>
+    <h4><i>Javascript is needed to submit this form.</i></h4>
    </noscript>
+
+
+
+    <!---Javascript verifying that the form is filled logically and legally.-->
+    <script> 
+    const form = document.querySelector("form"); 
+ 
+    form.addEventListener("submit", (event) => {
+        //alert("Form being checked.")
+         
+        //Checks bread and meats and cheeses. 
+        var valid = validate_form(); 
+ 
+        //Finally, it thanks the user and reminds them when they can pick it up.
+        if (valid == true) {
+            var periods = document.getElementsByName("period"); 
+            var period = ""; 
+            for (let i=0; i < periods.length; ++i) {
+                if (periods[i].checked) {
+                    period = periods[i].value; 
+                }
+            }
+            if (period == "") {
+                event.preventDefault(); 
+                valid = false; 
+                alert("You must select a period to pick up.")
+                return; 
+            }
+            alert("Thank you for your order! \n Please remember to pick up your sandwich during "+period+"th period lunch.");
+        }
+     }); 
+ 
+    function countMeatsAndCheeses() {
+        var proteins = document.getElementsByName("protein"); 
+        var total = 0; 
+        for (let i=0; i < proteins.length; ++i) {
+            if (proteins[i].checked) {
+                total++; 
+            }
+        }
+        return total; 
+    }
+ 
+    function validate_form() {
+        var valid = true; 
+ 
+        //Check for a base 
+        var breads = document.getElementsByName("bread"); 
+        var bread_total = 0; 
+        for (let i=0; i < breads.length; ++i) {
+            if (breads[i].checked) {
+                bread_total++; 
+            }
+        }
+        if (bread_total == 0) {
+            alert("You must select a base (bread type)."); 
+            event.preventDefault(); 
+            valid = false; 
+        }
+ 
+        //Check meats and cheeses (no more than 3 allowed)
+        var total = countMeatsAndCheeses();
+        if (total > 3) {
+            alert("You may only select a total of three meats and cheeses. You have "+total.toString()+"."); 
+            event.preventDefault(); //prevents form submission 
+            valid = false; 
+        } else {
+            //Reminds the user that length is ignored when selecting a salad. (Not actually needed anymore.)
+            const salad = document.querySelector('input[value="salad"]');  
+            const lengths = document.querySelectorAll('input[name="inch"]'); 
+            if (salad.checked && (lengths[0].checked || lengths[1].checked)) {
+                alert("Length is ignored for salads. \n(No 12 inch salads!)");
+            } 
+        }
+        return valid; 
+    }
+    </script> 
 
 </form>
 </div>
