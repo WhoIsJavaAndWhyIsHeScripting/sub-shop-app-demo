@@ -18,7 +18,7 @@ app.get('/order', (req, res) => {
 })
 // route for credits page
 app.get('/credits', (req, res) => {
-  res.sendFile(path.join(__dirname, 'layout', 'Credits.html'));
+  res.sendFile(path.join(__dirname, 'layout', 'credits-page.html'));
 })
 // Route for admin home
 app.get('/admin-home', (req, res) => {
