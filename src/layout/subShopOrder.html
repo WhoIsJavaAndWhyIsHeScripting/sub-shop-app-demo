@@ -35,7 +35,7 @@
 <br><br>
 <h1>Order A Sub for Today's Lunch</h1>
 <hr>
-<form action="/order-submit" method="POST" novalidate> <!-- Placeholder Path -->
+<form action="/order-submit" method="POST" novalidate> 
    <!--this div contains the form minus the submit button, it will be
    replaced with the order summary-->
     <div id="the-form">
@@ -210,11 +210,12 @@
             })
         })
    </script>
+   <!--Adding type="button" prevents a button from submitting the form.-->
    <button class="myButton" id="proceed" style="float: left;" onclick="loadSummary()" type="button"><strong>Review Order</strong></button>
-   <button class="myButton"><a style="text-decoration: none; color: white;" href="/"><strong>Return to Homepage!</strong></a></button>
+   <button class="myButton" type="button"><a style="text-decoration: none; color: white;" href="/"><strong>Return to Homepage!</strong></a></button>
    </div>
    <div style = "display: flex; justify-content: space-around; margin: 10px;">
-      <input id="submit" type="submit" value="Submit" class="submit" style="visibility: hidden"></label>
+        <label><input id="submit" type="submit" value="Submit" class="submit" style="visibility: hidden"/></label>
       <a id="goBack"></a>
    </div>
    <script>
@@ -328,7 +329,7 @@
                 alert("You must select a period to pick up.")
                 return; 
             }
-            alert("Thank you for your order! \n Please remember to pick up your sandwich during "+period+"th period lunch.");
+            alert("Thank you for your order! \n Please remember to pick up your sandwich during "+period+" period lunch.");
         }
      }); 
  
@@ -358,6 +359,13 @@
             alert("You must select a base (bread type)."); 
             event.preventDefault(); 
             valid = false; 
+        } else {
+            //check that the user chose a length or chose a salad 
+            if (!document.getElementById("salad").checked && !document.getElementById("6-inch").checked && !document.getElementById("12-inch").checked)  {
+                alert("You must select a length or select a salad."); 
+                event.preventDefault(); 
+                valid = false;
+            }
         }
  
         //Check meats and cheeses (no more than 3 allowed)
