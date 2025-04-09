@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="305a55d3-437e-4f1e-a2ba-7eaa76a18e9f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/layout/functions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/layout/subShopFront.html" beforeDir="false" afterPath="$PROJECT_DIR$/layout/subShopFront.html" afterDir="false" />
-    </list>
+    <list default="true" id="305a55d3-437e-4f1e-a2ba-7eaa76a18e9f" name="Changes" comment="https and google implementation" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -42,7 +37,26 @@
     "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/" />
+      <recent name="$PROJECT_DIR$/layout" />
+    </key>
+  </component>
   <component name="TaskManager">
+    <task id="LOCAL-00001" summary="https and google implementation">
+      <option name="closed" value="true" />
+      <created>1744206772869</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1744206772869</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="https and google implementation" />
+    <option name="LAST_COMMIT_MESSAGE" value="https and google implementation" />
   </component>
 </project>
