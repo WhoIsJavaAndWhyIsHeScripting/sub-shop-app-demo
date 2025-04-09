@@ -2,11 +2,11 @@ const express = require('express');
 const fs = require('fs');
 const app = express();
 const path = require('path');
-const https = require('https');
-const privateKey = fs.readFileSync(path.resolve(__dirname, './privkey.pem'), 'utf-8');
-const certificate = fs.readFileSync(path.resolve(__dirname, './fullchain.pem'), 'utf-8');
-
-const credentials = {key: privateKey, cert: certificate};
+const https = require('http');
+const credentials = {
+    key: fs.readFileSync('./privkey.pem', 'utf-8'), 
+    cert: fs.readFileSync('./fullchain.pem', 'utf-8'),
+};
 
 // Serve static files from the 'public' folder
 app.use(express.static(path.join(__dirname, 'layout', 'admin-page', 'admin-ingredients')));
@@ -130,7 +130,6 @@ app.post('/order-submit', (req, res) => {
   })
 })
 // Start the server
-var httpsServer = https.createServer(credentials, app);
-httpsServer.listen(3000, "localhost", () => {
+http.createServer(credentials, app).listen(3000, "localhost", () => {
     console.log('Server listening on port 3000');
 });
