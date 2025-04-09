@@ -3,14 +3,11 @@ const { check } = require('express-validator');
 const fs = require('fs');
 const app = express();
 const path = require('path');
-<<<<<<< HEAD:app.js
 const https = require('http');
 const credentials = {
     key: fs.readFileSync('./privkey.pem', 'utf-8'), 
     cert: fs.readFileSync('./fullchain.pem', 'utf-8'),
 };
-=======
->>>>>>> 19b9fedf8dd914fe2e3c9a55b2eda63cc3aeb16f:src/app.js
 
 // Serve static files from the 'public' folder
 app.use(express.static(path.join(__dirname, 'layout', 'admin-page', 'admin-ingredients')));
@@ -160,8 +157,5 @@ app.post('/order-submit', (req, res) => {
 // Start the server
 <<<<<<< HEAD:app.js
 http.createServer(credentials, app).listen(3000, "localhost", () => {
-=======
-app.listen(3000, () => {
->>>>>>> 19b9fedf8dd914fe2e3c9a55b2eda63cc3aeb16f:src/app.js
     console.log('Server listening on port 3000');
 });

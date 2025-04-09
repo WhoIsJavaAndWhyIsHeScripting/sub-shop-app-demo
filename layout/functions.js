@@ -13,7 +13,7 @@ async function authWithGoogle() {
 
             // The signed-in user info
             const user = result.user;
-
+            console.log(user.displayName);
         }).catch((error) => {
         // Handle errors here
 
