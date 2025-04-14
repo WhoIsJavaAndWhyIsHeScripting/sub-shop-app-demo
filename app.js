@@ -155,7 +155,6 @@ app.post('/order-submit', (req, res) => {
 })
 // check if a value is undefined, then remove it
 // Start the server
-<<<<<<< HEAD:app.js
 http.createServer(credentials, app).listen(3000, "localhost", () => {
     console.log('Server listening on port 3000');
 });
