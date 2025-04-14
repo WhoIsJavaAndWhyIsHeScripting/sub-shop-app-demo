@@ -24,14 +24,12 @@
 <body>
     <header>
         <div class="headerbar"><img src="../assets/bearbiteslogo.png"><a href="subShopFront.html">Bear Bites</a></div>
-        <div class="headerbar"><img src="../assets/bearbiteslogo.png"><a href="subShopFront.html">Bear Bites</a></div>
      </header>
 <div class = "box">
 <br><br>
 <h1>Order A Sub for Today's Lunch</h1>
 <hr>
-<form action="/order-submit" method="POST" novalidate> <!-- Placeholder Path -->
-<form action="/order-submit" method="POST" novalidate> <!-- Placeholder Path -->
+<form action="/order-submit" method="POST" novalidate>
    <!--this div contains the form minus the submit button, it will be
    replaced with the order summary-->
     <div id="the-form">
@@ -132,37 +130,6 @@
            <input type="checkbox" id="shredded-cheddar" name="protein" value="shredded_cheddar"> Shredded Cheddar
        </label>
    </fieldset> 
-   </td><td>
-   <!---Javascript verifying that meats and cheeses total to three.-->
-   <script> 
-   const form = document.querySelector("form"); 
-
-   form.addEventListener("submit", (event) => {
-    total = countMeatsAndCheeses();
-    if (total > 3) {
-        alert("You may only select a total of three meats and cheeses. You have "+total.toString()+"."); 
-        event.preventDefault(); //prevents form submission 
-    } else {
-        const salad = document.querySelector('input[value="salad"]');  
-        const lengths = document.querySelectorAll('input[name="inch"]'); 
-        if (salad.checked && (lengths[0].checked || lengths[1].checked)) {
-            alert("Length is ignored for salads. \n(No 12 inch salads!)");
-        }
-    }
-   }); 
-   
-   function countMeatsAndCheeses() {
-    var proteins = document.getElementsByName("protein"); 
-    var total = 0; 
-    for (let i=0; i < proteins.length; ++i) {
-        if (proteins[i].checked) {
-            total++; 
-        }
-    }
-    return total; 
-   }
-   </script> 
-
 
    </td><td>
    <!---Javascript verifying that meats and cheeses total to three.-->
@@ -280,7 +247,6 @@
    <script>
     // fix when clicking proceed button twice, displays double everything
     var loaded = false;
-      function loadSummary() {
       function loadSummary() {
         if (loaded == true) {
             document.getElementById("container").remove();
