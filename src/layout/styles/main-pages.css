@@ -15,6 +15,7 @@ body {
 .headerbar {
     position: fixed;
     top: 0;
+    left: 0;
     display: flex;
     background-color: var(--ua-gold);
     padding: 5px;
@@ -45,6 +46,7 @@ hr {
 }
 .flex {
    display: flex;
+   
 }
 section{
     float: left;
@@ -71,10 +73,17 @@ button{
 
 
 }
-
+label:has(input:disabled) {
+   text-decoration: line-through;
+   color: gray;
+}
+input {
+   accent-color: var(--ua-teal);
+}
 footer{
    display: block;
    background-color: var(--ua-gold);
+   margin-left: -8px;
    font-size: 18px;
    color: black;
    width: 100%;
@@ -97,15 +106,18 @@ footer{
 
 
 
-
+.end {
+   padding: 20px;
+   width: 50%;
+   padding: 15px 5px;
+}
 .submit{
-   all: unset;
-   margin: 10px;
+   border: none;
    background-color: var(--ua-gold);
    text-align: center;
    border-radius: 10px;
-   width: 50%;
-   padding: 10px 0;
+   width: 100%;
+   padding: 15px 0;
 }
 h1 {
    font-size: 1.5em;
@@ -117,26 +129,20 @@ p {
    border-bottom: solid 1px gray;
 }
 
-#goBack {
-   width: 50%;
-   margin: 10px auto;
-}
 #goBackButton {
    all: unset;
    display: block;
    background-color: gray;
    color: white;
-   padding: 15px 0;
    text-align: center;
    border-radius: 10px;
+   padding: 15px 0;
 }
 #goBackButton:visited {
    all: unset;
    color: white;
    text-decoration: none;
 }   
-
-
 table, td, th {
   border: 1px solid black;
   font-size: 24px;

@@ -4,8 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel = "stylesheet" type = "text/css" href = "/main-pages-css">
-
-<link href="/main-pages-css" rel="stylesheet">
+<style>
+    @media (scripting: none){
+        .myButton[id="proceed"] {
+            display: none; 
+        }
+    }
+</style>
 
 </head>
 <script>
@@ -60,7 +65,7 @@
        </label><br>
        <label>
            <input type="radio" id="wheat-bread" name="bread" value="white"> White Bread</label>
-       </label>
+       </label><br>
        <label>
            <input type="radio" id="salad" name="bread" value="salad"> Salad</label>
        </label>
@@ -232,9 +237,9 @@
    <button class="myButton" id="proceed" style="float: left;" onclick="loadSummary()" type="button"><strong>Review Order</strong></button>
    <button class="myButton"><a style="text-decoration: none; color: white;"><strong>Return to Homepage!</strong></a></button>
    </div>
-   <div style = "display: flex; justify-content: space-around; margin: 10px;">
-      <input id="submit" type="submit" value="Submit" class="submit" style="visibility: hidden"></label>
-      <a id="goBack"></a>
+   <div style = "display: flex; justify-content: space-evenly; margin: 10px; align-items: center;">
+        <a id="submitButton" class="end"><input id="submit" type="submit" class="submit" value="Submit" style="visibility: hidden"/></a>
+      <a id="goBack" class="end"></a>
    </div>
    <script>
     // fix when clicking proceed button twice, displays double everything
