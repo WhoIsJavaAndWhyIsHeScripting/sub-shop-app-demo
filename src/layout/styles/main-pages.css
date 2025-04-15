@@ -46,6 +46,9 @@ hr {
 }
 .flex {
    display: flex;
+   justify-content: space-around;
+   margin: 10px auto;
+   align-items: center;
    
 }
 section{
@@ -57,7 +60,7 @@ aside{
 }
 
 button{
-    width: 50%;
+    width: 40%;
     margin: auto;
 }
 .myButton {
@@ -70,7 +73,9 @@ button{
    padding: .5em;
    text-decoration:none;
    text-align: center;
-
+   border-radius: 10px;
+   border: none;
+   margin: 10px;
 
 }
 label:has(input:disabled) {

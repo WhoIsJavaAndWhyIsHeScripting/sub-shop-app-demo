@@ -236,12 +236,13 @@
             })
         })
    </script>
-   <button class="myButton" id="proceed" style="float: left;" onclick="loadSummary()" type="button"><strong>Review Order</strong></button>
-   <button class="myButton"><a style="text-decoration: none; color: white;"><strong>Return to Homepage!</strong></a></button>
-   <button class="myButton"><a style="text-decoration: none; color: white;"><strong>Return to Homepage!</strong></a></button>
+   <div class="flex">
+     <button class="myButton" id="proceed" style="float: left;" onclick="loadSummary()" type="button"><strong>Review Order</strong></button>
+     <button class="myButton"><a style="text-decoration: none; color: white;"><strong>Return to Homepage!</strong></a></button>
    </div>
-   <div style = "display: flex; justify-content: space-evenly; margin: 10px; align-items: center;">
-        <a id="submitButton" class="end"><input id="submit" type="submit" class="submit" value="Submit" style="visibility: hidden"/></a>
+   </div>
+   <div class="flex">
+      <a id="submitButton" class="end"><input id="submit" type="submit" class="submit" value="Submit" style="visibility: hidden"/></a>
       <a id="goBack" class="end"></a>
    </div>
    <script>
