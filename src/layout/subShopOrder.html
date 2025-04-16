@@ -137,18 +137,55 @@
    const form = document.querySelector("form"); 
 
    form.addEventListener("submit", (event) => {
-    total = countMeatsAndCheeses();
+    var valid = true; 
+
+    //Check for a base 
+    var breads = document.getElementsByName("bread"); 
+    var bread_total = 0; 
+    for (let i=0; i < breads.length; ++i) {
+        if (breads[i].checked) {
+            bread_total++; 
+        }
+    }
+    if (bread_total == 0) {
+        alert("You must select a base (bread type)."); 
+        event.preventDefault(); 
+        valid = false; 
+    }
+
+    //Check meats and cheeses 
+    var total = countMeatsAndCheeses();
     if (total > 3) {
         alert("You may only select a total of three meats and cheeses. You have "+total.toString()+"."); 
         event.preventDefault(); //prevents form submission 
+        valid = false; 
     } else {
+        //Reminds the user that length is ignored when selecting a salad. 
         const salad = document.querySelector('input[value="salad"]');  
         const lengths = document.querySelectorAll('input[name="inch"]'); 
         if (salad.checked && (lengths[0].checked || lengths[1].checked)) {
             alert("Length is ignored for salads. \n(No 12 inch salads!)");
-        }
+        } 
     }
-   }); 
+
+    //Finally, it thanks the user and reminds them when they can pick it up.
+    if (valid == true) {
+        var periods = document.getElementsByName("period"); 
+        var period = ""; 
+        for (let i=0; i < periods.length; ++i) {
+            if (periods[i].checked) {
+                period = periods[i].value; 
+            }
+        }
+        if (period == "") {
+            event.preventDefault(); 
+            valid = false; 
+            alert("You must select a period to pick up.")
+            return; 
+        }
+        alert("Thank you for your order! \n Please remember to pick up your sandwich during "+period+"th period lunch.");
+    }
+    }); 
    
    function countMeatsAndCheeses() {
     var proteins = document.getElementsByName("protein"); 
@@ -160,6 +197,7 @@
     }
     return total; 
    }
+
    </script> 
 
 
