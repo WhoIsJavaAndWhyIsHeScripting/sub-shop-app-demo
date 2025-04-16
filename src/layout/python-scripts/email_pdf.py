@@ -1,32 +1,27 @@
 '''Sends an email with orders.pdf as an attachement.
-Uses EMAIL REMOVED account as the sender. 
+Uses EMAIL REMOVED account. 
+Commented out code is for using a Google oauth file. 
+Currently intended to use a STMP server at UAHS. ''' 
 
-Commented out code is for using a Google oauth file or 
-for ssl; it is best left as is.  
-
-Currently set up to use a STMP server at UAHS. This 
-requires no login as long as one is on the school Wi-Fi.
-(if outside of school, a socket.gaierror occurs).
-
-Written January 2025.'''  
+#This program is unfinished! There are also some security concerns 
+#that might need addressed (currently uses input() to get password). 
 
 import datetime 
 
 #For smtp 
 import smtplib 
-#import ssl #No ssl for uaschools SMTP server. 
+import ssl 
 
 #For email and attachments 
 from email import encoders 
 from email.mime.base import MIMEBase 
 from email.mime.multipart import MIMEMultipart 
 from email.mime.text import MIMEText  
- 
- #import yagmail #Third party module for oauth - no longer needed 
+
+#import yagmail 
 
 def main(pdf_file, recipient, oauth_file=''): 
-    #Configuration for the SMTP server. 
-    port = 25  
+    port = 25 #I think this is right, but I am not certain. 
     server_address = "smtp.uaschools.org" 
     sender_email = "EMAIL REMOVED"
 
@@ -48,24 +43,21 @@ def main(pdf_file, recipient, oauth_file=''):
     encoders.encode_base64(part) 
     part.add_header(
         "content-disposition", 
-        "attachment",
-        filename=pdf_file, 
+        f"attachment; {pdf_file}", 
     )
     message.attach(part) 
 
     
-    #context = ssl.create_default_context() #for encryption 
-    with smtplib.SMTP(server_address, port) as server: 
-        #server.login(sender_email, password=input("sender password?")) #not secure, but also unused 
+    context = ssl.create_default_context() #for encryption 
+    with smtplib.SMTP_SSL(server_address, port, context=context) as server: 
+        server.login(sender_email, password=input("password?:")) #this is a problem if this is to run automatically! 
         try: 
-            #There is no need to login if the connection is successfully made. 
             server.sendmail(sender_email, recipient, message.as_string()) 
         except Exception as e:
             print("There was an error sending the email.")
             raise e 
         else: 
             print(f"Mail sent with orders.pdf at {str(datetime.datetime.now())}.")
-
 
     #Only needed if using Google oauth
     # contents = [
@@ -85,4 +77,5 @@ if __name__ == "__main__": #i.e. if not imported as a module
     main(
         "orders.pdf", 
         input("send to?"), 
+        #input("oauth file?"),
         )
