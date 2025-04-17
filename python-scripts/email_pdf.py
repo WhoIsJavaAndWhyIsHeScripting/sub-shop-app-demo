@@ -22,7 +22,7 @@ from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart 
 from email.mime.text import MIMEText  
  
- #import yagmail #Third party module for oauth - no longer needed 
+#import yagmail #Third party module for oauth - no longer needed 
 
 def main(pdf_file, recipients, oauth_file=''): 
     #Configuration for the SMTP server. 

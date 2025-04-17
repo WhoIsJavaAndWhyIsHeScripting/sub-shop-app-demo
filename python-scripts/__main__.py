@@ -19,26 +19,30 @@ RECIPIENTS = [
     "EMAIL REMOVED",
 ]
 CLEAR_CSV = True 
+SETTINGS_PATH = "./settings.json"
 
 if __name__ == "__main__":  # i.e if not imported as a module 
     print(f"Running at {str(datetime.datetime.now())}.")
     print(f"CSV_PATH: {CSV_PATH}") 
     print(f"RECIPIENTS: {RECIPIENTS}")
     print(f"CLEAR_CSV: {CLEAR_CSV}")
+    print()
 
     errors = False 
     try: 
-        csv_to_pdf.main(CSV_PATH, "settings.json") 
+        csv_to_pdf.main(CSV_PATH, SETTINGS_PATH) 
     except Exception as e : 
         print("Exception occured making pdf.")
         errors = True 
-        print(e)
+        print(e.with_traceback())
     try: 
         email_pdf.main("orders.pdf", RECIPIENTS)  
     except Exception as e: 
         print("Exception occured emailing pdf.")
         errors = True 
-        print(e) 
+        print(e.with_traceback()) 
+
+    print()
 
     #Counts the number of orders in csv file and places in history.csv. 
     with open(CSV_PATH) as f:
@@ -46,7 +50,6 @@ if __name__ == "__main__":  # i.e if not imported as a module
     
     with open("history.csv", "a") as f: 
         f.write(f"{datetime.date.today()}, {order_count}\n") 
-
 
     if CLEAR_CSV: 
         #Clears all but first line (header) of csv file 
@@ -56,6 +59,8 @@ if __name__ == "__main__":  # i.e if not imported as a module
         with open(CSV_PATH, 'w') as f:
             f.write(header) 
         print(f"Cleared {CSV_PATH}.")
+
+    print()
 
     if errors: 
         print(f"Tasks finished with errors. \n") 
