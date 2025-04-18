@@ -7,38 +7,61 @@ THIS SCRIPT NEEDS TO BE RUN FROM ITS CONTAINING DIRECTORY.
 Written March 2025.''' 
 
 import datetime 
+import traceback 
 
+import sort_csv 
 import csv_to_pdf 
 import email_pdf 
 
-CSV_PATH = "../layout/sub-orders.csv" 
+#CSV_PATH = "../layout/sub-orders.csv" 
+CSV_PATH = "./orders.csv" 
+SORT_CSV = True 
 RECIPIENTS = [
-    "EMAIL REMOVED", 
+    "EMAIL REMOVED",  # placeholders 
     "EMAIL REMOVED",
     "EMAIL REMOVED", 
     "EMAIL REMOVED",
 ]
 CLEAR_CSV = True 
+SETTINGS_PATH = "./settings.json"
 
 if __name__ == "__main__":  # i.e if not imported as a module 
-    print(f"Running at {str(datetime.datetime.now())}.")
+    print(f"Running at {str(datetime.datetime.now())}.") 
     print(f"CSV_PATH: {CSV_PATH}") 
+    print(f"SORT_CSV: {SORT_CSV}") 
     print(f"RECIPIENTS: {RECIPIENTS}")
     print(f"CLEAR_CSV: {CLEAR_CSV}")
+    print(f"SETTINGS_PATH: {SETTINGS_PATH}")
+    print()
 
     errors = False 
+
+    if SORT_CSV: 
+        try: 
+            sort_csv.main(CSV_PATH, ["PERIOD", "LAST"]) 
+        except Exception as e: 
+            print("Exception occured sorting csv.")
+            errors = True 
+            traceback.print_exc()   
+            print() 
+
     try: 
-        csv_to_pdf.main(CSV_PATH, "settings.json") 
+        csv_to_pdf.main(CSV_PATH, SETTINGS_PATH) 
     except Exception as e : 
         print("Exception occured making pdf.")
         errors = True 
-        print(e)
+        traceback.print_exc() 
+        print()
+
     try: 
         email_pdf.main("orders.pdf", RECIPIENTS)  
     except Exception as e: 
         print("Exception occured emailing pdf.")
         errors = True 
-        print(e) 
+        print("Uh-oh")
+        traceback.print_exc()  
+        print()
+
 
     #Counts the number of orders in csv file and places in history.csv. 
     with open(CSV_PATH) as f:
@@ -46,7 +69,6 @@ if __name__ == "__main__":  # i.e if not imported as a module
     
     with open("history.csv", "a") as f: 
         f.write(f"{datetime.date.today()}, {order_count}\n") 
-
 
     if CLEAR_CSV: 
         #Clears all but first line (header) of csv file 
@@ -57,7 +79,9 @@ if __name__ == "__main__":  # i.e if not imported as a module
             f.write(header) 
         print(f"Cleared {CSV_PATH}.")
 
+    print()
+
     if errors: 
-        print(f"Tasks finished with errors. \n") 
+        print(f"Tasks finished with errors at {str(datetime.datetime.now())}. \n") 
     else: 
-        print(f"Tasks completed. \n") 
+        print(f"Tasks completed at {str(datetime.datetime.now())}. \n") 
