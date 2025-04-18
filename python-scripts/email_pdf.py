@@ -6,7 +6,8 @@ for ssl; it is best left as is.
 
 Currently set up to use a STMP server at UAHS. This 
 requires no login as long as one is on the school Wi-Fi.
-(if outside of school, a socket.gaierror occurs).
+(if outside of school, a socket.gaierror occurs or, after 
+a time, an OSError saying the network is unreachable).
 
 Written January 2025.'''  
 
@@ -53,9 +54,11 @@ def main(pdf_file, recipients, oauth_file=''):
     )
     message.attach(part) 
 
-    
+    print("here we go")
+
     #context = ssl.create_default_context() #for encryption 
     with smtplib.SMTP(server_address, port) as server: 
+        print("getting there")
         #server.login(sender_email, password=input("sender password?")) #not secure, but also unused 
         try: 
             #There is no need to login if the connection is successfully made. 

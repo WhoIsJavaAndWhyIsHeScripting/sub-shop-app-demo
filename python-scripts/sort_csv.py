@@ -1,4 +1,5 @@
 '''Sorts a CSV file's rows in place by the contents of specified fields.
+The order of the fields indicates their priority. 
 
 Written April 2025. '''
 
