@@ -16,12 +16,13 @@ html {
 .headerbar {
     position: fixed;
     top: 0;
+    left: 0;
     display: flex;
     background-color: var(--ua-gold);
     padding: 5px;
     width: 100%;
     font-weight: 500;
-    font-size: 1.2em;
+    font-size: 1.75em;
     align-items: center;
 }
 /* get rid of default link styles for header bar */
@@ -32,7 +33,7 @@ html {
 }
 
 .headerbar img {
-    height: 40px;
+    height: 80px;
     clip-path: circle();
     margin: 5px;
 }

@@ -36,6 +36,34 @@ body {
     clip-path: circle();
     margin: 5px;
 }
+/* navigation buttons */
+.navbutton {
+   display: block;
+   background-color: white;
+   color: var(--ua-teal);
+   border: solid 5px var(--ua-gold);
+   width: 60%;
+   margin: 20px auto;
+   padding: 6vh 2vh;
+   border-radius: 10px;
+   text-align: center;
+   font-weight: 500;
+   font-size: 24px;
+   box-shadow: 0px 5px 5px lightgray;
+}
+/* button changes color with 
+transition when you hover */
+.navbutton:hover {
+   background-color: var(--ua-teal);
+   transition: 0.1s;
+   color: var(--ua-gold);
+   border-color: black;
+}
+/* transition when you stop hovering */
+.navbutton:not(:hover) {
+   transition: 0.1s;
+}
+
 /* added from internal css */
 
 hr {
@@ -132,6 +160,9 @@ h1 {
 p {
    padding: 10px;
    border-bottom: solid 1px gray;
+}
+a {
+   color: var(--ua-teal);
 }
 
 #goBackButton {

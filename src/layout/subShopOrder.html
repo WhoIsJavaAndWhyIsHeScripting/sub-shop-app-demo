@@ -4,6 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel = "stylesheet" type = "text/css" href = "/main-pages-css">
+<!--add in Montserrat font, font used on the uaschools website-->
+<link rel="preconnect" href="https://fsonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 <style>
     @media (scripting: none){
         .myButton[id="proceed"] {
@@ -23,7 +27,7 @@
 </script>
 <body>
     <header>
-        <div class="headerbar"><img src="../assets/bearbiteslogo.png"><a href="subShopFront.html">Bear Bites!</a></div>
+        <div class="headerbar"><img src="../assets/bearbiteslogo.png"><a href="subShopFront.html">Bear Bites</a></div>
      </header>
 <div class = "box">
 <br><br>
@@ -276,7 +280,7 @@
    </script>
    <div class="flex">
      <button class="myButton" id="proceed" style="float: left;" onclick="loadSummary()" type="button"><strong>Review Order</strong></button>
-     <button class="myButton"><a style="text-decoration: none; color: white;"><strong>Return to Homepage!</strong></a></button>
+     <a class="myButton" style="text-decoration: none; color: white; width: 40%;" href="/"><strong>Return to Homepage!</strong></a></button>
    </div>
    </div>
    <div class="flex">
@@ -297,7 +301,7 @@
          var baseText = "";
          var len = findChecked('input[name="inch"]');
          var base = findChecked('input[name="bread"]');
-         if (base == "Salad") {
+         if (base == "Salad" || base == "None") {
             baseText = `\nBase: ${base}`;
          } else {
             baseText = `\nBase: ${len} ${base}`;
@@ -344,6 +348,9 @@
                
             }
          })
+         if (buttonchecked == "") {
+            buttonchecked = "None";
+         }
          return buttonchecked;
       }
    </script>
