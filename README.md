@@ -5,17 +5,22 @@ Welcome to the SubShopApp project!
 
 <img src="./assets/bearbiteslogo.png" height="100"> 
 
-This repository and Gitlab project contains the code for a web application for ordering sub sandwiches from the Bear Bites shop at UAHS. This code is run on a school server, which is only accessable (if running) on UACS wi-fi. 
+This repository and Gitlab project contains the code for a web application for ordering sub sandwiches from the Bear Bites shop at UAHS. This code is run on a school server, which is only accessible (if running) on UACS wi-fi. 
 
 ## Overview 
 
 This application is mostly written in Node.js, a Javascript runtime. This handles GET (request for a webpage, usually) and POST (incoming orders, usually) requests to the server. 
 
---Finish this section-- 
+For now, our data (orders as well as admin settings) is stored in plain text in a csv format for the sake of simplicity. This will likely change later on.
 
 ## File Structure 
 
---Finish this section-- 
+layout - the folder for all of our frontend stuff. This includes HTML, CSS and frontend JS files. Our 3 main pages visible to users are in the top level folder. 
+    admin-page - the folder for the three admin pages.
+    styles - this is where we put any CSS that isn't specific to one page.
+assets - this is where we keep our images.
+python-scripts - this is where all our python is contained, which handles turning the CSV order data into a PDF and emailing it.
+app.js - this is where our server is. This is where routing and form validation are handled.
 
 ## Resources 
 
@@ -35,7 +40,10 @@ This application is mostly written in Node.js, a Javascript runtime. This handle
 
 ## Contact 
 
---Finish this section--
+EMAIL REMOVED - Charlie, project manager. 
+If you have questions/need help with anything, you can contact me. I contributed a lot to the frontend stuff (helped with pretty
+much everything in the layout folder) and the routing and form
+handling in app.js. I probably won't be able to help with https
+or anything in python-scripts. 
 
-
-
+-- Finish --
