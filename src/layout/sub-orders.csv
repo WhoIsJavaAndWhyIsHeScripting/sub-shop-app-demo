@@ -1,13 +1,4 @@
-TIME,EMAIL,FIRST,LAST,LENGTH,BREAD,PROTEIN1,PROTEIN2,CHEESE,CHEESE2
-3/26/2025, 1:36:11 PM,12,white,bacon,swiss,jalapenos,ranch
-4/1/2025, 7:40:10 AM,undefined,salad,bacon,honey_ham,pepperoni,green_peppers,mayo
-4/1/2025, 9:22:49 AM,undefined,undefined,undefined,undefined,undefined
-4/1/2025, 9:36:42 AM,undefined,undefined,undefined,undefined,undefined
-4/2/2025, 9:58:46 AM,6,wheat,undefined,undefined,undefined,undefined,undefined
-4/2/2025, 12:30:35 PM,12,wheat,bacon,undefined,undefined
-4/2/2025, 12:44:04 PM,4th,6,wheat,bacon,onions
-4/4/2025, 12:08:48 AM,4th,6,white,bacon,american,pickles,ranch
-4/7/2025, 3:31:22 PM,5th,12,white,bacon,honey_ham,pepperoni,onions,cucumbers,tomatoes,olives,spinach,lettuce,pickles,jalapenos,green_peppers,hummus,banana_peppers,hot_sauce,ranch,mayo
-4/7/2025, 3:31:56 PM,4th,6,wheat
-4/7/2025, 3:38:28 PM,4th,6,wheat,american,hot_pepper,green_peppers,mayo
-4/16/2025, 7:26:18 AM,12,undefined,pepperoni,hot_pepper,olives,spinach,undefined
+TIME LENGTH BREAD PROTEIN TOPPINGS CONDIMENTS
+4/20/2025, 12:25:47 PM	6	wheat	pepperoni,american,swiss	pickles	banana_peppers4/20/2025, 12:26:35 PM	12	wheat	pepperoni,swiss,hot_pepper	lettuce,green_peppers	banana_peppers
+4/20/2025, 12:27:43 PM	12	wheat	oven_roasted_turkey,american	tomatoes,spinach	banana_peppers
+4/20/2025, 2:45:30 PM;6;wheat;honey_ham,swiss,cheddar;lettuce,jalapenos;hot_sauce,ranch
