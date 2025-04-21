@@ -48,7 +48,7 @@ much everything in the layout folder) and the routing and form
 handling in app.js. I probably won't be able to help with https
 or anything in python-scripts. 
 
-reinhardt.1@uaschools - Evan, worked with the backend.  
+EMAIL REMOVED - Evan, worked with the backend.  
 Contact me as backup. I contributed to the Python scripts as well some client-side Javascript. I can't help much with Node or the most of the front end. 
 
 -- Finish --
