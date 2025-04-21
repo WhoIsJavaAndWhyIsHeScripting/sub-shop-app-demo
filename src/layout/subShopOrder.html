@@ -50,7 +50,7 @@
                         <input type="radio" name="period" value="5th"> 5th Period Lunch
                     </label>
                 </fieldset>
-    <fieldset>
+            <fieldset>
         
         
         <legend>Length Type</legend>
@@ -75,19 +75,35 @@
            <input type="radio" id="salad" name="bread" value="Salad"> Salad</label>
        </label>
    </fieldset>
-   </td><td>
+    <fieldset>
+        <legend>Do you want your sub toasted?</legend>
+        <label>
+            <input type="radio" id="toasted" name="toasted" value="Toasted">Yes</label>
+        </label><br>
+        <label>
+            <input type="radio" id="not-toasted" name="toasted" value="Not Toasted">No</label>
+        </label>
+    </fieldset>
+    </td><td>
    <script>
     var breads = document.getElementsByName("bread");
     breads.forEach((bread) => {
         bread.addEventListener("change", () => {
+            // disable options for length and toasting if "salad" is checked as base
             if (document.getElementById("salad").checked) {
                 document.getElementById("6-inch").checked = false;
                 document.getElementById("6-inch").disabled = true;
                 document.getElementById("12-inch").checked = false;
                 document.getElementById("12-inch").disabled = true;
+                document.getElementById("toasted").disabled = true;
+                document.getElementById("toasted").checked = false;
+                document.getElementById("not-toasted").disabled = true;
+                document.getElementById("not-toasted").checked = false;
             } else {
                 document.getElementById("6-inch").disabled = false;
                 document.getElementById("12-inch").disabled = false;
+                document.getElementById("toasted").disabled = false;
+                document.getElementById("not-toasted").disabled = false;
             }
         })
     })
@@ -156,6 +172,24 @@
         event.preventDefault(); 
         valid = false; 
     }
+    // if user selects a bread, they need to pick a length and whether they want it toasted
+    var white = document.getElementById("white-bread");
+    var wheat = document.getElementById("wheat-bread");
+    var inches = document.getElementsByName("inch");
+    var toast = document.getElementsByName("toasted");
+    if ((white.checked == true || wheat.checked == true)) {
+        if (inches[0].checked == false && inches[1].checked == false) {
+            alert("Please select a length for your sub."); 
+            event.preventDefault(); 
+            valid = false; 
+        }
+        if (toast[0].checked == false && toast[1].checked == false) {
+            alert("Please indicate whether you want your sub toasted."); 
+            event.preventDefault(); 
+            valid = false; 
+        }
+    }
+
 
     //Check meats and cheeses 
     var total = countMeatsAndCheeses();
@@ -163,14 +197,9 @@
         alert("You may only select a total of three meats and cheeses. You have "+total.toString()+"."); 
         event.preventDefault(); //prevents form submission 
         valid = false; 
-    } else {
-        //Reminds the user that length is ignored when selecting a salad. 
-        const salad = document.querySelector('input[value="salad"]');  
-        const lengths = document.querySelectorAll('input[name="inch"]'); 
-        if (salad.checked && (lengths[0].checked || lengths[1].checked)) {
-            alert("Length is ignored for salads. \n(No 12 inch salads!)");
-        } 
-    }
+    } 
+
+
 
     //Finally, it thanks the user and reminds them when they can pick it up.
     if (valid == true) {
@@ -187,7 +216,7 @@
             alert("You must select a period to pick up.")
             return; 
         }
-        alert("Thank you for your order! \n Please remember to pick up your sandwich during "+period+"th period lunch.");
+        alert("Thank you for your order! \n Please remember to pick up your sandwich during "+period+" period lunch.");
     }
     }); 
    
@@ -308,10 +337,13 @@
          var baseText = "";
          var len = findChecked('input[name="inch"]');
          var base = findChecked('input[name="bread"]');
-         if (base == "Salad" || base == "None") {
+         var toast = findChecked('input[name="toasted"]');
+         if (base == "Salad" || base == "None" || len == "None") {
             baseText = `\nBase: ${base}`;
-         } else {
+         } else if (toast == "No") {
             baseText = `\nBase: ${len} ${base}`;
+         } else {
+            baseText = `\nBase: Toasted ${len} ${base}`;
          }
          var protein = findChecked('input[name="protein"]');
          var toppings = findChecked('input[name="veggies"]');
