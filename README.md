@@ -27,11 +27,11 @@ For now, our data (orders as well as admin settings) is stored in plain text in 
 - [https://ww.w3schools.com/](https://www.w3schools.com/) good tutorials for HTML, CSS and Javascript.
 Stack Overflow - Great website if you're stuck. If you have a bug, someone else here has probably already had the same problem and knows how to fix it.
 Google - this will literally be your most useful resource as a developer. Paste your error messages in here. Search up dumb questions about your language of choice. Try to find a function that does something specific. Literally almost ANY question you have can be answered online. IT'S NOT CHEATING. USE IT.  
-- [https://docs.python.org/3/](https://docs.python.org/3/) Probably not the best place to learn Python, but if you need to reference a function or module's documentations, this is the place to go  (for the package that makes the PDFs, see [https://docs.reportlab.com/reportlab/userguide/ch1_intro/](https://docs.reportlab.com/reportlab/userguide/ch1_intro/)).
+- [https://docs.python.org/](https://docs.python.org/) Probably not the best place to learn Python, but if you need to reference a function or module's documentations, this is the place to go  (for the package that makes the PDFs, see [https://docs.reportlab.com/reportlab/userguide/ch1_intro/](https://docs.reportlab.com/reportlab/userguide/ch1_intro/)).
 
 ## Contributing 
 
-1. First, you will need access to this Gitlab project (which, if you are reading this, you probably alread have). 
+1. First, you will need access to this Gitlab project (which, if you are reading this, you probably already have). 
 2. Install Git if you do not have it already. 
 3. Download a IDE that has Git support (Visual Studio Code is good choice). 
 4. In Gitlab, go to "Edit Profile" and then "Access Tokens." Make a new token with all priviliges/scopes. 
