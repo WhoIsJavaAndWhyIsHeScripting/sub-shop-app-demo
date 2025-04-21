@@ -129,10 +129,17 @@ app.post('/order-submit', (req, res) => {
   var dateAndTime = time.toLocaleString("en-US");
   var inch = req.body.inch;
   var bread = req.body.bread;
+  var toasted = req.body.toasted;
   var protein = req.body.protein;
   var toppings = req.body.veggies;
   var sauces = req.body.condiments;
-  fs.appendFile(path.join(__dirname, "layout", "sub-orders.csv"), `\n${dateAndTime};${inch};${bread};${protein};${toppings};${sauces}`, () => {
+  var arrayize = [inch, bread, toasted, protein, toppings, sauces];
+  for (let i = 0; i < arrayize.length; i++) {
+    if ("" + arrayize[i] == "undefined") {
+      arrayize[i] = "None";
+    }
+  }
+  fs.appendFile(path.join(__dirname, "layout", "sub-orders.csv"), `\n${dateAndTime};${arrayize[0]};${arrayize[1]};${arrayize[2]};${arrayize[3]};${arrayize[4]};${arrayize[5]}`, () => {
     res.redirect('/');
   })
 })
