@@ -26,7 +26,8 @@ For now, our data (orders as well as admin settings) is stored in plain text in 
 - [https://developer.mozilla.org/en-US/](https://developer.mozilla.org/en-US/) fantastic tutorials for javascript, node.js, and basically anything frontend related.
 - [https://ww.w3schools.com/](https://www.w3schools.com/) good tutorials for HTML, CSS and Javascript.
 Stack Overflow - Great website if you're stuck. If you have a bug, someone else here has probably already had the same problem and knows how to fix it.
-Google - this will literally be your most useful resource as a developer. Paste your error messages in here. Search up dumb questions about your language of choice. Try to find a function that does something specific. Literally almost ANY question you have can be answered online. IT'S NOT CHEATING. USE IT.
+Google - this will literally be your most useful resource as a developer. Paste your error messages in here. Search up dumb questions about your language of choice. Try to find a function that does something specific. Literally almost ANY question you have can be answered online. IT'S NOT CHEATING. USE IT.  
+- [https://docs.python.org/3/](https://docs.python.org/3/) Probably not the best place to learn Python, but if you need to reference a function or module's documentations, this is the place to go  (for the package that makes the PDFs, see [https://docs.reportlab.com/reportlab/userguide/ch1_intro/](https://docs.reportlab.com/reportlab/userguide/ch1_intro/)).
 
 ## Contributing 
 
