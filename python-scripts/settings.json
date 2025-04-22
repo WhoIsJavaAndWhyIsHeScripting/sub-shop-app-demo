@@ -8,6 +8,6 @@
     "xmargin" : 0.1563,
     "ymargin" : 0.7500,   
     "xpadding" : 0.5000, 
-    "ypadding" : 0.2500 
-    
+    "ypadding" : 0.2500, 
+    "csv_delimiter" : ";", 
 }
