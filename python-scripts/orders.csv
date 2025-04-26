@@ -1,13 +1,13 @@
-TIME,EMAIL,FIRST,LAST,LENGTH,BREAD,PROTEIN1,PROTEIN2,CHEESE,CHEESE2
-11/26/2024 09:29:33,soandso@someschool.org,So,AndSo,6,White,Turkey,Ham,American
-11/26/2024 09:29:44,EMAIL REMOVED,Alice,Alpha,12,Wheat,Turkey,,Swiss
-11/26/2024 10:30:07,EMAIL REMOVED,Bob,Beta,12,Wheat,Salami,,Swiss
-11/26/2024 10:30:20,EMAIL REMOVED,CSV,TSV,,Salad,Pepperoni,,Provolone
-11/26/2024 10:30:48,EMAIL REMOVED,Bread,Butter,6,White,Salami, Pepperoni,,Pepper
-11/26/2024 08:32:00,EMAIL REMOVED,Evan,Reinhardt,6,White,Ham,,Shredded
-11/26/2024 07:35:00,EMAIL REMOVED,Who,IsThis,6,Wheat,Salami,,American,Swiss
-11/26/2024 10:35:00,EMAIL REMOVED,Space,Time,6,White,Ham,,Pepper
-11/26/2024 11:36:00,EMAIL REMOVED,Free,Time,6,White,Ham,,Swiss
-11/26/2024 09:48:01,EMAIL REMOVED,No,Time,12,White,Pepperoni,,American
-11/26/2024 12:35:00,okay@noschool.org,Just,Okay,12,Wheat,Salami,Ham,Pepper,Shredded
-11/26/2024 09:50:47,EMAIL REMOVED,Little,Foot,,Salad,Turkey,,Provolone
+TIME,EMAIL,PERIOD,FIRST,LAST,LENGTH,BREAD,PROTEIN1,PROTEIN2,CHEESE,CHEESE2
+11/26/2024 09:29:33,soandso@someschool.org,4,So,AndSo,6,White,Turkey,Ham,American
+11/26/2024 07:35:00,EMAIL REMOVED,4,Who,IsThis,6,Wheat,Salami,,American,Swiss
+11/26/2024 10:35:00,EMAIL REMOVED,4,Space,Time,6,White,Ham,,Pepper
+11/26/2024 11:36:00,EMAIL REMOVED,4,Free,Time,6,White,Ham,,Swiss
+11/26/2024 09:50:47,EMAIL REMOVED,4,Little,Foot,,Salad,Turkey,,Provolone
+11/26/2024 09:29:44,EMAIL REMOVED,5,Alice,Alpha,12,Wheat,Turkey,,Swiss
+11/26/2024 10:30:07,EMAIL REMOVED,5,Bob,Beta,12,Wheat,Salami,,Swiss
+11/26/2024 10:30:20,EMAIL REMOVED,5,CSV,TSV,,Salad,Pepperoni,,Provolone
+11/26/2024 10:30:48,EMAIL REMOVED,5,Bread,Butter,6,White,Salami, Pepperoni,,Pepper
+11/26/2024 08:32:00,EMAIL REMOVED,5,Evan,Reinhardt,6,White,Ham,,Shredded
+11/26/2024 12:35:00,okay@noschool.org,5,Just,Okay,12,Wheat,Salami,Ham,Pepper,Shredded
+11/26/2024 09:48:01,EMAIL REMOVED,6,No,Time,12,White,Pepperoni,,American
