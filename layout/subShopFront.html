@@ -4,10 +4,26 @@
 <meta charset = "utf-8">
 <meta name = "viewport" content = "width=device-width, initial-scale = 1.0">
 <link rel = "stylesheet" type = "text/css" href = "/main-pages-css">
-<script src = "functions.js"></script>
+<script>
+	import {getAuth, GoogleAuthProvider, signInWithRedirect} from "firebase/auth";
+    async function googleAuth() {
+	window.alert("yea");
+        const auth = getAuth();
+	const provider = new GoogleAuthProvider();
+	signInWithRedirect(auth, provider)
+	    .then((result) => {
+		const credential = GoogleAuthProvider.credentialFromResult(result);
+		const token = credential.accessToken;
+
+		const user = result.user;
+		window.alert(user.displayName);
+	    }).catch((error) =. {
+		window.alert("no");
+	    });
+    }
+</script>
 </head>
 <body>
-    <script>window.onload(authWithGoogle())</script>
    <header>
       <div class="headerbar"><img src="../assets/bearbiteslogo.png"><a href="/">Bear Bites</a></div>
    </header>
@@ -28,7 +44,7 @@
 <br>
 <hr>
 <br>
-<button class="myButton">
+<button class="myButton" onclick="googleAuth()">
    <a href="/order" class="myButton"><strong>Order Your Sub Now!</strong></a>
 </button>
 </main>

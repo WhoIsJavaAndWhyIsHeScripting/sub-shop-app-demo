@@ -1,9 +1,10 @@
 import {getAuth, signOut, GoogleAuthProvider, signInWithRedirect} from "firebase/auth";
 
-async function authWithGoogle() {
+function authWithGoogle() {
     const auth = getAuth();
     const provider = new GoogleAuthProvider();
-
+	alert("run");
+	google.accounts.id.prompt();
     // Start sign in for unauthenticated user, triggers a page redirect
     signInWithRedirect(auth, provider)
         .then((result) => {
@@ -13,12 +14,14 @@ async function authWithGoogle() {
 
             // The signed-in user info
             const user = result.user;
-            console.log(user.displayName);
+            window.alert(user.displayName);
         }).catch((error) => {
         // Handle errors here
-
+	window.alert("no");
     });
 }
+
+function get
 
 function createGoogleButton(){
     function handleCredentialResponse(response){

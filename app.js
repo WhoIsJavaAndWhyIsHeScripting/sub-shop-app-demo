@@ -1,12 +1,12 @@
 const express = require('express');
-const { check } = require('express-validator');
+//const { check } = require('express-validator');
 const fs = require('fs');
 const app = express();
 const path = require('path');
-const https = require('http');
+const http = require('http');
 const credentials = {
-    key: fs.readFileSync('./privkey.pem', 'utf-8'), 
-    cert: fs.readFileSync('./fullchain.pem', 'utf-8'),
+    key: fs.readFileSync('privkey.pem', 'utf-8'), 
+    cert: fs.readFileSync('fullchain.pem', 'utf-8'),
 };
 
 // Serve static files from the 'public' folder
@@ -155,7 +155,6 @@ app.post('/order-submit', (req, res) => {
 })
 // check if a value is undefined, then remove it
 // Start the server
-<<<<<<< HEAD:app.js
 http.createServer(credentials, app).listen(3000, "localhost", () => {
     console.log('Server listening on port 3000');
 });
