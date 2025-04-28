@@ -21,6 +21,8 @@ RECIPIENTS = [
     "EMAIL REMOVED",
     "EMAIL REMOVED", 
     "EMAIL REMOVED",
+    "EMAIL REMOVED", 
+    "EMAIL REMOVED", 
 ]
 CLEAR_CSV = True 
 SETTINGS_PATH = "./settings.json"
