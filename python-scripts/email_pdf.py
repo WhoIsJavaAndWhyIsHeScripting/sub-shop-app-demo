@@ -28,8 +28,8 @@ from email.mime.text import MIMEText
 def main(pdf_file, recipients, oauth_file=''): 
     #Configuration for the SMTP server. 
     port = 25  
-    server_address = "smtp.uaschools.org" 
-    sender_email = "EMAIL REMOVED"
+    server_address = "localhost" 
+    sender_email = "subshopapp@subshop-dev.uaschools.io"
 
     date = datetime.date.today().strftime("%B %d, %Y")
     subject = f"Bear Bites Orders for {date}"
