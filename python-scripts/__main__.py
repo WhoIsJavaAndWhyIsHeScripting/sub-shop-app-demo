@@ -13,8 +13,8 @@ import sort_csv
 import csv_to_pdf 
 import email_pdf 
 
-#CSV_PATH = "../layout/sub-orders.csv" 
-CSV_PATH = "./orders.csv" 
+CSV_PATH = "../layout/sub-orders.csv" 
+#CSV_PATH = "./orders.csv" 
 SORT_CSV = True 
 RECIPIENTS = [
     "EMAIL REMOVED",  # placeholders 
