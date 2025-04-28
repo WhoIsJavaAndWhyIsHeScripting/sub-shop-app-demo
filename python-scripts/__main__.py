@@ -20,7 +20,9 @@ RECIPIENTS = [
     "EMAIL REMOVED",  # placeholders 
     "EMAIL REMOVED",
     "EMAIL REMOVED", 
-    "EMAIL REMOVED",
+    "EMAIL REMOVED", 
+    "EMAIL REMOVED", 
+    "EMAIL REMOVED", 
 ]
 CLEAR_CSV = True 
 SETTINGS_PATH = "./settings.json"
@@ -69,6 +71,8 @@ if __name__ == "__main__":  # i.e if not imported as a module
     
     with open("history.csv", "a") as f: 
         f.write(f"{datetime.date.today()}, {order_count}\n") 
+
+    print(f"There were {order_count} order(s) in the CSV file.") 
 
     if CLEAR_CSV: 
         #Clears all but first line (header) of csv file 
