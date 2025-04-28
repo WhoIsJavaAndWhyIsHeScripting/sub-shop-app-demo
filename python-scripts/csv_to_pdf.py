@@ -5,6 +5,8 @@ from a CSV to a printable PDF.
 (Uses reportlab to create the pdf; target template is Avery Presta 9
 4215 w/ 6 labels per page)
 
+A settings file is used to read the CSV and make the PDF. 
+
 Written November 2024. 
 '''
 
@@ -39,7 +41,7 @@ def main(csv_file, settings_file, debug=False):
     settings = get_settings(settings_file)
 
     with open(csv_file) as f: 
-        reader = csv.DictReader(f) 
+        reader = csv.DictReader(f, delimiter=settings["csv_delimiter"]) 
         headers = reader.fieldnames
         i = 0 
         for row in reader: 
