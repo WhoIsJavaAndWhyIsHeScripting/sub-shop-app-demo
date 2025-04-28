@@ -42,27 +42,36 @@ if __name__ == "__main__":  # i.e if not imported as a module
         try: 
             sort_csv.main(CSV_PATH, ["PERIOD", "LAST"]) 
         except Exception as e: 
+            print() 
             print("Exception occured sorting csv.")
             errors = True 
             traceback.print_exc()   
             print() 
+        else: 
+            print("Sorted CSV file.") 
 
     try: 
         csv_to_pdf.main(CSV_PATH, SETTINGS_PATH) 
-    except Exception as e : 
+    except Exception as e: 
+        print() 
         print("Exception occured making pdf.")
         errors = True 
         traceback.print_exc() 
-        print()
+        print() 
+    else: 
+        print("Made PDF.")
 
     try: 
         email_pdf.main("orders.pdf", RECIPIENTS)  
     except Exception as e: 
+        print() 
         print("Exception occured emailing pdf.")
         errors = True 
         print("Uh-oh")
         traceback.print_exc()  
-        print()
+        print() 
+    else: 
+        print("Emailed PDF.")
 
 
     #Counts the number of orders in csv file and places in history.csv. 
