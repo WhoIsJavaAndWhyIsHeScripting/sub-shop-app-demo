@@ -44,11 +44,7 @@
 <br><br>
 <h1>Order A Sub for Today's Lunch</h1>
 <hr>
-<<<<<<<< HEAD:layout/subShopOrder.html
-<form action="/order-submit" method="POST" novalidate> 
-========
 <form action="/order-submit" method="POST" novalidate>
->>>>>>>> order-to-csv:src/layout/subShopOrder.html
    <!--this div contains the form minus the submit button, it will be
    replaced with the order summary-->
     <div id="the-form">
@@ -65,13 +61,7 @@
                         <input type="radio" name="period" value="5th"> 5th Period Lunch
                     </label>
                 </fieldset>
-<<<<<<<< HEAD:layout/subShopOrder.html
     <fieldset>
-========
-            <fieldset>
-        
-        
->>>>>>>> order-to-csv:src/layout/subShopOrder.html
         <legend>Length Type</legend>
         <label>
             <input type="radio" id="6-inch" name="inch" value="6"> 6 Inch</label>
@@ -170,11 +160,6 @@
            <input type="checkbox" id="shredded-cheddar" name="protein" value="Shredded Cheddar Cheese"> Shredded Cheddar
        </label>
    </fieldset> 
-<<<<<<<< HEAD:layout/subShopOrder.html
-   </td>
-   <td>
-========
-
    </td><td>
    <!---Javascript verifying that meats and cheeses total to three.-->
    <script> 
@@ -256,9 +241,6 @@
    }
 
    </script> 
-
-
->>>>>>>> order-to-csv:src/layout/subShopOrder.html
    <!-- Veggie Options -->
    <fieldset>
        <legend>Vegetable Options</legend>
@@ -289,6 +271,9 @@
        <label>
            <input type="checkbox" id="green-peppers" name="veggies" value="Green Peppers"> Green Peppers
        </label><br>
+       <label>
+        <input type="checkbox" id="banana-peppers" name="condiments" value="Banana Peppers"> Banana Peppers
+      </label><br>
    </fieldset>
    </td><td>
    <!-- Condiment Options -->
@@ -296,9 +281,6 @@
        <legend>Condiment Options</legend>
        <label>
            <input type="checkbox" id="hummus" name="condiments" value="Hummus"> Hummus
-       </label><br>
-       <label>
-           <input type="checkbox" id="banana-peppers" name="condiments" value="Banana Peppers"> Banana Peppers
        </label><br>
        <label>
            <input type="checkbox" id="hot-sauce" name="condiments" value="Hot Sauce"> Hot Sauce
@@ -332,7 +314,6 @@
             })
         })
    </script>
-<<<<<<<< HEAD:layout/subShopOrder.html
    <!--Adding type="button" prevents a button from submitting the form.-->
    <button class="myButton" id="proceed" style="float: left;" onclick="loadSummary()" type="button"><strong>Review Order</strong></button>
    <button class="myButton" type="button"><a style="text-decoration: none; color: white;" href="/"><strong>Return to Homepage!</strong></a></button>
@@ -340,7 +321,6 @@
    <div style = "display: flex; justify-content: space-around; margin: 10px;">
         <label><input id="submit" type="submit" value="Submit" class="submit" style="visibility: hidden"/></label>
       <a id="goBack"></a>
-========
    <div class="flex">
      <button class="myButton" id="proceed" style="float: left;" onclick="responsiveSummary()" type="button"><strong>Review Order</strong></button>
      <a class="myButton" style="text-decoration: none; color: white; width: 40%;" href="/"><strong>Return to Homepage!</strong></a></button>
@@ -349,16 +329,12 @@
    <div class="flex">
       <a id="submitButton" class="end"><input id="submit" type="submit" class="submit" value="Submit" style="visibility: hidden"/></a>
       <a id="goBack" class="end"></a>
->>>>>>>> order-to-csv:src/layout/subShopOrder.html
    </div>
    <script>
     // fix when clicking proceed button twice, displays double everything
     var loaded = false;
-<<<<<<<< HEAD:layout/subShopOrder.html
-
     //Shows a summary of the order. 
     function loadSummary() {
-========
       function responsiveSummary() {
         loadSummary();
         var checkboxes = document.querySelectorAll("input[type='checkbox'], input[type='radio']");
@@ -367,7 +343,6 @@
         })
       }
       function loadSummary() {
->>>>>>>> order-to-csv:src/layout/subShopOrder.html
         if (loaded == true) {
             document.getElementById("container").remove();
         }
@@ -445,24 +420,20 @@
          }
          return buttonchecked;
       }
+    }
    </script>
 
    <!--Only appears if there is no Javascript.-->
    <noscript> 
-<<<<<<<< HEAD:layout/subShopOrder.html
     <h4><i>Javascript is needed to submit this form.</i></h4>
-========
     <h4><i>Javascript is need to submit this form.</i></h4>
     <h4><i>Javascript is need to submit this form.</i></h4>
->>>>>>>> order-to-csv:src/layout/subShopOrder.html
    </noscript>
 
 
 
     <!---Javascript verifying that the form is filled logically and legally.-->
     <script> 
-    const form = document.querySelector("form"); 
- 
     form.addEventListener("submit", (event) => {
         //alert("Form being checked.")
          
@@ -522,7 +493,6 @@
                 valid = false;
             }
         }
- 
         //Check meats and cheeses (no more than 3 allowed)
         var total = countMeatsAndCheeses();
         if (total > 3) {
