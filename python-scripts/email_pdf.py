@@ -54,11 +54,11 @@ def main(pdf_file, recipients, oauth_file=''):
     )
     message.attach(part) 
 
-    print("here we go")
+    #print("here we go")
 
     #context = ssl.create_default_context() #for encryption 
     with smtplib.SMTP(server_address, port) as server: 
-        print("getting there")
+        #print("getting there")
         #server.login(sender_email, password=input("sender password?")) #not secure, but also unused 
         try: 
             #There is no need to login if the connection is successfully made. 
