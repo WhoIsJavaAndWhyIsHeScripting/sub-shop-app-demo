@@ -1,1 +1,3 @@
-TIME,EMAIL,FIRST,LAST,LENGTH,BREAD,PROTEIN1,PROTEIN2,CHEESE,CHEESE2
+TIME;LENGTH;BREAD;TOASTED;PROTEIN;TOPPINGS;CONDIMENTS
+4/21/2025, 1:35:53 PM;12;White Bread;Toasted;Pepperoni,American Cheese,Hot Pepper Cheese;undefined;Banana Peppers
+4/21/2025, 1:37:56 PM;12;White Bread;Toasted;None;None;Ranch
