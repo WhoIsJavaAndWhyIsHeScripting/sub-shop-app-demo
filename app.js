@@ -140,13 +140,14 @@ app.post('/order-submit', (req, res) => {
   var protein = req.body.protein;
   var toppings = req.body.veggies;
   var sauces = req.body.condiments;
-  var arrayize = [inch, bread, toasted, protein, toppings, sauces];
+  var email = document.cookie;
+  var arrayize = [email, inch, bread, toasted, protein, toppings, sauces];
   for (let i = 0; i < arrayize.length; i++) {
     if ("" + arrayize[i] == "undefined") {
       arrayize[i] = "None";
     }
   }
-  fs.appendFile(path.join(__dirname, "layout", "sub-orders.csv"), `\n${dateAndTime};${arrayize[0]};${arrayize[1]};${arrayize[2]};${arrayize[3]};${arrayize[4]};${arrayize[5]}`, () => {
+  fs.appendFile(path.join(__dirname, "layout", "sub-orders.csv"), `\n${dateAndTime};${arrayize[0]};${arrayize[1]};${arrayize[2]};${arrayize[3]};${arrayize[4]};${arrayize[5]};${arrayize[6]}`, () => {
     res.redirect('/');
   })
 })
