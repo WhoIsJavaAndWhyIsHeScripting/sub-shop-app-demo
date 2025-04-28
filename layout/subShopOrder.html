@@ -161,86 +161,7 @@
        </label>
    </fieldset> 
    </td><td>
-   <!---Javascript verifying that meats and cheeses total to three.-->
-   <script> 
-   const form = document.querySelector("form"); 
-
-   form.addEventListener("submit", (event) => {
-    var valid = true; 
-
-    //Check for a base 
-    var breads = document.getElementsByName("bread"); 
-    var bread_total = 0; 
-    for (let i=0; i < breads.length; ++i) {
-        if (breads[i].checked) {
-            bread_total++; 
-        }
-    }
-    if (bread_total == 0) {
-        alert("You must select a base (bread type)."); 
-        event.preventDefault(); 
-        valid = false; 
-    }
-    // if user selects a bread, they need to pick a length and whether they want it toasted
-    var white = document.getElementById("white-bread");
-    var wheat = document.getElementById("wheat-bread");
-    var inches = document.getElementsByName("inch");
-    var toast = document.getElementsByName("toasted");
-    if ((white.checked == true || wheat.checked == true)) {
-        if (inches[0].checked == false && inches[1].checked == false) {
-            alert("Please select a length for your sub."); 
-            event.preventDefault(); 
-            valid = false; 
-        }
-        if (toast[0].checked == false && toast[1].checked == false) {
-            alert("Please indicate whether you want your sub toasted."); 
-            event.preventDefault(); 
-            valid = false; 
-        }
-    }
-
-
-    //Check meats and cheeses 
-    var total = countMeatsAndCheeses();
-    if (total > 3) {
-        alert("You may only select a total of three meats and cheeses. You have "+total.toString()+"."); 
-        event.preventDefault(); //prevents form submission 
-        valid = false; 
-    } 
-
-
-
-    //Finally, it thanks the user and reminds them when they can pick it up.
-    if (valid == true) {
-        var periods = document.getElementsByName("period"); 
-        var period = ""; 
-        for (let i=0; i < periods.length; ++i) {
-            if (periods[i].checked) {
-                period = periods[i].value; 
-            }
-        }
-        if (period == "") {
-            event.preventDefault(); 
-            valid = false; 
-            alert("You must select a period to pick up.")
-            return; 
-        }
-        alert("Thank you for your order! \n Please remember to pick up your sandwich during "+period+" period lunch.");
-    }
-    }); 
-   
-   function countMeatsAndCheeses() {
-    var proteins = document.getElementsByName("protein"); 
-    var total = 0; 
-    for (let i=0; i < proteins.length; ++i) {
-        if (proteins[i].checked) {
-            total++; 
-        }
-    }
-    return total; 
-   }
-
-   </script> 
+   <script src="sub-order-form-fn.js"></script> 
    <!-- Veggie Options -->
    <fieldset>
        <legend>Vegetable Options</legend>
@@ -318,14 +239,6 @@
    <button class="myButton" id="proceed" style="float: left;" onclick="loadSummary()" type="button"><strong>Review Order</strong></button>
    <button class="myButton" type="button"><a style="text-decoration: none; color: white;" href="/"><strong>Return to Homepage!</strong></a></button>
    </div>
-   <div style = "display: flex; justify-content: space-around; margin: 10px;">
-        <label><input id="submit" type="submit" value="Submit" class="submit" style="visibility: hidden"/></label>
-      <a id="goBack"></a>
-   <div class="flex">
-     <button class="myButton" id="proceed" style="float: left;" onclick="responsiveSummary()" type="button"><strong>Review Order</strong></button>
-     <a class="myButton" style="text-decoration: none; color: white; width: 40%;" href="/"><strong>Return to Homepage!</strong></a></button>
-   </div>
-   </div>
    <div class="flex">
       <a id="submitButton" class="end"><input id="submit" type="submit" class="submit" value="Submit" style="visibility: hidden"/></a>
       <a id="goBack" class="end"></a>
@@ -340,7 +253,7 @@
         var checkboxes = document.querySelectorAll("input[type='checkbox'], input[type='radio']");
         checkboxes.forEach((checkbox) => {
             checkbox.addEventListener("change", loadSummary);
-        })
+        });
       }
       function loadSummary() {
         if (loaded == true) {
@@ -426,8 +339,6 @@
    <!--Only appears if there is no Javascript.-->
    <noscript> 
     <h4><i>Javascript is needed to submit this form.</i></h4>
-    <h4><i>Javascript is need to submit this form.</i></h4>
-    <h4><i>Javascript is need to submit this form.</i></h4>
    </noscript>
 
 
@@ -458,7 +369,6 @@
             alert("Thank you for your order! \n Please remember to pick up your sandwich during "+period+" period lunch.");
         }
      }); 
- 
     function countMeatsAndCheeses() {
         var proteins = document.getElementsByName("protein"); 
         var total = 0; 
