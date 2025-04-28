@@ -24,7 +24,7 @@ app.get('/order', (req, res) => {
 })
 // route for credits page
 app.get('/credits', (req, res) => {
-  res.sendFile(path.join(__dirname, 'layout', 'Credits.html'));
+  res.sendFile(path.join(__dirname, 'layout', 'credits-page.html'));
 })
 // Route for admin home
 app.get('/admin-home', (req, res) => {
@@ -136,20 +136,17 @@ app.post('/order-submit', (req, res) => {
   var lunchPeriod = req.body.period;
   var inch = req.body.inch;
   var bread = req.body.bread;
+  var toasted = req.body.toasted;
   var protein = req.body.protein;
   var toppings = req.body.veggies;
   var sauces = req.body.condiments;
-  var ingArray = [lunchPeriod, inch, bread, protein, toppings, sauces];
-  var csvRow = dateAndTime;
-  for (let i in ingArray) {
-    if (ingArray[i] != undefined) {
-        csvRow += "," + ingArray[i];
-      }
+  var arrayize = [inch, bread, toasted, protein, toppings, sauces];
+  for (let i = 0; i < arrayize.length; i++) {
+    if ("" + arrayize[i] == "undefined") {
+      arrayize[i] = "None";
     }
-    console.log(ingArray);
-    console.log(csvRow);
-
-  fs.appendFile(path.join(__dirname, "layout", "sub-orders.csv"), `\n${csvRow}`, () => {
+  }
+  fs.appendFile(path.join(__dirname, "layout", "sub-orders.csv"), `\n${dateAndTime};${arrayize[0]};${arrayize[1]};${arrayize[2]};${arrayize[3]};${arrayize[4]};${arrayize[5]}`, () => {
     res.redirect('/');
   })
 })

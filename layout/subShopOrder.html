@@ -4,8 +4,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel = "stylesheet" type = "text/css" href = "/main-pages-css">
-
-<link href="/main-pages-css" rel="stylesheet">
+<!--add in Montserrat font, font used on the uaschools website-->
+<link rel="preconnect" href="https://fsonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<style>
+    @media (scripting: none){
+        .myButton[id="proceed"] {
+            display: none; 
+        }
+    }
+</style>
 
 <style>
     @media (scripting: none){
@@ -35,7 +44,11 @@
 <br><br>
 <h1>Order A Sub for Today's Lunch</h1>
 <hr>
+<<<<<<<< HEAD:layout/subShopOrder.html
 <form action="/order-submit" method="POST" novalidate> 
+========
+<form action="/order-submit" method="POST" novalidate>
+>>>>>>>> order-to-csv:src/layout/subShopOrder.html
    <!--this div contains the form minus the submit button, it will be
    replaced with the order summary-->
     <div id="the-form">
@@ -52,7 +65,13 @@
                         <input type="radio" name="period" value="5th"> 5th Period Lunch
                     </label>
                 </fieldset>
+<<<<<<<< HEAD:layout/subShopOrder.html
     <fieldset>
+========
+            <fieldset>
+        
+        
+>>>>>>>> order-to-csv:src/layout/subShopOrder.html
         <legend>Length Type</legend>
         <label>
             <input type="radio" id="6-inch" name="inch" value="6"> 6 Inch</label>
@@ -66,29 +85,45 @@
    <fieldset>
        <legend>Bread Type</legend>
        <label>
-           <input type="radio" id="white-bread" name="bread" value="wheat"> Wheat Bread</label>
+           <input type="radio" id="white-bread" name="bread" value="Wheat Bread"> Wheat Bread</label>
        </label><br>
        <label>
-           <input type="radio" id="wheat-bread" name="bread" value="white"> White Bread</label>
-       </label>
+           <input type="radio" id="wheat-bread" name="bread" value="White Bread"> White Bread</label>
+       </label><br>
        <label>
-           <input type="radio" id="salad" name="bread" value="salad"> Salad</label>
+           <input type="radio" id="salad" name="bread" value="Salad"> Salad</label>
        </label>
    </fieldset>
-   </td><td>
+    <fieldset>
+        <legend>Do you want your sub toasted?</legend>
+        <label>
+            <input type="radio" id="toasted" name="toasted" value="Toasted">Yes</label>
+        </label><br>
+        <label>
+            <input type="radio" id="not-toasted" name="toasted" value="Not Toasted">No</label>
+        </label>
+    </fieldset>
+    </td><td>
    <script>
     //Disables length if a salad is selected. 
     var breads = document.getElementsByName("bread");
     breads.forEach((bread) => {
         bread.addEventListener("change", () => {
+            // disable options for length and toasting if "salad" is checked as base
             if (document.getElementById("salad").checked) {
                 document.getElementById("6-inch").checked = false;
                 document.getElementById("6-inch").disabled = true;
                 document.getElementById("12-inch").checked = false;
                 document.getElementById("12-inch").disabled = true;
+                document.getElementById("toasted").disabled = true;
+                document.getElementById("toasted").checked = false;
+                document.getElementById("not-toasted").disabled = true;
+                document.getElementById("not-toasted").checked = false;
             } else {
                 document.getElementById("6-inch").disabled = false;
                 document.getElementById("12-inch").disabled = false;
+                document.getElementById("toasted").disabled = false;
+                document.getElementById("not-toasted").disabled = false;
             }
         })
     })
@@ -97,19 +132,19 @@
    <fieldset>
        <legend>Meat Options</legend>
        <label>
-           <input type="checkbox" id="turkey" name="protein" value="oven_roasted_turkey"> Oven Roasted Turkey
+           <input type="checkbox" id="turkey" name="protein" value="Oven Roasted Turkey"> Oven Roasted Turkey
        </label><br>
        <label>
-           <input type="checkbox" id="bacon" name="protein" value="bacon"> Bacon
+           <input type="checkbox" id="bacon" name="protein" value="Bacon"> Bacon
        </label><br>
        <label>
-           <input type="checkbox" id="ham" name="protein" value="honey_ham"> Honey Ham
+           <input type="checkbox" id="ham" name="protein" value="Honey Ham"> Honey Ham
        </label><br>
        <label>
-           <input type="checkbox" id="salami" name="protein" value="salami"> Salami
+           <input type="checkbox" id="salami" name="protein" value="Salami"> Salami
        </label><br>
        <label>
-           <input type="checkbox" id="pepperoni" name="protein" value="pepperoni"> Pepperoni
+           <input type="checkbox" id="pepperoni" name="protein" value="Pepperoni"> Pepperoni
        </label>
    </fieldset>
 
@@ -117,55 +152,142 @@
    <fieldset>
        <legend>Cheese Options</legend>
        <label>
-           <input type="checkbox" id="american-cheese" name="protein" value="american"> American Cheese
+           <input type="checkbox" id="american-cheese" name="protein" value="American Cheese"> American Cheese
        </label><br>
        <label>
-           <input type="checkbox" id="swiss-cheese" name="protein" value="swiss"> Swiss Cheese
+           <input type="checkbox" id="swiss-cheese" name="protein" value="Swiss Cheese"> Swiss Cheese
        </label><br>
        <label>
-           <input type="checkbox" id="cheddar-cheese" name="protein" value="cheddar"> Cheddar Cheese
+           <input type="checkbox" id="cheddar-cheese" name="protein" value="Cheddar Cheese"> Cheddar Cheese
        </label><br>
        <label>
-           <input type="checkbox" id="hot-pepper-cheese" name="protein" value="hot_pepper"> Hot Pepper Cheese
+           <input type="checkbox" id="hot-pepper-cheese" name="protein" value="Hot Pepper Cheese"> Hot Pepper Cheese
        </label><br>
        <label>
-           <input type="checkbox" id="provolone-cheese" name="protein" value="provolone"> Provolone Cheese
+           <input type="checkbox" id="provolone-cheese" name="protein" value="Provolone Cheese"> Provolone Cheese
        </label><br>
        <label>
-           <input type="checkbox" id="shredded-cheddar" name="protein" value="shredded_cheddar"> Shredded Cheddar
+           <input type="checkbox" id="shredded-cheddar" name="protein" value="Shredded Cheddar Cheese"> Shredded Cheddar
        </label>
    </fieldset> 
+<<<<<<<< HEAD:layout/subShopOrder.html
    </td>
    <td>
+========
+
+   </td><td>
+   <!---Javascript verifying that meats and cheeses total to three.-->
+   <script> 
+   const form = document.querySelector("form"); 
+
+   form.addEventListener("submit", (event) => {
+    var valid = true; 
+
+    //Check for a base 
+    var breads = document.getElementsByName("bread"); 
+    var bread_total = 0; 
+    for (let i=0; i < breads.length; ++i) {
+        if (breads[i].checked) {
+            bread_total++; 
+        }
+    }
+    if (bread_total == 0) {
+        alert("You must select a base (bread type)."); 
+        event.preventDefault(); 
+        valid = false; 
+    }
+    // if user selects a bread, they need to pick a length and whether they want it toasted
+    var white = document.getElementById("white-bread");
+    var wheat = document.getElementById("wheat-bread");
+    var inches = document.getElementsByName("inch");
+    var toast = document.getElementsByName("toasted");
+    if ((white.checked == true || wheat.checked == true)) {
+        if (inches[0].checked == false && inches[1].checked == false) {
+            alert("Please select a length for your sub."); 
+            event.preventDefault(); 
+            valid = false; 
+        }
+        if (toast[0].checked == false && toast[1].checked == false) {
+            alert("Please indicate whether you want your sub toasted."); 
+            event.preventDefault(); 
+            valid = false; 
+        }
+    }
+
+
+    //Check meats and cheeses 
+    var total = countMeatsAndCheeses();
+    if (total > 3) {
+        alert("You may only select a total of three meats and cheeses. You have "+total.toString()+"."); 
+        event.preventDefault(); //prevents form submission 
+        valid = false; 
+    } 
+
+
+
+    //Finally, it thanks the user and reminds them when they can pick it up.
+    if (valid == true) {
+        var periods = document.getElementsByName("period"); 
+        var period = ""; 
+        for (let i=0; i < periods.length; ++i) {
+            if (periods[i].checked) {
+                period = periods[i].value; 
+            }
+        }
+        if (period == "") {
+            event.preventDefault(); 
+            valid = false; 
+            alert("You must select a period to pick up.")
+            return; 
+        }
+        alert("Thank you for your order! \n Please remember to pick up your sandwich during "+period+" period lunch.");
+    }
+    }); 
+   
+   function countMeatsAndCheeses() {
+    var proteins = document.getElementsByName("protein"); 
+    var total = 0; 
+    for (let i=0; i < proteins.length; ++i) {
+        if (proteins[i].checked) {
+            total++; 
+        }
+    }
+    return total; 
+   }
+
+   </script> 
+
+
+>>>>>>>> order-to-csv:src/layout/subShopOrder.html
    <!-- Veggie Options -->
    <fieldset>
        <legend>Vegetable Options</legend>
        <label>
-           <input type="checkbox" id="onions" name="veggies" value="onions"> Onions
+           <input type="checkbox" id="onions" name="veggies" value="Onions"> Onions
        </label><br>
        <label>
-           <input type="checkbox" id="cucumbers" name="veggies" value="cucumbers"> Cucumbers
+           <input type="checkbox" id="cucumbers" name="veggies" value="Cucumbers"> Cucumbers
        </label><br>
        <label>
-           <input type="checkbox" id="tomatoes" name="veggies" value="tomatoes"> Tomatoes
+           <input type="checkbox" id="tomatoes" name="veggies" value="Tomatoes"> Tomatoes
        </label><br>
        <label>
-           <input type="checkbox" id="olives" name="veggies" value="olives"> Olives
+           <input type="checkbox" id="olives" name="veggies" value="Olives"> Olives
        </label><br>
        <label>
-           <input type="checkbox" id="spinach" name="veggies" value="spinach"> Spinach
+           <input type="checkbox" id="spinach" name="veggies" value="Spinach"> Spinach
        </label><br>
        <label>
-           <input type="checkbox" id="lettuce" name="veggies" value="lettuce"> Lettuce
+           <input type="checkbox" id="lettuce" name="veggies" value="Lettuce"> Lettuce
        </label><br>
        <label>
-           <input type="checkbox" id="pickles" name="veggies" value="pickles"> Pickles
+           <input type="checkbox" id="pickles" name="veggies" value="Pickles"> Pickles
        </label><br>
        <label>
-           <input type="checkbox" id="jalapeno" name="veggies" value="jalapenos"> Jalapeños
+           <input type="checkbox" id="jalapeno" name="veggies" value="Jalapenos"> Jalapeños
        </label><br>
        <label>
-           <input type="checkbox" id="green-peppers" name="veggies" value="green_peppers"> Green Peppers
+           <input type="checkbox" id="green-peppers" name="veggies" value="Green Peppers"> Green Peppers
        </label><br>
    </fieldset>
    </td><td>
@@ -173,22 +295,22 @@
    <fieldset>
        <legend>Condiment Options</legend>
        <label>
-           <input type="checkbox" id="hummus" name="condiments" value="hummus"> Hummus
+           <input type="checkbox" id="hummus" name="condiments" value="Hummus"> Hummus
        </label><br>
        <label>
-           <input type="checkbox" id="banana-peppers" name="condiments" value="banana_peppers"> Banana Peppers
+           <input type="checkbox" id="banana-peppers" name="condiments" value="Banana Peppers"> Banana Peppers
        </label><br>
        <label>
-           <input type="checkbox" id="hot-sauce" name="condiments" value="hot_sauce"> Hot Sauce
+           <input type="checkbox" id="hot-sauce" name="condiments" value="Hot Sauce"> Hot Sauce
        </label><br>
        <label>
-           <input type="checkbox" id="ranch" name="condiments" value="ranch"> Ranch
+           <input type="checkbox" id="ranch" name="condiments" value="Ranch"> Ranch
        </label><br>
        <label>
-           <input type="checkbox" id="mayo" name="condiments" value="mayo"> Mayo
+           <input type="checkbox" id="mayo" name="condiments" value="Mayo"> Mayo
        </label><br>
        <label>
-           <input type="checkbox" id="ua-sauce" name="condiments" value="ua_sauce"> UA Sauce
+           <input type="checkbox" id="ua-sauce" name="condiments" value="UA Sauce"> UA Sauce
        </label>
    </fieldset>
    </td>
@@ -210,6 +332,7 @@
             })
         })
    </script>
+<<<<<<<< HEAD:layout/subShopOrder.html
    <!--Adding type="button" prevents a button from submitting the form.-->
    <button class="myButton" id="proceed" style="float: left;" onclick="loadSummary()" type="button"><strong>Review Order</strong></button>
    <button class="myButton" type="button"><a style="text-decoration: none; color: white;" href="/"><strong>Return to Homepage!</strong></a></button>
@@ -217,13 +340,34 @@
    <div style = "display: flex; justify-content: space-around; margin: 10px;">
         <label><input id="submit" type="submit" value="Submit" class="submit" style="visibility: hidden"/></label>
       <a id="goBack"></a>
+========
+   <div class="flex">
+     <button class="myButton" id="proceed" style="float: left;" onclick="responsiveSummary()" type="button"><strong>Review Order</strong></button>
+     <a class="myButton" style="text-decoration: none; color: white; width: 40%;" href="/"><strong>Return to Homepage!</strong></a></button>
+   </div>
+   </div>
+   <div class="flex">
+      <a id="submitButton" class="end"><input id="submit" type="submit" class="submit" value="Submit" style="visibility: hidden"/></a>
+      <a id="goBack" class="end"></a>
+>>>>>>>> order-to-csv:src/layout/subShopOrder.html
    </div>
    <script>
     // fix when clicking proceed button twice, displays double everything
     var loaded = false;
+<<<<<<<< HEAD:layout/subShopOrder.html
 
     //Shows a summary of the order. 
     function loadSummary() {
+========
+      function responsiveSummary() {
+        loadSummary();
+        var checkboxes = document.querySelectorAll("input[type='checkbox'], input[type='radio']");
+        checkboxes.forEach((checkbox) => {
+            checkbox.addEventListener("change", loadSummary);
+        })
+      }
+      function loadSummary() {
+>>>>>>>> order-to-csv:src/layout/subShopOrder.html
         if (loaded == true) {
             document.getElementById("container").remove();
         }
@@ -234,10 +378,13 @@
          var baseText = "";
          var len = findChecked('input[name="inch"]');
          var base = findChecked('input[name="bread"]');
-         if (base == "Salad") {
+         var toast = findChecked('input[name="toasted"]');
+         if (base == "Salad" || base == "None" || len == "None") {
             baseText = `\nBase: ${base}`;
-         } else {
+         } else if (toast == "No") {
             baseText = `\nBase: ${len} ${base}`;
+         } else {
+            baseText = `\nBase: Toasted ${len} ${base}`;
          }
          var protein = findChecked('input[name="protein"]');
          var toppings = findChecked('input[name="veggies"]');
@@ -293,13 +440,21 @@
                
             }
          })
+         if (buttonchecked == "") {
+            buttonchecked = "None";
+         }
          return buttonchecked;
       }
    </script>
 
    <!--Only appears if there is no Javascript.-->
    <noscript> 
+<<<<<<<< HEAD:layout/subShopOrder.html
     <h4><i>Javascript is needed to submit this form.</i></h4>
+========
+    <h4><i>Javascript is need to submit this form.</i></h4>
+    <h4><i>Javascript is need to submit this form.</i></h4>
+>>>>>>>> order-to-csv:src/layout/subShopOrder.html
    </noscript>
 
 
