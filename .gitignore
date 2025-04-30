@@ -1,5 +1,7 @@
 .DS_Store
 node_modules/*
+.venv
+*.pem
 layout/sub-orders.csv
 python-scripts/history.csv
 python-scripts/orders.pdf
