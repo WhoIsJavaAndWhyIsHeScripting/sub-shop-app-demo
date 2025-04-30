@@ -22,7 +22,6 @@ if __name__ == "__main__":  # i.e if not imported as a module
     print(f"SORT_CSV: {settings.SORT_CSV}") 
     print(f"RECIPIENTS: {settings.RECIPIENTS}")
     print(f"CLEAR_CSV: {settings.CLEAR_CSV}")
-    print()
 
     errors = False 
 
@@ -77,7 +76,7 @@ if __name__ == "__main__":  # i.e if not imported as a module
             f.truncate(0) 
         with open(settings.CSV_PATH, 'w') as f:
             f.write(header) 
-        print(f"Cleared {settings.SV_PATH}.")
+        print(f"Cleared {settings.CSV_PATH}.")
 
     print()
 
