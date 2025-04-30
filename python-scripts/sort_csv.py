@@ -17,6 +17,9 @@ def main(file_to_sort: str, fields: list, reverse=False):
     rows = rows[1:]
 
     field_ids = tuple(header.index(field) for field in fields if field in header) 
+    if len(field_ids) == 0: 
+        return  # exit function if no fields are in the actual CSV 
+
     rows.sort(key=operator.itemgetter(*field_ids), reverse=reverse) 
 
     with open(file_to_sort, "w") as f: 

@@ -19,16 +19,14 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter 
 from reportlab.lib.pagesizes import inch  
 
-def get_settings(json_file): 
-    '''Opens and returns a json data as a dict.'''
-    with open(json_file) as f: 
-        return json.load(f) 
 
-def main(csv_file, settings_file, debug=False): 
+def main(csv_file, settings, delimiter=',', debug=False): 
     """
     See module docstring for more details. 
 
     csv_file - filename of the CSV file from which the PDF shall be made 
+    settings - a dictionary of various dimensions for making the PDF (format in settings.py)
+
     Returns None 
     """
     pdf = canvas.Canvas("orders.pdf", pagesize=letter)
@@ -38,10 +36,8 @@ def main(csv_file, settings_file, debug=False):
     #This puts the origin in the top left corner, though the 
     # disavantage is that negative y values are neeeded. 
 
-    settings = get_settings(settings_file)
-
     with open(csv_file) as f: 
-        reader = csv.DictReader(f, delimiter=settings["csv_delimiter"]) 
+        reader = csv.DictReader(f, delimiter=delimiter) 
         headers = reader.fieldnames
         i = 0 
         for row in reader: 
