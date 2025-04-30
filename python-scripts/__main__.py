@@ -6,6 +6,9 @@ THIS SCRIPT NEEDS TO BE RUN FROM ITS CONTAINING DIRECTORY.
 
 Written March 2025.''' 
 
+# Get various constants and settings 
+import settings 
+
 import datetime 
 import traceback 
 
@@ -13,34 +16,19 @@ import sort_csv
 import csv_to_pdf 
 import email_pdf 
 
-CSV_PATH = "../layout/sub-orders.csv" 
-#CSV_PATH = "./orders.csv" 
-SORT_CSV = True 
-RECIPIENTS = [
-    "EMAIL REMOVED",  # placeholders 
-    "EMAIL REMOVED",
-    "EMAIL REMOVED", 
-    "EMAIL REMOVED", 
-    "EMAIL REMOVED", 
-    "EMAIL REMOVED", 
-]
-CLEAR_CSV = True 
-SETTINGS_PATH = "./settings.json"
-
 if __name__ == "__main__":  # i.e if not imported as a module 
     print(f"Running at {str(datetime.datetime.now())}.") 
-    print(f"CSV_PATH: {CSV_PATH}") 
-    print(f"SORT_CSV: {SORT_CSV}") 
-    print(f"RECIPIENTS: {RECIPIENTS}")
-    print(f"CLEAR_CSV: {CLEAR_CSV}")
-    print(f"SETTINGS_PATH: {SETTINGS_PATH}")
+    print(f"CSV_PATH: {settings.CSV_PATH}") 
+    print(f"SORT_CSV: {settings.SORT_CSV}") 
+    print(f"RECIPIENTS: {settings.RECIPIENTS}")
+    print(f"CLEAR_CSV: {settings.CLEAR_CSV}")
     print()
 
     errors = False 
 
-    if SORT_CSV: 
+    if settings.SORT_CSV: 
         try: 
-            sort_csv.main(CSV_PATH, ["PERIOD", "LAST"]) 
+            sort_csv.main(settings.CSV_PATH, settings.SORT_BY) 
         except Exception as e: 
             print() 
             print("Exception occured sorting csv.")
@@ -51,7 +39,7 @@ if __name__ == "__main__":  # i.e if not imported as a module
             print("Sorted CSV file.") 
 
     try: 
-        csv_to_pdf.main(CSV_PATH, SETTINGS_PATH) 
+        csv_to_pdf.main(settings.CSV_PATH, settings.PDF_DETAILS, delimiter=settings.CSV_DELIMITER) 
     except Exception as e: 
         print() 
         print("Exception occured making pdf.")
@@ -62,12 +50,11 @@ if __name__ == "__main__":  # i.e if not imported as a module
         print("Made PDF.")
 
     try: 
-        email_pdf.main("orders.pdf", RECIPIENTS)  
+        email_pdf.main("orders.pdf", settings.RECIPIENTS)  
     except Exception as e: 
         print() 
         print("Exception occured emailing pdf.")
         errors = True 
-        print("Uh-oh")
         traceback.print_exc()  
         print() 
     else: 
@@ -75,7 +62,7 @@ if __name__ == "__main__":  # i.e if not imported as a module
 
 
     #Counts the number of orders in csv file and places in history.csv. 
-    with open(CSV_PATH) as f:
+    with open(settings.CSV_PATH) as f:
         order_count = sum(1 for line in f) - 1 
     
     with open("history.csv", "a") as f: 
@@ -83,14 +70,14 @@ if __name__ == "__main__":  # i.e if not imported as a module
 
     print(f"There were {order_count} order(s) in the CSV file.") 
 
-    if CLEAR_CSV: 
+    if settings.CLEAR_CSV: 
         #Clears all but first line (header) of csv file 
-        with open(CSV_PATH, 'r+') as f: 
+        with open(settings.CSV_PATH, 'r+') as f: 
             header = f.readline() 
             f.truncate(0) 
-        with open(CSV_PATH, 'w') as f:
+        with open(settings.CSV_PATH, 'w') as f:
             f.write(header) 
-        print(f"Cleared {CSV_PATH}.")
+        print(f"Cleared {settings.SV_PATH}.")
 
     print()
 
