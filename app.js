@@ -140,7 +140,7 @@ app.post('/order-submit', (req, res) => {
   var protein = req.body.protein;
   var toppings = req.body.veggies;
   var sauces = req.body.condiments;
-  var email = document.cookie;
+  var email = req.body.cookie;
   var arrayize = [email, inch, bread, toasted, protein, toppings, sauces];
   for (let i = 0; i < arrayize.length; i++) {
     if ("" + arrayize[i] == "undefined") {

@@ -1,3 +1,4 @@
+import { cookie } from "express-validator";
 
 fetchy()
 .then((data) => {
@@ -14,7 +15,6 @@ fetchy()
 })
     var loaded = false;
     //Shows a summary of the order. 
-    function loadSummary() {
       function responsiveSummary() {
         loadSummary();
         var checkboxes = document.querySelectorAll("input[type='checkbox'], input[type='radio']");
@@ -100,9 +100,8 @@ fetchy()
          }
          return buttonchecked;
       }
-    }
-
-    orderForm.addEventListener("submit", (event) => {
+      var form = document.getElementById("form");
+    form.addEventListener("submit", (event) => {
         //alert("Form being checked.")
          
         //Checks bread and meats and cheeses. 
@@ -123,7 +122,14 @@ fetchy()
                 alert("You must select a period to pick up.")
                 return; 
             }
+            // create cookie element
+            var cookieHolder = document.createElement("input");
+            cookieHolder.name="cookie";
+            cookieHolder.value = document.cookie;
+            cookieHolder.style="visibility: hidden;"
+            form.appendChild(cookieHolder);
             alert("Thank you for your order! \n Please remember to pick up your sandwich during "+period+" period lunch.");
+            alert (cookieHolder.value) // should return the cookie
         }
      }); 
     function countMeatsAndCheeses() {
