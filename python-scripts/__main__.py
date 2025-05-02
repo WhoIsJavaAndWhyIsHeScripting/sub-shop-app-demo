@@ -38,7 +38,7 @@ if __name__ == "__main__":  # i.e if not imported as a module
             print("Sorted CSV file.") 
 
     try: 
-        csv_to_pdf.main(settings.CSV_PATH, settings.PDF_DETAILS, delimiter=settings.CSV_DELIMITER) 
+        csv_to_pdf.main(settings.CSV_PATH, settings.PDF_VARS, delimiter=settings.CSV_DELIMITER) 
     except Exception as e: 
         print() 
         print("Exception occured making pdf.")

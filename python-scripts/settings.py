@@ -20,7 +20,7 @@ CSV_DELIMITER = ";"
 
 
 # For csv_to_pdf.py 
-PDF_DETAILS = {
+PDF_VARS = {
     # These settings are for Avery Presta 94215 label paper. Dimensions have been adjusted for space between stickers. 
     "font" : "Times-Roman",
     "font-bold" : "Times-Bold",
@@ -35,10 +35,10 @@ PDF_DETAILS = {
 }
 
 
-# For email_pdf.py - probably should make a dictionary 
-class EMAIL_DETAILS: 
-    port = 25 
-    #server_address = "smtp.uaschools.org" 
-    server_address = "localhost"  # the server now has a SMTP server 
-    sender_email = "subshopapp@subshop-dev.uaschools.io" 
-            
+# For email_pdf.py 
+EMAIL_VARS = {
+    "port" : 25, 
+    #"server_address" : "smtp.uaschools.org", 
+    "server_address" : "localhost",   # the server now has a SMTP server 
+    "sender_email" : "subshopapp@subshop-dev.uaschools.io", 
+}      

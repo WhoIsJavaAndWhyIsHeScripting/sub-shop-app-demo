@@ -10,8 +10,7 @@ A settings file is used to read the CSV and make the PDF.
 Written November 2024. 
 '''
 
-import csv 
-import json 
+import csv  
 import datetime 
 import math 
 
