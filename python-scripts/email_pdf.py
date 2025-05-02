@@ -6,7 +6,10 @@ for ssl; it is best left as is.
 Currently set up to use a district STMP server. This 
 requires no login as long as one is on the school Wi-Fi.
 (if outside of school, a socket.gaierror occurs or, after 
-a time, an OSError saying the network is unreachable).
+a time, an OSError saying the network is unreachable). 
+
+Note: An empty string for the PDF filename is considered a lack 
+of any sub orders. 
 
 Written January 2025.'''  
 
@@ -32,8 +35,13 @@ def main(pdf_file, recipients, oauth_file=''):
 
     # Should probably move into settings.py 
     date = datetime.date.today().strftime("%B %d, %Y")
-    subject = f"Bear Bites Orders for {date}"
-    body = f"Hello! Attached are today's orders." 
+    subject = f"Bear Bites Orders for {date}" 
+
+    if not pdf_file:  # id est no orders for today 
+        body = "Hello! There were no orders for today." 
+
+    else: 
+        body = f"Hello! Attached are today's orders." 
 
     #Create object representing message content 
     message = MIMEMultipart() 
@@ -42,17 +50,18 @@ def main(pdf_file, recipients, oauth_file=''):
     message["Subject"] = subject 
     message.attach(MIMEText(body, "plain")) 
 
-    #Open and attached the PDF file 
-    with open(pdf_file, 'rb') as attachment: 
-        part = MIMEBase("application", "octet-stream")
-        part.set_payload(attachment.read()) 
-    encoders.encode_base64(part) 
-    part.add_header(
-        "content-disposition", 
-        "attachment",
-        filename=pdf_file, 
-    )
-    message.attach(part) 
+    if pdf_file: #  i.e. there are orders today 
+        #Open and attached the PDF file 
+        with open(pdf_file, 'rb') as attachment: 
+            part = MIMEBase("application", "octet-stream")
+            part.set_payload(attachment.read()) 
+        encoders.encode_base64(part) 
+        part.add_header(
+            "content-disposition", 
+            "attachment",
+            filename=pdf_file, 
+        )
+        message.attach(part) 
 
     #context = ssl.create_default_context() #for encryption 
     with smtplib.SMTP(EMAIL_VARS["server_address"], EMAIL_VARS["port"]) as server: 
