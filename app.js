@@ -1,12 +1,11 @@
 const express = require('express');
-//const { check } = require('express-validator');
 const fs = require('fs');
 const app = express();
 const path = require('path');
 const http = require('http');
 const credentials = {
-    key: fs.readFileSync('privkey.pem', 'utf-8'), 
-    cert: fs.readFileSync('fullchain.pem', 'utf-8'),
+  key: fs.readFileSync('privkey.pem', 'utf-8'), 
+  cert: fs.readFileSync('fullchain.pem', 'utf-8'),
 };
 
 // Serve static files from the 'public' folder
@@ -130,28 +129,28 @@ app.post('/submit2', (req, res) => {
   res.redirect('/users');
 });
 // populate the sub order csv with the form data
+// populate the sub order csv with the form data
 app.post('/order-submit', (req, res) => {
   var time = new Date();
   var dateAndTime = time.toLocaleString("en-US");
   var lunchPeriod = req.body.period;
   var inch = req.body.inch;
   var bread = req.body.bread;
+  var toasted = req.body.toasted;
   var protein = req.body.protein;
   var toppings = req.body.veggies;
   var sauces = req.body.condiments;
-  var ingArray = [lunchPeriod, inch, bread, protein, toppings, sauces];
-  var csvRow = dateAndTime;
-  for (let i in ingArray) {
-    if (ingArray[i] != undefined) {
-        csvRow += "," + ingArray[i];
-      }
+  const email = req.body.email;
+  var arrayize = [lunchPeriod, inch, bread, toasted, protein, toppings, sauces, email];
+  for (let i = 0; i < arrayize.length; i++) {
+    if ("" + arrayize[i] == "undefined") {
+      arrayize[i] = "None";
     }
-    console.log(ingArray);
-    console.log(csvRow);
-
-  fs.appendFile(path.join(__dirname, "layout", "sub-orders.csv"), `\n${csvRow}`, () => {
+  }
+  fs.appendFile(path.join(__dirname, "layout", "sub-orders.csv"), `\n${dateAndTime};${arrayize[0]};${arrayize[1]};${arrayize[2]};${arrayize[3]};${arrayize[4]};${arrayize[5]};${arrayize[6]}`, () => {
     res.redirect('/');
   })
+
 })
 // check if a value is undefined, then remove it
 // Start the server
