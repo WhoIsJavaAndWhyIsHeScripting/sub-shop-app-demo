@@ -1,4 +1,8 @@
-import { cookie } from "express-validator";
+async function fetchy() {
+    const fetcher = await fetch("/out-of-stock");
+    data = await fetcher.text();
+    return data;
+}
 
 fetchy()
 .then((data) => {
@@ -15,13 +19,6 @@ fetchy()
 })
     var loaded = false;
     //Shows a summary of the order. 
-      function responsiveSummary() {
-        loadSummary();
-        var checkboxes = document.querySelectorAll("input[type='checkbox'], input[type='radio']");
-        checkboxes.forEach((checkbox) => {
-            checkbox.addEventListener("change", loadSummary);
-        });
-      }
       function loadSummary() {
         if (loaded == true) {
             document.getElementById("container").remove();
@@ -99,13 +96,19 @@ fetchy()
             buttonchecked = "None";
          }
          return buttonchecked;
-      }
-      var form = document.getElementById("form");
-    form.addEventListener("submit", (event) => {
-        //alert("Form being checked.")
+        }
+        function responsiveSummary() {
+            loadSummary();
+            var checkboxes = document.querySelectorAll("input[type='checkbox'], input[type='radio']");
+            checkboxes.forEach((checkbox) => {
+                checkbox.addEventListener("change", loadSummary);
+            });
+          }
+    function submitOrder(event) {
+     //alert("Form being checked.")
          
         //Checks bread and meats and cheeses. 
-        var valid = validate_form(); 
+        var valid = validate_form(event); 
  
         //Finally, it thanks the user and reminds them when they can pick it up.
         if (valid == true) {
@@ -122,16 +125,12 @@ fetchy()
                 alert("You must select a period to pick up.")
                 return; 
             }
-            // create cookie element
-            var cookieHolder = document.createElement("input");
-            cookieHolder.name="cookie";
-            cookieHolder.value = document.cookie;
-            cookieHolder.style="visibility: hidden;"
-            form.appendChild(cookieHolder);
             alert("Thank you for your order! \n Please remember to pick up your sandwich during "+period+" period lunch.");
-            alert (cookieHolder.value) // should return the cookie
+            var cookieInput = document.createElement("input");
+            cookieInput.name = "cookie";
+            cookieInput.value = document.cookie;
         }
-     }); 
+    }
     function countMeatsAndCheeses() {
         var proteins = document.getElementsByName("protein"); 
         var total = 0; 
@@ -143,7 +142,7 @@ fetchy()
         return total; 
     }
  
-    function validate_form() {
+    function validate_form(event) {
         var valid = true; 
  
         //Check for a base 
