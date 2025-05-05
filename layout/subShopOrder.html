@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,8 +8,15 @@
 <link rel="preconnect" href="https://fsonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<script src = "order-scripts.js"></script>
+<style>
+    @media (scripting: none){
+        .myButton[id="proceed"] {
+            display: none; 
+        }
+    }
+</style>
 
-<script src="order-scripts.js"></script>
 <style>
     @media (scripting: none){
         .myButton[id="proceed"] {
@@ -20,9 +26,6 @@
 </style>
 
 </head>
-
-
-
 <body>
     <header>
         <div class="headerbar"><img src="../assets/bearbiteslogo.png"><a href="/">Bear Bites</a></div>
@@ -32,6 +35,8 @@
 <h1>Order A Sub for Today's Lunch</h1>
 <hr>
 <form id="form" action="/order-submit" method="POST" novalidate>
+   <!--this div contains the form minus the submit button, it will be
+   replaced with the order summary-->
     <div id="the-form">
    <!-- Length Options-->
     <table>
@@ -79,6 +84,30 @@
         </label>
     </fieldset>
     </td><td>
+   <script>
+    //Disables length if a salad is selected. 
+    var breads = document.getElementsByName("bread");
+    breads.forEach((bread) => {
+        bread.addEventListener("change", () => {
+            // disable options for length and toasting if "salad" is checked as base
+            if (document.getElementById("salad").checked) {
+                document.getElementById("6-inch").checked = false;
+                document.getElementById("6-inch").disabled = true;
+                document.getElementById("12-inch").checked = false;
+                document.getElementById("12-inch").disabled = true;
+                document.getElementById("toasted").disabled = true;
+                document.getElementById("toasted").checked = false;
+                document.getElementById("not-toasted").disabled = true;
+                document.getElementById("not-toasted").checked = false;
+            } else {
+                document.getElementById("6-inch").disabled = false;
+                document.getElementById("12-inch").disabled = false;
+                document.getElementById("toasted").disabled = false;
+                document.getElementById("not-toasted").disabled = false;
+            }
+        })
+    })
+   </script>
    <!-- Meat Options -->
    <fieldset>
        <legend>Meat Options</legend>
@@ -122,7 +151,6 @@
        </label>
    </fieldset> 
    </td><td>
-   <script src="sub-order-form-fn.js"></script> 
    <!-- Veggie Options -->
    <fieldset>
        <legend>Vegetable Options</legend>
@@ -179,8 +207,7 @@
    </fieldset>
    </td>
    </tr>
-   </table>
-   <!--Adding type="button" prevents a button from submitting the form.-->
+   </table>   <!--Adding type="button" prevents a button from submitting the form.-->
    <button class="myButton" id="proceed" style="float: left;" onclick="loadSummary()" type="button"><strong>Review Order</strong></button>
    <button class="myButton" type="button"><a style="text-decoration: none; color: white;" href="/"><strong>Return to Homepage!</strong></a></button>
    </div>
@@ -192,9 +219,11 @@
    <noscript> 
     <h4><i>Javascript is needed to submit this form.</i></h4>
    </noscript>
+     
 </form>
 </div>
-
 </body>
-
+<script>
+    document.getElementById("form").addEventListener("submit", submitOrder);
+</script>
 </html>
