@@ -24,7 +24,7 @@ PDF_VARS = {
     # These settings are for Avery Presta 94215 label paper. Dimensions have been adjusted for space between stickers. 
     "font" : "Times-Roman",
     "font-bold" : "Times-Bold",
-    "font-size": 10,
+    "font-size": 14,
     "labels" : 6,
     "sticker-height" : 3.3333,
     "sticker-width" : 4.1888,
