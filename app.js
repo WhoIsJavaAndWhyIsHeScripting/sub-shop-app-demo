@@ -14,12 +14,7 @@ app.use(express.static(path.join(__dirname, 'layout', 'admin-page', 'admin-ingre
 app.use(express.static(path.join(__dirname, 'layout', 'admin-page', 'admin-home')));
 app.use(express.static(path.join(__dirname, 'layout', 'admin-page', 'admin-users')));
 app.use(express.static(__dirname));
-// 404 error handler
-/*
-app.use((req, res) => {
-  res.status(404).sendFile(path.join(__dirname, 'layout', '404.html'));
-});
-*/
+
 // route for home page
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'layout', 'subShopFront.html'));
@@ -166,6 +161,10 @@ app.post('/order-submit', (req, res) => {
     res.redirect('/');
   })
 })
+// 404 error handler
+app.use((req, res) => {
+  res.status(404).sendFile(path.join(__dirname, 'layout', '404.html'));
+});
 // check if a value is undefined, then remove it
 // Start the server
 http.createServer(credentials, app).listen(3000, "localhost", () => {
