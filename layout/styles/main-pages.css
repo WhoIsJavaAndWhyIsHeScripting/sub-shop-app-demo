@@ -28,7 +28,9 @@ body {
 .headerbar a {
     margin: 5px;
     color: black;
-    text-decoration: none;
+    text-decoration: none; 
+    display: flex; 
+    align-items: center;
 }
 
 .headerbar img {
