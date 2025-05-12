@@ -10,6 +10,8 @@ settings.json \- contains setttings for how the pdf file is to be generated (cur
 
 email_pdf.py \- sends the CSV file via email  
 
+sort_csv.py \- preforms an in-place sort of a CSV file's rows  
+
 \_\_main\_\_.py \- This runs both csv_to_pdf.py and email_pdf.py (it should be what is from Node or cron); Edit this to change who is emailed the orders each day or the CSV to read from. 
    
 THIS SHOULD BE RUN FROM THE python-scripts FOLDER!  

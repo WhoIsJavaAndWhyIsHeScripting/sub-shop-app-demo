@@ -1,0 +1,17 @@
+# 5/12/2025 Henry Bonath <EMAIL REMOVED>
+stages:
+  - deploy
+
+deploy-job:
+  stage: deploy
+  environment: production
+  tags:
+    - subshop-dev
+  script:
+    - echo "Deploying application..."
+    - cd /srv/SubShopApp
+    - /bin/su - bonath.3 -c 'cd /srv/SubShopApp && git pull'
+    - /bin/su - bonath.3 -c 'ln -s /etc/letsencrypt/live/subshop-dev.uaschools.io/fullchain.pem fullchain.pem'
+    - /bin/su - bonath.3 -c 'ln -s /etc/letsencrypt/live/subshop-dev.uaschools.io/privkey.pem'
+    - /bin/su - bonath.3 -c '/usr/bin/npm install'
+    - echo "Application successfully deployed."

@@ -15,6 +15,7 @@ body {
 .headerbar {
     position: fixed;
     top: 0;
+    left: 0;
     display: flex;
     background-color: var(--ua-gold);
     padding: 5px;
@@ -27,7 +28,9 @@ body {
 .headerbar a {
     margin: 5px;
     color: black;
-    text-decoration: none;
+    text-decoration: none; 
+    display: flex; 
+    align-items: center;
 }
 
 .headerbar img {
@@ -35,6 +38,34 @@ body {
     clip-path: circle();
     margin: 5px;
 }
+/* navigation buttons */
+.navbutton {
+   display: block;
+   background-color: white;
+   color: var(--ua-teal);
+   border: solid 5px var(--ua-gold);
+   width: 60%;
+   margin: 20px auto;
+   padding: 6vh 2vh;
+   border-radius: 10px;
+   text-align: center;
+   font-weight: 500;
+   font-size: 24px;
+   box-shadow: 0px 5px 5px lightgray;
+}
+/* button changes color with 
+transition when you hover */
+.navbutton:hover {
+   background-color: var(--ua-teal);
+   transition: 0.1s;
+   color: var(--ua-gold);
+   border-color: black;
+}
+/* transition when you stop hovering */
+.navbutton:not(:hover) {
+   transition: 0.1s;
+}
+
 /* added from internal css */
 
 hr {
@@ -45,6 +76,10 @@ hr {
 }
 .flex {
    display: flex;
+   justify-content: space-around;
+   margin: 10px auto;
+   align-items: center;
+   
 }
 section{
     float: left;
@@ -55,7 +90,7 @@ aside{
 }
 
 button{
-    width: 50%;
+    width: 40%;
     margin: auto;
 }
 .myButton {
@@ -68,13 +103,22 @@ button{
    padding: .5em;
    text-decoration:none;
    text-align: center;
-
+   border-radius: 10px;
+   border: none;
+   margin: 10px;
 
 }
-
+label:has(input:disabled) {
+   text-decoration: line-through;
+   color: gray;
+}
+input {
+   accent-color: var(--ua-teal);
+}
 footer{
    display: block;
    background-color: var(--ua-gold);
+   margin-left: -8px;
    font-size: 18px;
    color: black;
    width: 100%;
@@ -97,15 +141,18 @@ footer{
 
 
 
-
+.end {
+   padding: 20px;
+   width: 50%;
+   padding: 15px 5px;
+}
 .submit{
-   all: unset;
-   margin: 10px;
+   border: none;
    background-color: var(--ua-gold);
    text-align: center;
    border-radius: 10px;
-   width: 50%;
-   padding: 10px 0;
+   width: 100%;
+   padding: 15px 0;
 }
 h1 {
    font-size: 1.5em;
@@ -116,27 +163,24 @@ p {
    padding: 10px;
    border-bottom: solid 1px gray;
 }
-
-#goBack {
-   width: 50%;
-   margin: 10px auto;
+a {
+   color: var(--ua-teal);
 }
+
 #goBackButton {
    all: unset;
    display: block;
    background-color: gray;
    color: white;
-   padding: 15px 0;
    text-align: center;
    border-radius: 10px;
+   padding: 15px 0;
 }
 #goBackButton:visited {
    all: unset;
    color: white;
    text-decoration: none;
 }   
-
-
 table, td, th {
   border: 1px solid black;
   font-size: 24px;
