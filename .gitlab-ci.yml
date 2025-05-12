@@ -5,6 +5,8 @@ stages:
 deploy-job:
   stage: deploy
   environment: production
+  tags:
+    - subshop-dev
   script:
     - echo "Deploying application..."
     - cd /srv/SubShopApp
