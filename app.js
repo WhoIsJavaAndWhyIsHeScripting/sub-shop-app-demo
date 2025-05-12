@@ -15,9 +15,11 @@ app.use(express.static(path.join(__dirname, 'layout', 'admin-page', 'admin-home'
 app.use(express.static(path.join(__dirname, 'layout', 'admin-page', 'admin-users')));
 app.use(express.static(__dirname));
 // 404 error handler
+/*
 app.use((req, res) => {
   res.status(404).sendFile(path.join(__dirname, 'layout', '404.html'));
 });
+*/
 // route for home page
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'layout', 'subShopFront.html'));
