@@ -16,7 +16,7 @@ app.use(express.static(path.join(__dirname, 'layout', 'admin-page', 'admin-users
 app.use(express.static(__dirname));
 // 404 error handler
 app.use((req, res) => {
-  res.sendFile(path.join(__dirname, 'layout', '404.html'));
+  res.status(404).sendFile(path.join(__dirname, 'layout', '404.html'));
 });
 // route for home page
 app.get('/', (req, res) => {
@@ -144,11 +144,20 @@ app.post('/order-submit', (req, res) => {
   var protein = req.body.protein;
   var toppings = req.body.veggies;
   var sauces = req.body.condiments;
+  // to do: once confirmed that the cookie is working, grab the username from the cookie
   var email = req.body.cookie;
   var arrayize = [email, lunchPeriod, inch, bread, toasted, protein, toppings, sauces];
   for (let i = 0; i < arrayize.length; i++) {
     if ("" + arrayize[i] == "undefined") {
       arrayize[i] = "None";
+    } else {
+      // add spaces between items
+      let spacedEntry = "";
+      spacedEntry += arrayize[i][0];
+      for (let j = 1; j < arrayize[i].length; j++) {
+        spacedEntry += `, ${arrayize[i][j]}`;
+      }
+      arrayize[i] = spacedEntry;
     }
   }
   fs.appendFile(path.join(__dirname, "layout", "sub-orders.csv"), `\n${dateAndTime};${arrayize[0]};${arrayize[1]};${arrayize[2]};${arrayize[3]};${arrayize[4]};${arrayize[5]};${arrayize[6]};${arrayize[7]}`, () => {
