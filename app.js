@@ -167,9 +167,9 @@ app.post('/order-submit', (req, res) => {
   }
   fs.appendFile(path.join(__dirname, "layout", "sub-orders.csv"), `\n${dateAndTime};${arrayize[0]};${arrayize[1]};${arrayize[2]};${arrayize[3]};${arrayize[4]};${arrayize[5]};${arrayize[6]};${arrayize[7]}`, () => {
     res.redirect('/');
-  })
+  });
 
-})
+});
 // 404 error handler
 app.use((req, res) => {
   res.status(404).sendFile(path.join(__dirname, 'layout', '404.html'));
