@@ -50,9 +50,13 @@ app.get('/main-pages-css', (req, res) => {
 app.get('/out-of-stock', (req, res) => {
   res.sendFile(path.join(__dirname, 'layout', 'admin-page', 'admin-ingredients', 'out-of-stock.txt'));
 });
-// route for js file
+// route for order-scripts.js
 app.get('/order-scripts-js', (req, res) => {
   res.sendFile(path.join(__dirname, 'layout', 'order-scripts.js'));
+});
+// route for functions.js
+app.get('/functions-js', (req, res) => {
+  res.sendFile(path.join(__dirname, 'functions.js'));
 });
 // create request body thing i don't really know how this works
 app.use(express.urlencoded({extended: true}))
