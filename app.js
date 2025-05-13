@@ -176,13 +176,13 @@ app.post('/order-submit', (req, res) => {
   // conglomerate length, base type and toasted into one "base" cell
   console.log(inch, toasted, bread);
   console.log(toasted == "Toasted");
-  if (inch != undefined) {
+  if ("" + inch != "undefined") {
     console.log("1");
-    base += inch + " Inch ";
+    base += inch + " Inch";
   } 
   if (toasted == "Toasted") {
     console.log("2");
-    base += "Toasted ";
+    base += " Toasted ";
   }
   base += bread;
   arrayize[1] = base;
