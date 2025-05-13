@@ -139,6 +139,32 @@ footer{
    height: auto;
 }
 
+@media only screen and (max-width: 850px) {
+   aside {
+      float:none;
+      display: block;
+      width: 100%;
+   }
+
+   section {
+      float:none;
+      display: block;
+      width: 100%;
+   }
+
+   .flex {
+      flex-direction: column-reverse;
+   }
+
+   td {
+      display: block;
+   }
+   table, tbody, tr {
+      display: block;
+      width: auto;
+   }
+}
+
 
 
 .end {
