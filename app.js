@@ -8,7 +8,6 @@ const credentials = {
   cert: fs.readFileSync('fullchain.pem', 'utf-8'),
 };
 
-
 // Serve static files from the 'public' folder
 app.use(express.static(path.join(__dirname, 'layout', 'admin-page', 'admin-ingredients')));
 app.use(express.static(path.join(__dirname, 'layout', 'admin-page', 'admin-home')));
@@ -198,6 +197,6 @@ app.use((req, res) => {
 });
 // check if a value is undefined, then remove it
 // Start the server
-http.createServer(credentials, app).listen(8080, "localhost", () => {
+http.createServer(credentials, app).listen(3000, "localhost", () => {
     console.log('Server listening on port 3000');
 });
