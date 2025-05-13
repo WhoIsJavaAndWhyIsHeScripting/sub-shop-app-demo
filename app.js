@@ -176,7 +176,7 @@ app.post('/order-submit', (req, res) => {
   // conglomerate length, base type and toasted into one "base" cell
   console.log(inch, toasted, bread);
   console.log(toasted == "Toasted");
-  if (inch != "None") {
+  if (inch != undefined) {
     console.log("1");
     base += inch + " Inch ";
   } 
