@@ -87,28 +87,24 @@
     </fieldset>
     </td><td>
    <script>
-    //Disables length if a salad is selected. 
-    var breads = document.getElementsByName("bread");
-    breads.forEach((bread) => {
-        bread.addEventListener("change", () => {
-            // disable options for length and toasting if "salad" is checked as base
-            if (document.getElementById("salad").checked) {
-                document.getElementById("6-inch").checked = false;
-                document.getElementById("6-inch").disabled = true;
-                document.getElementById("12-inch").checked = false;
-                document.getElementById("12-inch").disabled = true;
-                document.getElementById("toasted").disabled = true;
-                document.getElementById("toasted").checked = false;
-                document.getElementById("not-toasted").disabled = true;
-                document.getElementById("not-toasted").checked = false;
-            } else {
-                document.getElementById("6-inch").disabled = false;
-                document.getElementById("12-inch").disabled = false;
-                document.getElementById("toasted").disabled = false;
-                document.getElementById("not-toasted").disabled = false;
-            }
-        })
-    })
+     //Disables length if a salad is selected. 
+ var breads = document.getElementsByName("bread");
+ breads.forEach((bread) => {
+     bread.addEventListener("change", () => {
+         // disable options for length and toasting if "salad" is checked as base
+         if (document.getElementById("salad").checked) {
+             disableElement("6-inch", true);
+             disableElement("12-inch", true);
+             disableElement("toasted", true);
+             disableElement("not-toasted", true);
+         } else {
+            disableElement("6-inch", false);
+            disableElement("12-inch", false);
+            disableElement("toasted", false);
+            disableElement("not-toasted", false);
+         }
+     })
+ })
    </script>
    <!-- Meat Options -->
    <fieldset>
@@ -210,7 +206,7 @@
    </td>
    </tr>
    </table>   <!--Adding type="button" prevents a button from submitting the form.-->
-   <button class="myButton" id="proceed" style="float: left;" onclick="loadSummary()" type="button"><strong>Review Order</strong></button>
+   <button class="myButton" id="proceed" style="float: left;" onclick="responsiveSummary()" type="button"><strong>Review Order</strong></button>
    <button class="myButton" type="button"><a style="text-decoration: none; color: white;" href="/"><strong>Return to Homepage!</strong></a></button>
    </div>
    <div class="flex">

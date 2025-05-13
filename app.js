@@ -136,40 +136,53 @@ app.post('/submit2', (req, res) => {
 // populate the sub order csv with the form data
 // populate the sub order csv with the form data
 app.post('/order-submit', (req, res) => {
-  var time = new Date();
-  var dateAndTime = time.toLocaleString("en-US");
-  var lunchPeriod = req.body.period;
-  var inch = req.body.inch;
-  var bread = req.body.bread;
-  var toasted = req.body.toasted;
-  var protein = req.body.protein;
-  var toppings = req.body.veggies;
-  var sauces = req.body.condiments;
+  let time = new Date();
+  let dateAndTime = time.toLocaleString("en-US");
+  let lunchPeriod = req.body.period;
+  let inch = req.body.inch;
+  let bread = req.body.bread;
+  let toasted = req.body.toasted;
+  let protein = req.body.protein;
+  let toppings = req.body.veggies;
+  let sauces = req.body.condiments;
   const email = req.body.email;
-  var arrayize = [lunchPeriod, inch, bread, toasted, protein, toppings, sauces, email];
-  for (let i = 0; i < arrayize.length; i++) {
-    if ("" + arrayize[i] == "undefined") {
-      arrayize[i] = "None";
-    }
-  }
-  fs.appendFile(path.join(__dirname, "layout", "sub-orders.csv"), `\n${dateAndTime};${arrayize[0]};${arrayize[1]};${arrayize[2]};${arrayize[3]};${arrayize[4]};${arrayize[5]};${arrayize[6]}`, () => {
-  // to do: once confirmed that the cookie is working, grab the username from the cookie
-  var email = req.body.cookie;
-  var arrayize = [email, lunchPeriod, inch, bread, toasted, protein, toppings, sauces];
-  for (let i = 0; i < arrayize.length; i++) {
+  let base = "";
+  let arrayize = [lunchPeriod, base, protein, toppings, sauces, email];
+  // clean up data
+  for (let i = 2; i < arrayize.length-1; i++) {
     if ("" + arrayize[i] == "undefined") {
       arrayize[i] = "None";
     } else {
       // add spaces between items
       let spacedEntry = "";
-      spacedEntry += arrayize[i][0];
-      for (let j = 1; j < arrayize[i].length; j++) {
-        spacedEntry += `, ${arrayize[i][j]}`;
+      console.log(arrayize[i][0]);
+      // check if element is an actual array in a lazy way so strings aren't separated by character
+      if (arrayize[i][0].length > 1) {
+        console.log("hello :3");
+        spacedEntry += arrayize[i][0];
+        for (let j = 1; j < arrayize[i].length; j++) {
+          spacedEntry += `, ${arrayize[i][j]}`;
+        }
+        arrayize[i] = spacedEntry;
       }
-      arrayize[i] = spacedEntry;
+      console.log(arrayize);
     }
+
   }
-  fs.appendFile(path.join(__dirname, "layout", "sub-orders.csv"), `\n${dateAndTime};${arrayize[0]};${arrayize[1]};${arrayize[2]};${arrayize[3]};${arrayize[4]};${arrayize[5]};${arrayize[6]};${arrayize[7]}`, () => {
+  // conglomerate length, base type and toasted into one "base" cell
+  console.log(inch, toasted, bread);
+  console.log(toasted == "Toasted");
+  if (inch != "None") {
+    console.log("1");
+    base += inch + " Inch ";
+  } 
+  if (toasted == "Toasted") {
+    console.log("2");
+    base += "Toasted ";
+  }
+  base += bread;
+  arrayize[1] = base;
+  fs.appendFile(path.join(__dirname, "layout", "sub-orders.csv"), `\n${dateAndTime};${arrayize[0]};${arrayize[1]};${arrayize[2]};${arrayize[3]};${arrayize[4]};${arrayize[5]}`, () => {
     res.redirect('/');
   });
 
