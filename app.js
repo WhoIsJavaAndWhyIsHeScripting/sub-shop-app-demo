@@ -66,17 +66,20 @@ app.post('/submit', (req, res) => {
  let ingredients = req.body.ingredients;
  // turn it into a comma separated list
  let ingredientsText = "";
- ingredientsText += ingredients[0];
- for (let i = 1; i < ingredients.length; i++) {
-  ingredientsText += "," + ingredients[i];
+ if (ingredients != undefined) {
+    ingredientsText += ingredients[0];
+    for (let i = 1; i < ingredients.length; i++) {
+      ingredientsText += "," + ingredients[i];
+     }
  }
  // replace whatever is in out-of-stock.txt with the new comma separated list
- fs.writeFile(path.join(__dirname, "layout", "admin-page", "admin-ingredients", "out-of-stock.txt"), ingredientsText, (err) => {
-  if (err) {
-    throw err;
-  }
-  console.log("yippee");
- })
+  fs.writeFile(path.join(__dirname, "layout", "admin-page", "admin-ingredients", "out-of-stock.txt"), ingredientsText, (err) => {
+    if (err) {
+      console.log(err);
+    }
+    console.log("yippee");
+  })
+
  // go back to ingredients page
  res.redirect("/ingredients");
 })

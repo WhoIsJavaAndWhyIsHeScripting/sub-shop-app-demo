@@ -17,6 +17,7 @@
     // then turns it into text format
     // returns the content of out-of-stock.txt
     async function fetchy() {
+        
         const fetcher = await fetch("out-of-stock.txt");
         data = await fetcher.text();
         return data;
