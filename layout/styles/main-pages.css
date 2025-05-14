@@ -116,6 +116,7 @@ label:has(input:disabled) {
 input {
    accent-color: var(--ua-teal);
 }
+
 footer{
    display: block;
    background-color: var(--ua-gold);
@@ -140,7 +141,12 @@ footer{
    height: auto;
 }
 
-@media only screen and (max-width: 850px) {
+#proceed-container {
+   display: flex;
+   justify-content: space-around;
+}
+
+@media only screen and (max-width: 800px) {
    aside {
       float:none;
       display: block;
@@ -164,6 +170,20 @@ footer{
       display: block;
       width: auto;
    }
+
+   #order-now {
+      width: 80%;
+   }
+   #proceed-container {
+      flex-direction: column;
+   }
+   .button-container > button, .button-container > a {
+      width: 70%;
+   }
+}
+
+@media only screen and (max-width: 600px) {
+
 }
 
 
