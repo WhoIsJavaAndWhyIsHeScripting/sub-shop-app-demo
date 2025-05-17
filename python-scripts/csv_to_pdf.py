@@ -7,17 +7,17 @@ from a CSV to a printable PDF.
 
 A settings file is used to read the CSV and make the PDF. 
 
-Written November 2024. 
+Written November 2024, extensively modified May 2025. 
 '''
 
-import csv 
-import json 
+import csv  
 import datetime 
 import math 
 
 from reportlab.pdfgen import canvas 
-from reportlab.lib.pagesizes import letter 
-from reportlab.lib.pagesizes import inch  
+from reportlab.lib.pagesizes import letter, inch 
+from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet 
+from reportlab.platypus import Paragraph, Frame 
 
 
 def main(csv_file, settings, delimiter=',', debug=False): 
@@ -36,12 +36,25 @@ def main(csv_file, settings, delimiter=',', debug=False):
     #This puts the origin in the top left corner, though the 
     # disavantage is that negative y values are neeeded. 
 
+    # Define the text style 
+    styles = getSampleStyleSheet() 
+    text_style = ParagraphStyle( 
+        "text_style", 
+        parent=styles["Normal"], 
+        fontSize=settings["font-size"], 
+        fontName=settings["font"], 
+        # Note: Paragraphs wrap text automatically. 
+    )
+
     with open(csv_file) as f: 
         reader = csv.DictReader(f, delimiter=delimiter) 
         headers = reader.fieldnames
         i = 0 
         for row in reader: 
-            text_object = pdf.beginText(
+            if debug: print(i) 
+
+            # Alternative, but less adaptable method for adding text 
+            '''text_object = pdf.beginText(
                 #The measurements below are for Avery Label Paper Presta 94207 (10 labels per page) instead. 
                 #(5/32 + 0.50 + (133/32)*(i%2))*inch, 
                 #-(0.5 + 0.25 + 2*(math.floor((i/2)%5)))*inch, 
@@ -58,30 +71,67 @@ def main(csv_file, settings, delimiter=',', debug=False):
                     ) * inch,
 
                 )
-            text_object.setFont(settings["font"], settings["font-size"])
+            text_object.setFont(settings["font"], settings["font-size"])'''
 
+
+            # Frames contain other objects like Paragraphs. 
+            frame_object = Frame( 
+                #The measurements below are for Avery Label Paper Presta 94207 (10 labels per page) instead. 
+                #(5/32 + (133/32)*(i%2))*inch, 
+                #-(0.5 + 2*(math.floor((i/2)%5)))*inch, 
+
+                #(margin + appropriate displacement for the ith box)*inch
+
+                # x location 
+                (
+                    settings["xmargin"] + settings["sticker-width"]*(i%2)
+                    ) * inch, 
+
+                # y location 
+                -(
+                    settings["ymargin"] + 
+                    settings["sticker-height"]*math.floor(((i/2) % (settings["labels"]/2)))
+                    # This extra settings["sticker-height"] is since Frame measures from the bottom left. 
+                    + settings["sticker-height"]) * inch,
+                
+                # width and height of Frame 
+                settings["sticker-width"] * inch, 
+                settings["sticker-height"] * inch, 
+
+                leftPadding = settings["xpadding"] * inch, 
+                topPadding = settings["ypadding"] * inch,
+
+                showBoundary=int(debug), # Only draw Frame boundary if debug==True 
+            )
+
+
+            text = [] 
             for h in headers: 
-                text = f"{h}: {row[h]}" 
+                text.append(f"{h}: {row[h]}") 
                 if debug: print(text)
-                text_object.textLine(text)
-                    
+
+            
             if (i != 0) and (i % settings["labels"] == 0): 
                 #i.e., go to next page if this is the last box on a page 
                 pdf.showPage() 
                 pdf.translate(0, height) 
             
-            pdf.drawText(text_object)
+            #pdf.drawText(text_object)
+            frame_object.addFromList(
+                [ Paragraph('<br/>'.join(text),text_style) ],
+                pdf,
+                )
+            
             i += 1 
 
 
-    #if i%10 != 0:
-    if True: 
-        #does not actually display the page - rather moves to the next page 
-        pdf.showPage()  
+    #does not display the page - just moves to the next page 
+    pdf.showPage() 
     pdf.save() 
 
 
 
 if __name__ == "__main__": 
-    print(f"Running csv_to_pdf.py at {str(datetime.datetime.now())}.")
-    main("orders.csv", "settings.json", debug=True)
+    from settings import PDF_VARS 
+    print(f"Running csv_to_pdf.py at {str(datetime.datetime.now())}.") 
+    main("orders.csv", PDF_VARS, debug=True)
