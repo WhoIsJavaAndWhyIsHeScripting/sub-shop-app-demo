@@ -1,12 +1,28 @@
+// for node instance creation
 const express = require('express');
+
+// for file reading
 const fs = require('fs');
+
+// the node instance
 const app = express();
+
+// for file paths
 const path = require('path');
+
+// using http support to create the node instance, https is handled 
 const http = require('http');
+
+// https credentials, uses symbolic links to point to the following credential files
 const credentials = {
   key: fs.readFileSync('privkey.pem', 'utf-8'), 
   cert: fs.readFileSync('fullchain.pem', 'utf-8'),
 };
+
+// for verifying Google ID_TOKENs
+const { OAuth2Client } = require('google-auth-library');
+const CLIENT_ID = "702804890232-pj9j2siaa55563pild655ev156i36un5.apps.googleusercontent.com";
+const client = new OAuth2Client(CLIENT_ID);
 
 // Serve static files from the 'public' folder
 app.use(express.static(path.join(__dirname, 'layout', 'admin-page', 'admin-ingredients')));
@@ -137,7 +153,66 @@ app.post('/submit2', (req, res) => {
   // redirect back to the users page
   res.redirect('/users');
 });
-// populate the sub order csv with the form data
+
+
+//redirect to order page after successful Google authentication
+app.post('/order', (req, res) => {
+  var credential = parseJwt(req.body.credential);
+
+  try {
+    const user = verifyToken(credential);
+
+    res.cookie('session_token', credential, {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'Lax',
+      maxAge: 1000 * 60 * 60 * 24
+    });
+
+  var email = credential.email;
+  var name = credential.given_name + " ";
+  
+  var family_name = credential.family_name;
+  if(credential.family_name.includes("(Student)")) {
+    name += family_name.split(" ")[0];
+  } else {
+    name += family_name;
+  }
+
+  console.log(email);
+  console.log(name);
+
+  res.redirect('/order');
+
+  } catch (err) {
+    console.error("Token verification failed:", err);
+    res.status(401).send("Invalid token");
+  }
+});
+
+// verify Google ID_TOKEN before using its information
+function verifyToken(token) {
+  /*const ticket = client.verifyIdToken({ ****Commented out b/c the Google Auth Library is buggin****
+    idToken: token,
+    audience: CLIENT_ID
+  });
+  return ticket.idToken;*/ // contains user info
+
+  return token;
+}
+
+// parse Google ID_TOKEN
+function parseJwt (token) {
+  const base64Url = token.split('.')[1];
+  const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+  const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+  }).join(''));
+
+  return JSON.parse(jsonPayload);
+}
+
+
 // populate the sub order csv with the form data
 app.post('/order-submit', (req, res) => {
   let time = new Date();
@@ -145,13 +220,14 @@ app.post('/order-submit', (req, res) => {
   let lunchPeriod = req.body.period;
   let inch = req.body.inch;
   let bread = req.body.bread;
-  let toasted = req.body.toasted;
+  let toasted = req.body.toasted;:
   let protein = req.body.protein;
   let toppings = req.body.veggies;
   let sauces = req.body.condiments;
-  const email = req.body.email;
+  let email = req.body.email;
+  let name = req.body.name;
   let base = "";
-  let arrayize = [lunchPeriod, base, protein, toppings, sauces, email];
+  let arrayize = [lunchPeriod, base, protein, toppings, sauces, email, name];
   // clean up data
   for (let i = 2; i < arrayize.length-1; i++) {
     if ("" + arrayize[i] == "undefined") {
@@ -186,7 +262,7 @@ app.post('/order-submit', (req, res) => {
   }
   base += bread;
   arrayize[1] = base;
-  fs.appendFile(path.join(__dirname, "layout", "sub-orders.csv"), `\n${dateAndTime};${arrayize[0]};${arrayize[1]};${arrayize[2]};${arrayize[3]};${arrayize[4]};${arrayize[5]}`, () => {
+  fs.appendFile(path.join(__dirname, "layout", "sub-orders.csv"), `\n${dateAndTime};${arrayize[0]};${arrayize[1]};${arrayize[2]};${arrayize[3]};${arrayize[4]};${arrayize[5]};${arrayize[6]}`, () => {
     res.redirect('/');
   });
 
