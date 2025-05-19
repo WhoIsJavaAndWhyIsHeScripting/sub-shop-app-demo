@@ -43,7 +43,7 @@ function updateTime() {
   var hour = currentTime.getHours();
   var minute = currentTime.getMinutes();
   hour += minute/60;
-  if (hour >= 7.5 && hour < 20.5) {
+  if (hour >= 7.5 && hour < 9.5) {
     isOpen = true;
   } else {
     isOpen = false;
