@@ -60,17 +60,17 @@ app.use(express.static(__dirname));
 // route - the actual path on the server/the subpage on the internet (subshop-dev.uaschools.io/route)
 // path - the path for the file that will be sent
 // verify - boolean, whether you should verify if the shop is open when sending the file
-function loadPage(route, path, verify) {
+function loadPage(route, sendPath, verify) {
   app.get(route, (req, res) => {
     if (verify) {
       updateTime();
       if (isOpen) {
-        res.sendFile(path);
+        res.sendFile(sendPath);
       } else {
         res.sendFile(path.join(__dirname, 'layout', 'sorry.html'));
       }
     } else {
-      res.sendFile(path.join(path));
+      res.sendFile(path.join(sendPath));
     }
   })
 }
