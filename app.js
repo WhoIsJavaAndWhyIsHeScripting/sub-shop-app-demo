@@ -43,7 +43,7 @@ function updateTime() {
   var hour = currentTime.getHours();
   var minute = currentTime.getMinutes();
   hour += minute/60;
-  if (hour >= 7.5 && hour < 9.5) {
+  if (hour >= 7.5 && hour < 20.5) {
     isOpen = true;
   } else {
     isOpen = false;
@@ -63,14 +63,15 @@ app.use(express.static(__dirname));
 function loadPage(route, path, verify) {
   app.get(route, (req, res) => {
     if (verify) {
+      updateTime();
       if (isOpen) {
         res.sendFile(path);
       } else {
         // to do: redirect to the shop is closed page (merge in Aiden's branch)
-        res.send("WE'RE CLOSED!!!!");
+        res.sendFile(path.join(''));
       }
     } else {
-      res.sendFile(path);
+      res.sendFile(path.join(__dirname, 'layout', 'sorry.html'));
     }
   })
 }
