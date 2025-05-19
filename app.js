@@ -206,7 +206,6 @@ app.post('/order', (req, res) => {
 
     var email = credential.email;
     var name = credential.given_name + " ";
-    req.session.name = name;
   
     var family_name = credential.family_name;
     if(credential.family_name.includes("(Student)")) {
@@ -214,6 +213,7 @@ app.post('/order', (req, res) => {
     } else {
       name += family_name;
     }
+    req.session.name = name;
 
     console.log(email);
     console.log(name);
