@@ -5,8 +5,8 @@ const app = express();
 const path = require('path');
 const http = require('http');
 const credentials = {
-    key: fs.readFileSync('./privkey.pem', 'utf-8'), 
-    cert: fs.readFileSync('./fullchain.pem', 'utf-8'),
+   // key: fs.readFileSync('./privkey.pem', 'utf-8'), 
+    //cert: fs.readFileSync('./fullchain.pem', 'utf-8'),
 };
 
 // Serve static files from the 'public' folder
@@ -15,9 +15,9 @@ app.use(express.static(path.join(__dirname, 'layout', 'admin-page', 'admin-home'
 app.use(express.static(path.join(__dirname, 'layout', 'admin-page', 'admin-users')));
 app.use(express.static(__dirname));
 // 404 error handler
-app.use((req, res) => {
-  res.status(404).sendFile(path.join(__dirname, 'layout', '404.html'));
-});
+//app.use((req, res) => {
+  //res.status(404).sendFile(path.join(__dirname, 'layout', '404.html'));
+//});
 // route for home page
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'layout', 'subShopFront.html'));
