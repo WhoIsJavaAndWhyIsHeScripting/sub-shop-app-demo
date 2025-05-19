@@ -47,10 +47,10 @@
                 <fieldset>
                     <legend>Lunch Period</legend>
                     <label>
-                        <input type="radio" name="period" value="4th"> 4th Period Lunch
+                        <input type="radio" id="4th" name="period" value="4th"> 4th Period Lunch
                     </label><br>
                     <label>
-                        <input type="radio" name="period" value="5th"> 5th Period Lunch
+                        <input type="radio" id="4th" name="period" value="5th"> 5th Period Lunch
                     </label>
                 </fieldset>
     <fieldset>
@@ -205,11 +205,13 @@
    </fieldset>
    </td>
    </tr>
-   </table>   <!--Adding type="button" prevents a button from submitting the form.-->
-   <button class="myButton" id="proceed" style="float: left;" onclick="responsiveSummary()" type="button"><strong>Review Order</strong></button>
-   <button class="myButton" type="button"><a style="text-decoration: none; color: white;" href="/"><strong>Return to Homepage!</strong></a></button>
+   </table> 
+   <div class="flex button-container">  <!--Adding type="button" prevents a button from submitting the form.-->
+      <button class="myButton" id="proceed" onclick="responsiveSummary()" type="button"><strong>Review Order</strong></button>
+      <button class="myButton" type="button"><a style="text-decoration: none; color: white;" href="/"><strong>Return to Homepage!</strong></a></button>
+    </div>
    </div>
-   <div class="flex">
+   <div class="flex button-container">
       <a id="submitButton" class="end"><input id="submit" type="submit" class="submit" value="Submit" style="visibility: hidden"/></a>
       <a id="goBack" class="end"></a>
    </div>
@@ -225,3 +227,4 @@
     document.getElementById("form").addEventListener("submit", submitOrder);
 </script>
 </html>
+

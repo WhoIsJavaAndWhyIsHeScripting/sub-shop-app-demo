@@ -3,14 +3,17 @@
 Commented out code is for using a Google oauth file or 
 for ssl; it is best left as is.  
 
-Currently set up to use a STMP server at UAHS. This 
+Currently set up to use a district STMP server. This 
 requires no login as long as one is on the school Wi-Fi.
 (if outside of school, a socket.gaierror occurs or, after 
-a time, an OSError saying the network is unreachable).
+a time, an OSError saying the network is unreachable). 
+
+Note: An empty string for the PDF filename is considered a lack 
+of any sub orders. 
 
 Written January 2025.'''  
 
-from settings import EMAIL_DETAILS 
+from settings import EMAIL_VARS 
 
 import datetime 
 
@@ -30,35 +33,42 @@ def main(pdf_file, recipients, oauth_file=''):
     #server_address = "smtp.uaschools.org" 
     #sender_email = "EMAIL REMOVED" 
 
+    # Should probably move into settings.py 
     date = datetime.date.today().strftime("%B %d, %Y")
-    subject = f"Bear Bites Orders for {date}"
-    body = f"Hello! Attached are today's orders." 
+    subject = f"Bear Bites Orders for {date}" 
+
+    if not pdf_file:  # i.e. if there are no orders for today 
+        body = "Hello! There were no orders for today." 
+
+    else: 
+        body = f"Hello! Attached are today's orders." 
 
     #Create object representing message content 
     message = MIMEMultipart() 
-    message["From"] = EMAIL_DETAILS.sender_email 
+    message["From"] = EMAIL_VARS["sender_email"] 
     message["To"] = ", ".join(recipients)  
     message["Subject"] = subject 
     message.attach(MIMEText(body, "plain")) 
 
-    #Open and attached the PDF file 
-    with open(pdf_file, 'rb') as attachment: 
-        part = MIMEBase("application", "octet-stream")
-        part.set_payload(attachment.read()) 
-    encoders.encode_base64(part) 
-    part.add_header(
-        "content-disposition", 
-        "attachment",
-        filename=pdf_file, 
-    )
-    message.attach(part) 
+    if pdf_file: #  i.e. there are orders today 
+        #Open and attached the PDF file 
+        with open(pdf_file, 'rb') as attachment: 
+            part = MIMEBase("application", "octet-stream")
+            part.set_payload(attachment.read()) 
+        encoders.encode_base64(part) 
+        part.add_header(
+            "content-disposition", 
+            "attachment",
+            filename=pdf_file, 
+        )
+        message.attach(part) 
 
     #context = ssl.create_default_context() #for encryption 
-    with smtplib.SMTP(EMAIL_DETAILS.server_address, EMAIL_DETAILS.port) as server: 
+    with smtplib.SMTP(EMAIL_VARS["server_address"], EMAIL_VARS["port"]) as server: 
         #server.login(sender_email, password=input("sender password?")) #not secure, but also unused 
         try: 
             #There is no need to login if the connection is successfully made. 
-            server.sendmail(EMAIL_DETAILS.sender_email, recipients, message.as_string()) 
+            server.sendmail(EMAIL_VARS["sender_email"], recipients, message.as_string()) 
         except Exception as e:
             print("There was an error sending the email.")
             raise e 
