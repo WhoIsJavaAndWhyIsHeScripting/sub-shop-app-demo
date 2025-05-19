@@ -165,31 +165,37 @@ app.post('/order', (req, res) => {
   try {
     const user = verifyToken(credential);
 
-    res.cookie('session_token', credential, {
+    var email = credential.email;
+    var name = credential.given_name + " ";
+  
+    var family_name = credential.family_name;
+    if(credential.family_name.includes("(Student)")) {
+      name += family_name.split(" ")[0];
+    } else {
+      name += family_name;
+    }
+
+    console.log(email);
+    console.log(name);
+
+    res.cookie('email', email, {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'Lax',
+      maxAge: 1000 * 60 * 60 * 24
+    });
+    res.cookie('name', name, {
       httpOnly: true,
       secure: true,
       sameSite: 'Lax',
       maxAge: 1000 * 60 * 60 * 24
     });
 
-  var email = credential.email;
-  var name = credential.given_name + " ";
-  
-  var family_name = credential.family_name;
-  if(credential.family_name.includes("(Student)")) {
-    name += family_name.split(" ")[0];
-  } else {
-    name += family_name;
-  }
-
-  console.log(email);
-  console.log(name);
-
-  res.redirect('/order');
+    res.redirect('/order');
 
   } catch (err) {
-    console.error("Token verification failed:", err);
-    res.status(401).send("Invalid token");
+      console.error("Token verification failed:", err);
+      res.status(401).send("Invalid token");
   }
 });
 
@@ -223,7 +229,7 @@ app.post('/order-submit', (req, res) => {
   let lunchPeriod = req.body.period;
   let inch = req.body.inch;
   let bread = req.body.bread;
-  let toasted = req.body.toasted;:
+  let toasted = req.body.toasted;
   let protein = req.body.protein;
   let toppings = req.body.veggies;
   let sauces = req.body.condiments;
