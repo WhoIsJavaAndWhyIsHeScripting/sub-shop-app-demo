@@ -67,11 +67,10 @@ function loadPage(route, path, verify) {
       if (isOpen) {
         res.sendFile(path);
       } else {
-        // to do: redirect to the shop is closed page (merge in Aiden's branch)
-        res.sendFile(path.join(''));
+        res.sendFile(path.join(__dirname, 'layout', 'sorry.html'));
       }
     } else {
-      res.sendFile(path.join(__dirname, 'layout', 'sorry.html'));
+      res.sendFile(path.join(path));
     }
   })
 }
