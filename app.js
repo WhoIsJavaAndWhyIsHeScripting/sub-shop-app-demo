@@ -19,10 +19,33 @@ const credentials = {
   cert: fs.readFileSync('fullchain.pem', 'utf-8'),
 };
 
+// creates a session that stores the user email
+const session = require ('express-session');
+// initialize session
+app.use(session({
+  secret: randomUUID(),
+  resave: true,
+  saveUninitialized: false
+}))
+
 // for verifying Google ID_TOKENs
 const { OAuth2Client } = require('google-auth-library');
 const CLIENT_ID = "702804890232-pj9j2siaa55563pild655ev156i36un5.apps.googleusercontent.com";
 const client = new OAuth2Client(CLIENT_ID);
+
+// check the server time and open/close the server at given times
+var isOpen = false;
+function updateTime() {
+  var currentTime = new Date();
+  var hour = currentTime.getHours();
+  var minute = currentTime.getMinutes();
+  hour += minute/60;
+  if (hour >= 7.5 && hour < 9.5) {
+    isOpen = true;
+  } else {
+    isOpen = false;
+  }
+}
 
 // Serve static files from the 'public' folder
 app.use(express.static(path.join(__dirname, 'layout', 'admin-page', 'admin-ingredients')));
@@ -30,18 +53,30 @@ app.use(express.static(path.join(__dirname, 'layout', 'admin-page', 'admin-home'
 app.use(express.static(path.join(__dirname, 'layout', 'admin-page', 'admin-users')));
 app.use(express.static(__dirname));
 
+// function for sending a file to a path
+// route - the actual path on the server/the subpage on the internet (subshop-dev.uaschools.io/route)
+// path - the path for the file that will be sent
+// verify - boolean, whether you should verify if the shop is open when sending the file
+function loadPage(route, path, verify) {
+  app.get(route, (req, res) => {
+    if (verify) {
+      if (isOpen) {
+        res.sendFile(path);
+      } else {
+        // to do: redirect to the shop is closed page (merge in Aiden's branch)
+        res.send("WE'RE CLOSED!!!!");
+      }
+    } else {
+      res.sendFile(path);
+    }
+  })
+}
 // route for home page
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'layout', 'subShopFront.html'));
-})
+loadPage('/', path.join(__dirname, 'layout', 'subShopFront.html'), true);
 // route for order page
-app.get('/order', (req, res) => {
-  res.sendFile(path.join(__dirname, 'layout', 'subShopOrder.html'));
-})
+loadPage('/order', path.join(__dirname, 'layout', 'subShopOrder.html'), true);
 // route for credits page
-app.get('/credits', (req, res) => {
-  res.sendFile(path.join(__dirname, 'layout', 'credits-page.html'));
-})
+loadPage('/credits', path.join(__dirname, 'layout', 'credits-page.html'), true);
 // Route for admin home
 app.get('/admin-home', (req, res) => {
     res.sendFile(path.join(__dirname, 'layout', 'admin-page', 'admin-home', 'admin-home.html'));
@@ -167,6 +202,7 @@ app.post('/order', (req, res) => {
 
     var email = credential.email;
     var name = credential.given_name + " ";
+    req.session.name = name;
   
     var family_name = credential.family_name;
     if(credential.family_name.includes("(Student)")) {
@@ -233,12 +269,11 @@ app.post('/order-submit', (req, res) => {
   let protein = req.body.protein;
   let toppings = req.body.veggies;
   let sauces = req.body.condiments;
-  let email = req.body.email;
-  let name = req.body.name;
+  let name = req.session.name;
   let base = "";
-  let arrayize = [lunchPeriod, base, protein, toppings, sauces, email, name];
+  let arrayize = [name, lunchPeriod, base, protein, toppings, sauces];
   // clean up data
-  for (let i = 2; i < arrayize.length-1; i++) {
+  for (let i = 3; i < arrayize.length; i++) {
     if ("" + arrayize[i] == "undefined") {
       arrayize[i] = "None";
     } else {
@@ -247,7 +282,6 @@ app.post('/order-submit', (req, res) => {
       console.log(arrayize[i][0]);
       // check if element is an actual array in a lazy way so strings aren't separated by character
       if (arrayize[i][0].length > 1) {
-        console.log("hello :3");
         spacedEntry += arrayize[i][0];
         for (let j = 1; j < arrayize[i].length; j++) {
           spacedEntry += `, ${arrayize[i][j]}`;
@@ -270,8 +304,8 @@ app.post('/order-submit', (req, res) => {
     base += "Toasted ";
   }
   base += bread;
-  arrayize[1] = base;
-  fs.appendFile(path.join(__dirname, "layout", "sub-orders.csv"), `\n${dateAndTime};${arrayize[0]};${arrayize[1]};${arrayize[2]};${arrayize[3]};${arrayize[4]};${arrayize[5]};${arrayize[6]}`, () => {
+  arrayize[2] = base;
+  fs.appendFile(path.join(__dirname, "layout", "sub-orders.csv"), `\n${arrayize[0]};${arrayize[1]};${arrayize[2]};${arrayize[3]};${arrayize[4]};${arrayize[5]}`, () => {
     res.redirect('/');
   });
 
