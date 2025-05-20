@@ -24,6 +24,7 @@ const session = require ('express-session');
 
 // generate a random string of numbers and letters for every session
 const { randomUUID } = require('crypto');
+
 // initialize session
 app.use(session({
   secret: randomUUID(),
@@ -76,44 +77,56 @@ function loadPage(route, sendPath, verify) {
 }
 // route for home page
 loadPage('/', path.join(__dirname, 'layout', 'subShopFront.html'), true);
+
 // route for order page
 loadPage('/order', path.join(__dirname, 'layout', 'subShopOrder.html'), true);
+
 // route for credits page
 loadPage('/credits', path.join(__dirname, 'layout', 'credits-page.html'), true);
+
 // Route for admin home
 app.get('/admin-home', (req, res) => {
     res.sendFile(path.join(__dirname, 'layout', 'admin-page', 'admin-home', 'admin-home.html'));
 });
+
 // route for ingredients page
 app.get('/ingredients', (req, res) => {
   res.sendFile(path.join(__dirname, 'layout', 'admin-page', 'admin-ingredients', 'admin-ingredients.html'));
 });
+
 // route for users page
 app.get('/users', (req, res) => {
   res.sendFile(path.join(__dirname, 'layout', 'admin-page', 'admin-users', 'admin-users.html'));
 });
+
 // create route for css boilerplate
 app.get('/boilerplate', (req, res) => {
   res.sendFile(path.join(__dirname, 'layout', 'styles', 'boilerplate.css'));
 });
+
 // create route for css boilerplate for main pages
 app.get('/main-pages-css', (req, res) => {
   res.sendFile(path.join(__dirname, 'layout', 'styles', 'main-pages.css'));
 });
+
 // create route for out of stock file
 app.get('/out-of-stock', (req, res) => {
   res.sendFile(path.join(__dirname, 'layout', 'admin-page', 'admin-ingredients', 'out-of-stock.txt'));
 });
+
 // route for order-scripts.js
 app.get('/order-scripts-js', (req, res) => {
   res.sendFile(path.join(__dirname, 'layout', 'order-scripts.js'));
 });
+
 // route for functions.js
 app.get('/functions-js', (req, res) => {
   res.sendFile(path.join(__dirname, 'functions.js'));
 });
+
 // create request body thing i don't really know how this works
-app.use(express.urlencoded({extended: true}))
+app.use(express.urlencoded({extended: true}));
+
 // handle post request when ingredients form submitted
 app.post('/submit', (req, res) => {
   // get the values of the checked checkboxes
@@ -136,7 +149,8 @@ app.post('/submit', (req, res) => {
 
  // go back to ingredients page
  res.redirect("/ingredients");
-})
+});
+
 // handle post request when users form submitted
 app.post('/submit2', (req, res) => {
   // handle when a user is ADDED to the list
@@ -313,10 +327,12 @@ app.post('/order-submit', (req, res) => {
   });
 
 });
+
 // 404 error handler
 app.use((req, res) => {
   res.status(404).sendFile(path.join(__dirname, 'layout', '404.html'));
 });
+
 // check if a value is undefined, then remove it
 // Start the server
 http.createServer(credentials, app).listen(3000, "localhost", () => {
