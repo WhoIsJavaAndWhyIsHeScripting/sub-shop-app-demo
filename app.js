@@ -79,7 +79,16 @@ function loadPage(route, sendPath, verify) {
 loadPage('/', path.join(__dirname, 'layout', 'subShopFront.html'), true);
 
 // route for order page
-loadPage('/order', path.join(__dirname, 'layout', 'subShopOrder.html'), true);
+app.get('/order', (req, res) => {
+    updateTime();
+    if (isOpen && "" + req.session.user != "undefined") {
+      res.sendFile(path.join(__dirname, 'layout', 'subShopOrder.html'));
+    } else if ("" + req.session.user == "undefined") {
+      res.redirect("/")
+    } else {
+      res.sendFile(path.join(__dirname, 'layout', 'sorry.html'));
+    }
+ });
 
 // route for credits page
 loadPage('/credits', path.join(__dirname, 'layout', 'credits-page.html'), true);
