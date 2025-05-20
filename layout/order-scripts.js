@@ -120,19 +120,6 @@ function submitOrder(event) {
 
     //Finally, it thanks the user and reminds them when they can pick it up.
     if (valid == true) {
-        var periods = document.getElementsByName("period"); 
-        var period = ""; 
-        for (let i=0; i < periods.length; ++i) {
-            if (periods[i].checked) {
-                period = periods[i].value; 
-            }
-        }
-        if (period == "") {
-            event.preventDefault(); 
-            valid = false; 
-            alert("You must select a period to pick up.")
-            return; 
-        }
         alert("Thank you for your order! \n Please remember to pick up your sandwich during "+period+" period lunch.");
         var cookieInput = document.createElement("input");
         cookieInput.name = "cookie";
@@ -186,6 +173,22 @@ function validate_form(event) {
         if (salad.checked && (lengths[0].checked || lengths[1].checked)) {
             alert("Length is ignored for salads. \n(No 12 inch salads!)");
         } 
+    }
+
+    // check if a period is selected
+        
+    // check if period is selected
+    var periods = document.getElementsByName("period"); 
+    var period = ""; 
+    for (let i=0; i < periods.length; ++i) {
+        if (periods[i].checked) {
+            period = periods[i].value; 
+        }
+    }
+    if (period == "") {
+        event.preventDefault(); 
+        valid = false; 
+        alert("You must select a period to pick up.")
     }
     return valid; 
 }
