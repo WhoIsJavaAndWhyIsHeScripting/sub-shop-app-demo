@@ -75,7 +75,9 @@ if __name__ == "__main__":  # i.e if not imported as a module
             print("Made PDF.")
 
         try: 
-            email_pdf.main("orders.pdf", settings.RECIPIENTS)  
+            email_pdf.main("orders.pdf", 
+                           settings.RECIPIENTS, 
+                           csv_file=settings.CSV_PATH)  
         except Exception as e: 
             print() 
             print("Exception occured emailing pdf.")

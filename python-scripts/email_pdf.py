@@ -6,7 +6,8 @@ for ssl; it is best left as is.
 Currently set up to use a district STMP server. This 
 requires no login as long as one is on the school Wi-Fi.
 (if outside of school, a socket.gaierror occurs or, after 
-a time, an OSError saying the network is unreachable). 
+a time, an OSError saying the network is unreachable or, 
+sometimes, a ConnectionRefusedError). 
 
 Note: An empty string for the PDF filename is considered a lack 
 of any sub orders. 
@@ -27,7 +28,7 @@ from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart 
 from email.mime.text import MIMEText  
 
-def main(pdf_file, recipients, debug=False): 
+def main(pdf_file, recipients, csv_file='', debug=False): 
     #Configuration for the SMTP server. - now uses settings.py 
     #port = 25  
     #server_address = "smtp.uaschools.org" 
@@ -58,10 +59,24 @@ def main(pdf_file, recipients, debug=False):
         encoders.encode_base64(part) 
         part.add_header(
             "content-disposition", 
-            "attachment",
+            "attachment", 
             filename=pdf_file, 
         )
         message.attach(part) 
+
+    if pdf_file and csv_file: 
+        # Open and attach the csv file if there is a pdf file as well 
+        with open(csv_file, 'r') as attachment: 
+            part = MIMEBase("text", "csv")
+            part.set_payload(attachment.read()) 
+        encoders.encode_base64(part) 
+        part.add_header(
+            "content-disposition", 
+            "attachment", 
+            filename=csv_file, 
+        )
+        message.attach(part) 
+
 
     if debug: 
         print(message.as_string()) 
@@ -85,5 +100,6 @@ if __name__ == "__main__": #i.e. if not imported as a module
     main(
         "orders.pdf", 
         [input("send to?")], 
+        csv_file="orders.csv", 
         debug=True, 
         )
