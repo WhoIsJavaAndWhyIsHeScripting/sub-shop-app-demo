@@ -12,7 +12,7 @@ function googleAuth() {
     login_uri: "https://subshop-dev.uaschools.io/order"
   });
   google.accounts.id.renderButton(
-        document.getElementById("order-now"),
+        document.getElementById("proceed"),
         { theme: "outline", size: "large" }  // customization attributes
   );
 }

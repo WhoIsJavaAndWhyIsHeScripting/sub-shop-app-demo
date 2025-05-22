@@ -17,7 +17,7 @@
     // then turns it into text format
     // returns the content of out-of-stock.txt
     async function fetchy() {
-        
+
         const fetcher = await fetch("out-of-stock.txt");
         data = await fetcher.text();
         return data;
@@ -96,8 +96,8 @@
     let proteinNames = ["Roasted Turkey", "Bacon", "Honey Ham", "Salami", "Pepperoni", 
     "American Cheese", "Swiss Cheese", "Cheddar Cheese", "Hot Pepper Cheese", "Provolone Cheese", "Shredded Cheddar"];
     let toppingIds = ["onions", "cucumbers", "tomatoes", "olives", "spinach", "lettuce", 
-    "pickles", "jalapeno", "green-peppers", "hummus", "banana-peppers"];
-    let toppingNames = ["Onions", "Cucumbers", "Tomatoes", "Olives", "Spinach", "Lettuce", "Pickles", "Jalepeños", "Green Peppers", "Hummus", "Banana Peppers"];
+    "pickles", "jalapeno", "green-peppers", "hummus", "banana-peppers", "avocado"];
+    let toppingNames = ["Onions", "Cucumbers", "Tomatoes", "Black Olives", "Spinach", "Lettuce", "Pickles", "Jalepeños", "Green Peppers", "Hummus", "Banana Peppers", "Avocado"];
     let sauceIds = ["hot-sauce", "ranch", "mayo", "ua-sauce"];
     let sauceNames = ["Hot Sauce", "Ranch", "Mayonnaise", "UA Sauce"];
     // load checkboxes for each fieldset

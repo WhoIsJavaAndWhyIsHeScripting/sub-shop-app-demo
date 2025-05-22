@@ -12,6 +12,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 <script src = "/order-scripts-js"></script>
+<script src="https://accounts.google.com/gsi/client" async defer onload="googleLibraryLoaded()"></script>
 <style>
     @media (scripting: none){
         .myButton[id="proceed"] {
@@ -150,36 +151,54 @@
    <!-- Veggie Options -->
    <fieldset>
        <legend>Vegetable Options</legend>
-       <label>
-           <input type="checkbox" id="onions" name="veggies" value="Onions"> Onions
-       </label><br>
-       <label>
-           <input type="checkbox" id="cucumbers" name="veggies" value="Cucumbers"> Cucumbers
-       </label><br>
-       <label>
-           <input type="checkbox" id="tomatoes" name="veggies" value="Tomatoes"> Tomatoes
-       </label><br>
-       <label>
-           <input type="checkbox" id="olives" name="veggies" value="Olives"> Olives
-       </label><br>
-       <label>
-           <input type="checkbox" id="spinach" name="veggies" value="Spinach"> Spinach
-       </label><br>
-       <label>
-           <input type="checkbox" id="lettuce" name="veggies" value="Lettuce"> Lettuce
-       </label><br>
-       <label>
-           <input type="checkbox" id="pickles" name="veggies" value="Pickles"> Pickles
-       </label><br>
-       <label>
-           <input type="checkbox" id="jalapeno" name="veggies" value="Jalapenos"> Jalapeños
-       </label><br>
-       <label>
-           <input type="checkbox" id="green-peppers" name="veggies" value="Green Peppers"> Green Peppers
-       </label><br>
-       <label>
-        <input type="checkbox" id="banana-peppers" name="veggies" value="Banana Peppers"> Banana Peppers
-      </label><br>
+        <label>
+            <input type="checkbox" name="veggies" id="hummus" value="Hummus"> Hummus
+            <br>
+        </label>
+        <label>
+            <input type="checkbox" name="veggies" id="avocado" value="Avocado"> Avocado
+            <br>
+        </label>
+        <label>
+            <input type="checkbox" name="veggies" id="green-peppers" value="Green Peppers"> Green Peppers
+            <br>
+        </label>
+        <label>
+            <input type="checkbox" name="veggies" id="onions" value="Onions"> Onions
+            <br>
+        </label>
+        <label>
+            <input type="checkbox" name="veggies" id="jalapeno" value="Jalapeños"> Jalapeños
+            <br>
+        </label>
+        <label>
+            <input type="checkbox" name="veggies" id="olives" value="Olives"> Black Olives
+            <br>
+        </label>
+        <label>
+            <input type="checkbox" name="veggies" id="cucumbers" value="Cucumbers"> Cucumbers
+            <br>
+        </label>
+        <label>
+            <input type="checkbox" name="veggies" id="pickles" value="Pickles"> Dill Pickle Slices
+            <br>
+        </label>
+        <label>
+            <input type="checkbox" name="veggies" id="spinach" value="Spinach"> Spinach
+            <br>
+        </label>
+        <label>
+            <input type="checkbox" name="veggies" id="banana-peppers" value="Banana Peppers"> Banana Peppers
+            <br>
+        </label>
+        <label>
+            <input type="checkbox" name="veggies" id="tomatoes" value="Tomatoes"> Tomatoes
+            <br>
+        </label>
+        <label>
+            <input type="checkbox" name="veggies" id="lettuce" value="Lettuce"> Lettuce
+            <br>
+        </label>
    </fieldset>
    </td><td>
    <!-- Condiment Options -->
