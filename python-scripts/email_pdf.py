@@ -27,7 +27,7 @@ from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart 
 from email.mime.text import MIMEText  
 
-def main(pdf_file, recipients, oauth_file=''): 
+def main(pdf_file, recipients, debug=False): 
     #Configuration for the SMTP server. - now uses settings.py 
     #port = 25  
     #server_address = "smtp.uaschools.org" 
@@ -63,6 +63,9 @@ def main(pdf_file, recipients, oauth_file=''):
         )
         message.attach(part) 
 
+    if debug: 
+        print(message.as_string()) 
+
     #context = ssl.create_default_context() #for encryption 
     with smtplib.SMTP(EMAIL_VARS["server_address"], EMAIL_VARS["port"]) as server: 
         #server.login(sender_email, password=input("sender password?")) #not secure, but also unused 
@@ -70,14 +73,17 @@ def main(pdf_file, recipients, oauth_file=''):
             #There is no need to login if the connection is successfully made. 
             server.sendmail(EMAIL_VARS["sender_email"], recipients, message.as_string()) 
         except Exception as e:
-            print("There was an error sending the email.")
+            if debug: 
+                print("There was an error sending the email.")
             raise e 
         else: 
-            print(f"Mail sent with orders.pdf at {str(datetime.datetime.now())}.")
+            if debug: 
+                print(f"Mail sent with orders.pdf at {str(datetime.datetime.now())}.")
 
     
 if __name__ == "__main__": #i.e. if not imported as a module
     main(
         "orders.pdf", 
         [input("send to?")], 
+        debug=True, 
         )

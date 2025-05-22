@@ -4,7 +4,11 @@
 CSV_PATH = "../layout/sub-orders.csv" 
 #CSV_PATH = "./orders.csv" 
 SORT_CSV = True 
-SORT_BY = ["PERIOD", "LAST"]
+
+# What to do with different headers in the CSV 
+SORT_BY = ["PERIOD", "LAST"] 
+SKIP = ["TIME"] 
+
 RECIPIENTS = [
     "EMAIL REMOVED",  # placeholders 
     "EMAIL REMOVED",

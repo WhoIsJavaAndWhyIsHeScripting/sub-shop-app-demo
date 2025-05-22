@@ -20,12 +20,13 @@ from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 from reportlab.platypus import Paragraph, Frame 
 
 
-def main(csv_file, settings, delimiter=',', debug=False): 
+def main(csv_file, settings, skip=[], delimiter=',', debug=False): 
     """
     See module docstring for more details. 
 
     csv_file - filename of the CSV file from which the PDF shall be made 
-    settings - a dictionary of various dimensions for making the PDF (format in settings.py)
+    settings - a dictionary of various dimensions for making the PDF (format in settings.py) 
+    skip - headers (and values) to omit when  
 
     Returns None 
     """
@@ -106,7 +107,8 @@ def main(csv_file, settings, delimiter=',', debug=False):
 
             text = [] 
             for h in headers: 
-                text.append(f"{h}: {row[h]}") 
+                if h not in skip: 
+                    text.append(f"<b>{h}</b>: {row[h]}") 
                 if debug: print(text)
 
             
@@ -133,6 +135,6 @@ def main(csv_file, settings, delimiter=',', debug=False):
 
 
 if __name__ == "__main__": 
-    from settings import PDF_VARS 
+    from settings import PDF_VARS, SKIP 
     print(f"Running csv_to_pdf.py at {str(datetime.datetime.now())}.") 
-    main("orders.csv", PDF_VARS, debug=True)
+    main("orders.csv", PDF_VARS, skip=SKIP, debug=True)
