@@ -20,7 +20,7 @@ from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 from reportlab.platypus import Paragraph, Frame 
 
 
-def main(csv_file, settings, skip=[], delimiter=',', debug=False): 
+def main(csv_file, settings, skip=[], bold=[], delimiter=',', debug=False): 
     """
     See module docstring for more details. 
 
@@ -43,9 +43,10 @@ def main(csv_file, settings, skip=[], delimiter=',', debug=False):
         "text_style", 
         parent=styles["Normal"], 
         fontSize=settings["font-size"], 
-        fontName=settings["font"], 
-        wordWrap=True, 
+        fontName=settings["font"],  
+        leading=settings["font-size"]+1,  # line spacing 
     )
+    font_size_bold = settings["font-size-bold"]
 
     with open(csv_file) as f: 
         reader = csv.DictReader(f, delimiter=delimiter) 
@@ -106,10 +107,15 @@ def main(csv_file, settings, skip=[], delimiter=',', debug=False):
             )
 
             text = [] 
+            for h in bold: # add values such as name and period first 
+                if h not in skip and h in headers: 
+                    text.append(f"<font size={font_size_bold}><b>{h}: {row[h]}</b></font>")  
+                if debug: print(text) 
+
             for h in headers: 
-                if h not in skip: 
+                if h not in skip and h not in bold: 
                     text.append(f"<b>{h}</b>: {row[h]}") 
-                if debug: print(text)
+                if debug: print(text) 
 
             
             if (i != 0) and (i % settings["labels"] == 0): 
@@ -135,6 +141,6 @@ def main(csv_file, settings, skip=[], delimiter=',', debug=False):
 
 
 if __name__ == "__main__": 
-    from settings import PDF_VARS, SKIP 
+    from settings import PDF_VARS, SKIP, BOLD 
     print(f"Running csv_to_pdf.py at {str(datetime.datetime.now())}.") 
-    main("orders.csv", PDF_VARS, skip=SKIP, debug=True)
+    main("orders.csv", PDF_VARS, skip=SKIP, bold=BOLD, debug=True)

@@ -24,6 +24,7 @@ if __name__ == "__main__":  # i.e if not imported as a module
     print(f"SORT_CSV: {settings.SORT_CSV}") 
     print(f"RECIPIENTS: {settings.RECIPIENTS}")
     print(f"CLEAR_CSV: {settings.CLEAR_CSV}")
+    print() 
 
     errors = False 
 
@@ -63,6 +64,7 @@ if __name__ == "__main__":  # i.e if not imported as a module
                 settings.CSV_PATH, 
                 settings.PDF_VARS, 
                 skip=settings.SKIP, 
+                bold=settings.BOLD, 
                 delimiter=settings.CSV_DELIMITER, 
                 ) 
         except Exception as e: 
@@ -77,7 +79,8 @@ if __name__ == "__main__":  # i.e if not imported as a module
         try: 
             email_pdf.main("orders.pdf", 
                            settings.RECIPIENTS, 
-                           csv_file=settings.CSV_PATH)  
+                           csv_file=settings.CSV_PATH,
+                           )  
         except Exception as e: 
             print() 
             print("Exception occured emailing pdf.")

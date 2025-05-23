@@ -7,6 +7,7 @@ SORT_CSV = True
 
 # What to do with different headers in the CSV 
 SORT_BY = ["PERIOD", "LAST"] 
+BOLD = SORT_BY  # Bold increase font of these values 
 SKIP = ["TIME"] 
 
 RECIPIENTS = [
@@ -27,7 +28,8 @@ CSV_DELIMITER = ";"
 PDF_VARS = {
     # These settings are for Avery Presta 94215 label paper. Dimensions have been adjusted for space between stickers. 
     "font" : "Times-Roman",
-    "font-size": 14,
+    "font-size": 14, 
+    "font-size-bold": 20,  # For bolded values, not headers 
     "labels" : 6,
     "sticker-height" : 3.3333,
     "sticker-width" : 4.1888,

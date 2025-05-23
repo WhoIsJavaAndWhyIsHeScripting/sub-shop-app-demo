@@ -17,6 +17,7 @@ Written January 2025.'''
 from settings import EMAIL_VARS 
 
 import datetime 
+from pathlib import Path 
 
 #For smtp 
 import smtplib 
@@ -60,7 +61,7 @@ def main(pdf_file, recipients, csv_file='', debug=False):
         part.add_header(
             "content-disposition", 
             "attachment", 
-            filename=pdf_file, 
+            filename=Path(pdf_file).name, 
         )
         message.attach(part) 
 
@@ -73,7 +74,7 @@ def main(pdf_file, recipients, csv_file='', debug=False):
         part.add_header(
             "content-disposition", 
             "attachment", 
-            filename=csv_file, 
+            filename=Path(csv_file).name, 
         )
         message.attach(part) 
 
