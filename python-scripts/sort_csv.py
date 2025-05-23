@@ -24,9 +24,9 @@ def main(file_to_sort: str, fields: list, delimiter=',', reverse=False):
     rows.sort(key=operator.itemgetter(*field_ids), reverse=reverse) 
 
     with open(file_to_sort, "w") as f: 
-        writer = csv.writer(f)
+        writer = csv.writer(f, delimiter=delimiter)
         writer.writerows([header]+rows) 
 
 
 if __name__ == "__main__": 
-    main("../layout/sub-orders.csv", ["PERIOD", "LAST"]) 
+    main("orders.csv", ["PERIOD", "LAST"]) 
