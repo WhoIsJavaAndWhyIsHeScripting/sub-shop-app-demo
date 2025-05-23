@@ -30,7 +30,7 @@ if __name__ == "__main__":  # i.e if not imported as a module
 
     if settings.SORT_CSV: 
         try: 
-            sort_csv.main(settings.CSV_PATH, settings.SORT_BY) 
+            sort_csv.main(settings.CSV_PATH, settings.SORT_BY, delimiter=settings.CSV_DELIMITER) 
         except Exception as e: 
             print() 
             print("Exception occured sorting csv.")
