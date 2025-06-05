@@ -6,5 +6,5 @@ layout/sub-orders.csv
 python-scripts/history.csv
 python-scripts/orders.pdf
 python-scripts/__pycache__/*
-.vscode 
-.idea 
+.vscode/*
+.idea/*
