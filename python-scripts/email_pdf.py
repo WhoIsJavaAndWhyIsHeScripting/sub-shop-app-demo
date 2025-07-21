@@ -14,8 +14,6 @@ of any sub orders.
 
 Written January 2025.'''  
 
-from settings import EMAIL_VARS 
-
 import datetime 
 from pathlib import Path 
 
@@ -29,7 +27,7 @@ from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart 
 from email.mime.text import MIMEText  
 
-def main(pdf_file, recipients, csv_file='', debug=False): 
+def main(pdf_file, settings, recipients, csv_file='', debug=False): 
     #Configuration for the SMTP server. - now uses settings.py 
     #port = 25  
     #server_address = "smtp.uaschools.org" 
@@ -47,7 +45,7 @@ def main(pdf_file, recipients, csv_file='', debug=False):
 
     #Create object representing message content 
     message = MIMEMultipart() 
-    message["From"] = EMAIL_VARS["sender_email"] 
+    message["From"] = settings["sender_email"] 
     message["To"] = ", ".join(recipients)  
     message["Subject"] = subject 
     message.attach(MIMEText(body, "plain")) 
@@ -83,11 +81,11 @@ def main(pdf_file, recipients, csv_file='', debug=False):
         print(message.as_string()) 
 
     #context = ssl.create_default_context() #for encryption 
-    with smtplib.SMTP(EMAIL_VARS["server_address"], EMAIL_VARS["port"]) as server: 
+    with smtplib.SMTP(settings["server_address"], settings["port"]) as server: 
         #server.login(sender_email, password=input("sender password?")) #not secure, but also unused 
         try: 
             #There is no need to login if the connection is successfully made. 
-            server.sendmail(EMAIL_VARS["sender_email"], recipients, message.as_string()) 
+            server.sendmail(settings["sender_email"], recipients, message.as_string()) 
         except Exception as e:
             if debug: 
                 print("There was an error sending the email.")
@@ -97,9 +95,12 @@ def main(pdf_file, recipients, csv_file='', debug=False):
                 print(f"Mail sent with orders.pdf at {str(datetime.datetime.now())}.")
 
     
-if __name__ == "__main__": #i.e. if not imported as a module
+if __name__ == "__main__": #i.e. if not imported as a module 
+    from settings import EMAIL_VARS 
+
     main(
         "orders.pdf", 
+        EMAIL_VARS, 
         [input("send to?")], 
         csv_file="orders.csv", 
         debug=True, 
