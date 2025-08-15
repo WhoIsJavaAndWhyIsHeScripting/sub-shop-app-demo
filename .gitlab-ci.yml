@@ -1,4 +1,5 @@
 # 5/12/2025 Henry Bonath <EMAIL REMOVED>
+# 8/15/2025 Evan <EMAIL REMOVED>
 stages:
   - deploy
 
@@ -10,9 +11,11 @@ deploy-job:
   script:
     - echo "Deploying application..."
     - cd /srv
-    - [ -d /srv/SubShopApp/.git ] && (cd /srv/SubShopApp && git pull) || git clone https://oauth2:$GITLAB_WEB_TOKEN@gitlab-student.uaschools.org/compsci-club/subshopapp.git SubShopApp
+    - '[ -d /srv/SubShopApp/.git ] && cd (/srv/SubShopApp && git pull) || git clone https://oauth2:$GITLAB_WEB_TOKEN@gitlab-student.uaschools.org/compsci-club/subshopapp.git SubShopApp'
     - ln -s /etc/letsencrypt/live/subshop-dev.uaschools.io/fullchain.pem fullchain.pem
     - ln -s /etc/letsencrypt/live/subshop-dev.uaschools.io/privkey.pem
     - /usr/bin/npm install
     - echo "Application successfully deployed."
     - sudo systemctl restart subshopapp.service
+  rules: 
+    - if: $CI_COMMIT_BRANCH == "main"
