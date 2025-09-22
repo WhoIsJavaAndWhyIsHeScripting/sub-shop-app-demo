@@ -6,12 +6,16 @@ CSV_PATH = "../layout/sub-orders.csv"
 SORT_CSV = True 
 SORT_BY = ["PERIOD", "LAST"]
 RECIPIENTS = [
-    "EMAIL REMOVED",  # placeholders 
+    # Computer Science people 
+    "EMAIL REMOVED",  
     "EMAIL REMOVED",
     "EMAIL REMOVED", 
     "EMAIL REMOVED", 
+    
+    # Sub Shop people 
     "EMAIL REMOVED", 
     "EMAIL REMOVED", 
+    "EMAIL REMOVED",
 ]
 
 CLEAR_CSV = True 
