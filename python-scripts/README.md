@@ -1,20 +1,20 @@
 # SubShopApp
 Sub Shop App
 
-The python-scripts directory is explained below: 
+The python-scripts directory is explained below\: 
 
 Files\:  
 csv_to_pdf.py \- takes the data in orders.csv and produces a pdf (orders.pdf)  
 
-settings.py \- contains setttings for the other python scripts (imported by \_\_main\_\_.py and email_pdf.py)  
+settings.py \- contains setttings for the other python scripts (imported by \_\_main\_\_.py)
 
-*If there is a setting (e.g. server address, pdf font) to change this is the file to modify!* 
+*If there is a setting (e.g. server address, pdf font, email recipients) to change this is the file to modify!* 
 
 email_pdf.py \- sends the CSV file via email  
 
 sort_csv.py \- preforms an in-place sort of a CSV file's rows  
 
-\_\_main\_\_.py \- This runs both csv_to_pdf.py and email_pdf.py (it should be what is from Node or cron); Edit this to change who is emailed the orders each day or the CSV to read from. 
+\_\_main\_\_.py \- This runs both csv_to_pdf.py and email_pdf.py (currently scheduled with cron) 
    
 *This should be run from the python-scripts folder for relative paths to work!*  
 

@@ -15,26 +15,28 @@ import datetime
 import math 
 
 from reportlab.pdfgen import canvas 
-from reportlab.lib.pagesizes import letter, inch 
+from reportlab.lib.pagesizes import letter 
+from reportlab.lib.units import inch 
 from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet 
 from reportlab.platypus import Paragraph, Frame 
 
 
-def main(csv_file, settings, delimiter=',', debug=False): 
+def main(csv_file, settings, skip=[], bold=[], delimiter=',', debug=False): 
     """
     See module docstring for more details. 
 
     csv_file - filename of the CSV file from which the PDF shall be made 
-    settings - a dictionary of various dimensions for making the PDF (format in settings.py)
+    settings - a dictionary of various dimensions for making the PDF (format in settings.py) 
+    skip - headers (and values) to omit when  
 
     Returns None 
     """
     pdf = canvas.Canvas("orders.pdf", pagesize=letter)
     width, height = letter 
-    #adjusts the location of the origin for drawing on the pdf 
+    # adjusts the location of the origin for drawing on the pdf 
     pdf.translate(0, height) 
-    #This puts the origin in the top left corner, though the 
-    # disavantage is that negative y values are neeeded. 
+    # This puts the origin in the top left corner, though the 
+    # disadvantage is that negative y values are neeeded. 
 
     # Define the text style 
     styles = getSampleStyleSheet() 
@@ -42,9 +44,10 @@ def main(csv_file, settings, delimiter=',', debug=False):
         "text_style", 
         parent=styles["Normal"], 
         fontSize=settings["font-size"], 
-        fontName=settings["font"], 
-        # Note: Paragraphs wrap text automatically. 
+        fontName=settings["font"],  
+        leading=settings["font-size"]+1,  # line spacing 
     )
+    font_size_bold = settings["font-size-bold"]
 
     with open(csv_file) as f: 
         reader = csv.DictReader(f, delimiter=delimiter) 
@@ -101,14 +104,19 @@ def main(csv_file, settings, delimiter=',', debug=False):
                 leftPadding = settings["xpadding"] * inch, 
                 topPadding = settings["ypadding"] * inch,
 
-                showBoundary=int(debug), # Only draw Frame boundary if debug==True 
+                showBoundary=int(debug), # only draw Frame boundary if debug==True 
             )
 
-
             text = [] 
-            for h in headers: 
-                text.append(f"{h}: {row[h]}") 
-                if debug: print(text)
+            for h in bold: # add values such as name and period first 
+                if h not in skip and h in headers: 
+                    text.append(f"<font size={font_size_bold}><b>{h}: {row[h]}</b></font>")  
+                if debug: print(text) 
+
+            for h in headers:  # type: ignore
+                if h not in skip and h not in bold: 
+                    text.append(f"<b>{h}</b>: {row[h]}") 
+                if debug: print(text) 
 
             
             if (i != 0) and (i % settings["labels"] == 0): 
@@ -125,13 +133,14 @@ def main(csv_file, settings, delimiter=',', debug=False):
             i += 1 
 
 
-    #does not display the page - just moves to the next page 
-    pdf.showPage() 
+        # does not actually display the page - rather moves to the next page 
+        pdf.showPage()  
+
     pdf.save() 
 
 
 
 if __name__ == "__main__": 
-    from settings import PDF_VARS 
+    from settings import PDF_VARS, SKIP, BOLD 
     print(f"Running csv_to_pdf.py at {str(datetime.datetime.now())}.") 
-    main("orders.csv", PDF_VARS, debug=True)
+    main("orders.csv", PDF_VARS, skip=SKIP, bold=BOLD, debug=True)

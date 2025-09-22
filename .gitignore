@@ -5,6 +5,8 @@ node_modules/*
 layout/sub-orders.csv
 python-scripts/history.csv
 python-scripts/orders.pdf
-python-scripts/__pycache__/*
+python-scripts/__pycache__/
+*.pyc
 .vscode/*
 .idea/*
+log.txt
