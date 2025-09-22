@@ -8,11 +8,10 @@ THIS SCRIPT NEEDS TO BE RUN FROM ITS CONTAINING DIRECTORY!
 
 Written March 2025.''' 
 
-# Get various constants and settings 
+# Get various constants and settings for the scripts 
 import settings 
 
 import datetime 
-#import traceback 
 import logging 
 
 import sort_csv 

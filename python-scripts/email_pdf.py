@@ -43,14 +43,14 @@ def main(pdf_file, settings, recipients, csv_file='', debug=False):
     else: 
         body = f"Hello! Attached are today's orders." 
 
-    #Create object representing message content 
+    # Create object representing message content 
     message = MIMEMultipart() 
     message["From"] = settings["sender_email"] 
     message["To"] = ", ".join(recipients)  
     message["Subject"] = subject 
     message.attach(MIMEText(body, "plain")) 
 
-    if pdf_file: #  i.e. there are orders today 
+    if pdf_file:  # i.e. there are orders today 
         #Open and attached the PDF file 
         with open(pdf_file, 'rb') as attachment: 
             part = MIMEBase("application", "octet-stream")
@@ -80,11 +80,9 @@ def main(pdf_file, settings, recipients, csv_file='', debug=False):
     if debug: 
         print(message.as_string()) 
 
-    #context = ssl.create_default_context() #for encryption 
+    # Because there is an UA schools SMTP server on the server, no password or login is needed.  
     with smtplib.SMTP(settings["server_address"], settings["port"]) as server: 
-        #server.login(sender_email, password=input("sender password?")) #not secure, but also unused 
-        try: 
-            #There is no need to login if the connection is successfully made. 
+        try:  
             server.sendmail(settings["sender_email"], recipients, message.as_string()) 
         except Exception as e:
             if debug: 

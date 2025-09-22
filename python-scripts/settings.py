@@ -26,12 +26,13 @@ CLEAR_CSV = False
 CSV_DELIMITER = ";" 
 
 # Logging 
-LOG_FILE = ""  # use an empty string for the console  
+LOG_FILE = "log.txt"  # use an empty string for the console  
 LOG_LEVEL = DEBUG 
 
 # For csv_to_pdf.py 
 PDF_VARS = {
-    # These settings are for Avery Presta 94215 label paper. Dimensions have been adjusted for space between stickers. 
+    # These settings are for Avery Presta 94215 label paper. 
+    # Dimensions have been adjusted for space between stickers. 
     "font" : "Times-Roman",  # Supports only fonts available in the reportlab library 
     "font-size": 14, 
     "font-size-bold": 20,  # For bolded values, not headers 

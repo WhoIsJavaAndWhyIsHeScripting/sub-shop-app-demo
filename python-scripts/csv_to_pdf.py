@@ -15,7 +15,8 @@ import datetime
 import math 
 
 from reportlab.pdfgen import canvas 
-from reportlab.lib.pagesizes import letter, inch 
+from reportlab.lib.pagesizes import letter 
+from reportlab.lib.units import inch 
 from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet 
 from reportlab.platypus import Paragraph, Frame 
 
@@ -32,10 +33,10 @@ def main(csv_file, settings, skip=[], bold=[], delimiter=',', debug=False):
     """
     pdf = canvas.Canvas("orders.pdf", pagesize=letter)
     width, height = letter 
-    #adjusts the location of the origin for drawing on the pdf 
+    # adjusts the location of the origin for drawing on the pdf 
     pdf.translate(0, height) 
-    #This puts the origin in the top left corner, though the 
-    # disavantage is that negative y values are neeeded. 
+    # This puts the origin in the top left corner, though the 
+    # disadvantage is that negative y values are neeeded. 
 
     # Define the text style 
     styles = getSampleStyleSheet() 
@@ -103,7 +104,7 @@ def main(csv_file, settings, skip=[], bold=[], delimiter=',', debug=False):
                 leftPadding = settings["xpadding"] * inch, 
                 topPadding = settings["ypadding"] * inch,
 
-                showBoundary=int(debug), # Only draw Frame boundary if debug==True 
+                showBoundary=int(debug), # only draw Frame boundary if debug==True 
             )
 
             text = [] 
@@ -112,7 +113,7 @@ def main(csv_file, settings, skip=[], bold=[], delimiter=',', debug=False):
                     text.append(f"<font size={font_size_bold}><b>{h}: {row[h]}</b></font>")  
                 if debug: print(text) 
 
-            for h in headers: 
+            for h in headers:  # type: ignore
                 if h not in skip and h not in bold: 
                     text.append(f"<b>{h}</b>: {row[h]}") 
                 if debug: print(text) 
@@ -132,10 +133,9 @@ def main(csv_file, settings, skip=[], bold=[], delimiter=',', debug=False):
             i += 1 
 
 
-    #if i%10 != 0:
-    if True: 
-        #does not actually display the page - rather moves to the next page 
+        # does not actually display the page - rather moves to the next page 
         pdf.showPage()  
+
     pdf.save() 
 
 
