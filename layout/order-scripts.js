@@ -116,7 +116,7 @@ function submitOrder(event) {
     //alert("Form being checked.")
         
     //Checks bread and meats and cheeses. 
-    var valid = validate_form(event); 
+    const [valid, period] = validate_form(event); 
 
     //Finally, it thanks the user and reminds them when they can pick it up.
     if (valid == true) {
@@ -168,7 +168,7 @@ function validate_form(event) {
         valid = false; 
     } else {
         //Reminds the user that length is ignored when selecting a salad. (Not actually needed anymore.)
-        const salad = document.querySelector('input[value="salad"]');  
+        const salad = document.querySelector('input[id="salad"]');  
         const lengths = document.querySelectorAll('input[name="inch"]'); 
         if (salad.checked && (lengths[0].checked || lengths[1].checked)) {
             alert("Length is ignored for salads. \n(No 12 inch salads!)");
@@ -188,8 +188,10 @@ function validate_form(event) {
     if (period == "") {
         event.preventDefault(); 
         valid = false; 
-        alert("You must select a period to pick up.")
+        alert("You must select a period to pick up.");
     }
-    return valid; 
+
+    //alert("Done checking form.");
+    return [valid, period]; 
 }
 

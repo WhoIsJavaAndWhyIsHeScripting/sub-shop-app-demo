@@ -14,10 +14,10 @@ const path = require('path');
 const http = require('http');
 
 // https credentials, uses symbolic links to point to the following credential files
-const credentials = {
-  key: fs.readFileSync('privkey.pem', 'utf-8'), 
-  cert: fs.readFileSync('fullchain.pem', 'utf-8'),
-};
+// const credentials = {
+//   key: fs.readFileSync('privkey.pem', 'utf-8'), 
+//   cert: fs.readFileSync('fullchain.pem', 'utf-8'),
+// };
 
 // creates a session that stores the user email
 const session = require ('express-session');
@@ -26,16 +26,16 @@ const session = require ('express-session');
 const { randomUUID } = require('crypto');
 
 // initialize session
-app.use(session({
-  secret: randomUUID(),
-  resave: true,
-  saveUninitialized: false
-}))
+// app.use(session({
+//   secret: randomUUID(),
+//   resave: true,
+//   saveUninitialized: false
+// }))
 
 // for verifying Google ID_TOKENs
-const { OAuth2Client } = require('google-auth-library');
-const CLIENT_ID = "702804890232-pj9j2siaa55563pild655ev156i36un5.apps.googleusercontent.com";
-const client = new OAuth2Client(CLIENT_ID);
+// const { OAuth2Client } = require('google-auth-library');
+// const CLIENT_ID = "702804890232-pj9j2siaa55563pild655ev156i36un5.apps.googleusercontent.com";
+// const client = new OAuth2Client(CLIENT_ID);
 
 // check the server time and open/close the server at given times
 var isOpen = false;
@@ -63,7 +63,7 @@ app.use(express.static(__dirname));
 // verify - boolean, whether you should verify if the shop is open when sending the file
 function loadPage(route, sendPath, verify) {
   app.get(route, (req, res) => {
-    if (verify) {
+    if (false) {
       updateTime();
       if (isOpen) {
         res.sendFile(sendPath);
@@ -81,13 +81,14 @@ loadPage('/', path.join(__dirname, 'layout', 'subShopFront.html'), true);
 // route for order page
 app.get('/order', (req, res) => {
     updateTime();
-    if (isOpen && "" + req.session.user != "undefined") {
-      res.sendFile(path.join(__dirname, 'layout', 'subShopOrder.html'));
-    } else if ("" + req.session.user == "undefined") {
-      res.redirect("/")
-    } else {
-      res.sendFile(path.join(__dirname, 'layout', 'sorry.html'));
-    }
+    // if (isOpen && "" + req.session.user != "undefined") {
+    //   res.sendFile(path.join(__dirname, 'layout', 'subShopOrder.html'));
+    // } else if ("" + req.session.user == "undefined") {
+    //   res.sendFile(path.join(__dirname, 'layout', 'subShopOrder.html'));
+    // } else {
+    //   res.sendFile(path.join(__dirname, 'layout', 'sorry.html'));
+    // }
+  res.sendFile(path.join(__dirname, 'layout', 'subShopOrder.html'));
  });
 
 // route for credits page
@@ -223,54 +224,54 @@ app.post('/submit2', (req, res) => {
 app.post('/order', (req, res) => {
   var credential = parseJwt(req.body.credential);
 
-  try {
+  //try {
     const user = verifyToken(credential);
 
-    var email = credential.email;
-    var name = credential.given_name + " ";
+    // var email = credential.email;
+    // var name = credential.given_name + " ";
   
-    var family_name = credential.family_name;
-    if(credential.family_name.includes("(Student)")) {
-      name += family_name.split(" ")[0];
-    } else {
-      name += family_name;
-    }
-    req.session.name = name;
+    // var family_name = credential.family_name;
+    // if(credential.family_name.includes("(Student)")) {
+    //   name += family_name.split(" ")[0];
+    // } else {
+    //   name += family_name;
+    // }
+    // req.session.name = name;
 
     console.log(email);
     console.log(name);
 
-    res.cookie('email', email, {
-      httpOnly: true,
-      secure: true,
-      sameSite: 'Lax',
-      maxAge: 1000 * 60 * 60 * 24
-    });
-    res.cookie('name', name, {
-      httpOnly: true,
-      secure: true,
-      sameSite: 'Lax',
-      maxAge: 1000 * 60 * 60 * 24
-    });
+    // res.cookie('email', email, {
+    //   httpOnly: true,
+    //   secure: true,
+    //   sameSite: 'Lax',
+    //   maxAge: 1000 * 60 * 60 * 24
+    // });
+    // res.cookie('name', name, {
+    //   httpOnly: true,
+    //   secure: true,
+    //   sameSite: 'Lax',
+    //   maxAge: 1000 * 60 * 60 * 24
+    // });
 
     res.redirect('/order');
 
-  } catch (err) {
-      console.error("Token verification failed:", err);
-      res.status(401).send("Invalid token");
-  }
+  // } catch (err) {
+  //     console.error("Token verification failed:", err);
+  //     res.status(401).send("Invalid token");
+  // }
 });
 
 // verify Google ID_TOKEN before using its information
-function verifyToken(token) {
-  /*const ticket = client.verifyIdToken({ ****Commented out b/c the Google Auth Library is buggin****
-    idToken: token,
-    audience: CLIENT_ID
-  });
-  return ticket.idToken;*/ // contains user info
+// function verifyToken(token) {
+//   /*const ticket = client.verifyIdToken({ ****Commented out b/c the Google Auth Library is buggin****
+//     idToken: token,
+//     audience: CLIENT_ID
+//   });
+//   return ticket.idToken;*/ // contains user info
 
-  return token;
-}
+//   return token;
+// }
 
 // parse Google ID_TOKEN
 function parseJwt (token) {
@@ -295,7 +296,8 @@ app.post('/order-submit', (req, res) => {
   let protein = req.body.protein;
   let toppings = req.body.veggies;
   let sauces = req.body.condiments;
-  let name = req.session.name;
+  //let name = req.session.name;
+  let name = "Test User"; 
   let base = "";
   let arrayize = [name, lunchPeriod, base, protein, toppings, sauces];
   // clean up data
@@ -332,7 +334,7 @@ app.post('/order-submit', (req, res) => {
   base += bread;
   arrayize[2] = base;
   fs.appendFile(path.join(__dirname, "layout", "sub-orders.csv"), `\n${arrayize[0]};${arrayize[1]};${arrayize[2]};${arrayize[3]};${arrayize[4]};${arrayize[5]}`, () => {
-    res.redirect('/');
+  res.redirect('/');
   });
 
 });
@@ -344,6 +346,5 @@ app.use((req, res) => {
 
 // check if a value is undefined, then remove it
 // Start the server
-http.createServer(credentials, app).listen(3000, "localhost", () => {
-    console.log('Server listening on port 3000');
-});
+http.createServer(app).listen(3000, "localhost", () => {
+    console.log('Server listening on port 3000');});
