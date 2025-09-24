@@ -44,7 +44,7 @@ function loadOrder() {
         var inputGroup = document.querySelectorAll(`input[name=${keyValue[0]}]`);
         inputGroup.forEach((input) => {
             // if the checkbox is in the checked list, check the checkbox
-            if (values.indexOf(input.value) != -1) {
+            if (values.indexOf(input.parentElement.textContent.trim()) != -1) {
                 input.checked = true;
             }
         })
