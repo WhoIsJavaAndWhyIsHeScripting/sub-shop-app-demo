@@ -241,10 +241,12 @@
 </div>
 </body>
 <script>
-    var checkboxes = document.querySelectorAll("input[type='checkbox'], input[type='radio']");
-    checkboxes.forEach((checkbox) => {
+    window.onload = function() {
+        var checkboxes = document.querySelectorAll("input[type='checkbox'], input[type='radio']");
+        checkboxes.forEach((checkbox) => {
         checkbox.addEventListener("change", saveOrder);
     });
+    }
     document.getElementById("form").addEventListener("submit", submitOrder);
 </script>
 </html>
