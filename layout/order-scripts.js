@@ -27,20 +27,20 @@ function disableElement(element, bool) {
 // saves the current boxes checked to a cookie
 function saveOrder() {
     document.cookie = "inch=" + findChecked('input[name="inch"]')
-                    + " bread=" + findChecked('input[name="bread"]')
-                    + " toasted=" + findChecked('input[name="toasted"]')
-                    + " protein=" + findChecked('input[name="protein"]')
-                    + " veggies=" + findChecked('input[name="veggies"]')
-                    + " condiments=" + findChecked('input[name="condiments"]');
+                    + "\tbread=" + findChecked('input[name="bread"]')
+                    + "\ttoasted=" + findChecked('input[name="toasted"]')
+                    + "\tprotein=" + findChecked('input[name="protein"]')
+                    + "\tveggies=" + findChecked('input[name="veggies"]')
+                    + "\tcondiments=" + findChecked('input[name="condiments"]');
 }
 // loads the order from the cookie and adds event listeners to checkboxes to save it when the order is changed
 function loadOrder() {
     // split the cookie into each key/value pair for each category of checkboxes
-    var orderInfo = document.cookie.split(" ");
+    var orderInfo = document.cookie.split("\t");
     for (cookiePair of orderInfo) {
         //keyValue - index 0 is the name of each checkbox in the category, index 1 is a list of values of each checkbox checked in that category
         var keyValue = cookiePair.split("=");
-        var values = keyValue[1].split(",");
+        var values = keyValue[1].split(", ");
         var inputGroup = document.querySelectorAll(`input[name=${keyValue[0]}]`);
         inputGroup.forEach((input) => {
             // if the checkbox is in the checked list, check the checkbox
