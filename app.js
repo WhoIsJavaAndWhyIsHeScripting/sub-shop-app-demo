@@ -81,10 +81,8 @@ loadPage('/', path.join(__dirname, 'layout', 'subShopFront.html'), true);
 // route for order page
 app.get('/order', (req, res) => {
     updateTime();
-    if (isOpen && "" + req.session.user != "undefined") {
+    if (isOpen) {
       res.sendFile(path.join(__dirname, 'layout', 'subShopOrder.html'));
-    } else if ("" + req.session.user == "undefined") {
-      res.redirect("/")
     } else {
       res.sendFile(path.join(__dirname, 'layout', 'sorry.html'));
     }
