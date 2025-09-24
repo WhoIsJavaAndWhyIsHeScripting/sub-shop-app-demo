@@ -26,7 +26,8 @@ function disableElement(element, bool) {
 }
 // saves the current boxes checked to a cookie
 function saveOrder() {
-    document.cookie = "inch=" + findChecked('input[name="inch"]')
+    document.cookie = "period=" + findChecked('input[name="period"]')
+                    + "\tinch=" + findChecked('input[name="inch"]')
                     + "\tbread=" + findChecked('input[name="bread"]')
                     + "\ttoasted=" + findChecked('input[name="toasted"]')
                     + "\tprotein=" + findChecked('input[name="protein"]')
