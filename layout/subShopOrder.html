@@ -243,7 +243,7 @@
 <script>
     var checkboxes = document.querySelectorAll("input[type='checkbox'], input[type='radio']");
     checkboxes.forEach((checkbox) => {
-        checkbox.addEventListener("change", setCookie);
+        checkbox.addEventListener("change", saveOrder);
     });
     document.getElementById("form").addEventListener("submit", submitOrder);
 </script>
