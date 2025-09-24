@@ -24,14 +24,41 @@ function disableElement(element, bool) {
     }
     document.getElementById(element).disabled = bool;
 }
-
+// saves the current boxes checked to a cookie
+function saveOrder() {
+    document.cookie = "inch=" + findChecked('input[name="inch"]')
+                    + "; bread=" + findChecked('input[name="bread"]')
+                    + "; toasted=" + findChecked('input[name="toasted"]')
+                    + "; protein=" + findChecked('input[name="protein"]')
+                    + "; veggies=" + findChecked('input[name="veggies"]')
+                    + "; condiments=" + findChecked('input[name="condiments"]');
+}
+// loads the order from the cookie
+function loadOrder() {
+    // split the cookie into each key/value pair for each category of checkboxes
+    var orderInfo = document.cookie.split("; ");
+    for (cookiePair of orderInfo) {
+        //keyValue - index 0 is the name of each checkbox in the category, index 1 is a list of values of each checkbox checked in that category
+        var keyValue = cookiePair.split("=");
+        var values = keyValue[1].split(",");
+        var inputGroup = document.querySelectorAll(`input[name=${keyValue[0]}]`);
+        inputGroup.forEach((input) => {
+            // if the checkbox is in the checked list, check the checkbox
+            if (values.indexOf(input.name) != -1) {
+                input.checked = true;
+            }
+        })
+    }
+}
 var loaded = false;
 //Shows a summary of the order. 
 function loadSummary() {
+// if summary has already been loaded, discard old summary
 if (loaded == true) {
     document.getElementById("container").remove();
 }
     var orderForm = document.getElementById("the-form");
+    // create a container for the summary
     var container = document.createElement('div');
     container.id = "container";
     orderForm.appendChild(container);
@@ -50,30 +77,31 @@ if (loaded == true) {
     var toppings = findChecked('input[name="veggies"]');
     var sauces = findChecked('input[name="condiments"]');
     var head = document.createElement('h1');
-    head.textContent = "Here is your order:"
+    head.textContent = "Here is your order:";
     container.appendChild(head);
+    // add rows displaying all the boxes you checked
     var p1 = document.createElement('p');
     p1.textContent = baseText;
     if (baseText.trim() == "Base:") {
-    p1.textContent += " None"
+    p1.textContent += " None";
     }
     container.appendChild(p1);
     var p2 = document.createElement('p');
     p2.textContent = "Protein: " + protein;
     if (protein == "") {
-    p2.textContent += "None"
+    p2.textContent += "None";
     }
     container.appendChild(p2);
     var p3 = document.createElement('p');
     p3.textContent = "Toppings: " + toppings;
     if (toppings == "") {
-    p3.textContent += "None"
+    p3.textContent += "None";
     }
     container.appendChild(p3);
     var p4 = document.createElement('p');
     p4.textContent = "Sauce: " + sauces;
     if (sauces == "") {
-    p4.textContent += "None"
+    p4.textContent += "None";
     }
     container.appendChild(p4);
     if (loaded == false) {
@@ -87,6 +115,8 @@ if (loaded == true) {
     }
     loaded = true;
 }
+// finds all the checkboxes that are checked
+// query - the query selector for the checkboxes you want e.g. input[name="orange"];
 function findChecked(query) {
     var itemsAll = document.querySelectorAll(query);
     var buttonchecked = "";
@@ -105,6 +135,7 @@ function findChecked(query) {
     }
     return buttonchecked;
 }
+// loads the summary and reloads it each time your order is changed
 function responsiveSummary() {
     loadSummary();
     var checkboxes = document.querySelectorAll("input[type='checkbox'], input[type='radio']");
@@ -122,8 +153,6 @@ function submitOrder(event) {
     if (valid == true) {
         alert("Thank you for your order! \n Please remember to pick up your sandwich during "+period+" period lunch.");
         var cookieInput = document.createElement("input");
-        cookieInput.name = "cookie";
-        cookieInput.value = document.cookie;
     }
 }
 function countMeatsAndCheeses() {

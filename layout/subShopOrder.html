@@ -22,7 +22,7 @@
 </style>
 
 </head>
-<body>
+<body onload="loadOrder()">
 <script type="text/javascript">
   var elm=document.getElementsByTagName("html")[0];
   elm.style.display="none";
@@ -241,6 +241,10 @@
 </div>
 </body>
 <script>
+    var checkboxes = document.querySelectorAll("input[type='checkbox'], input[type='radio']");
+    checkboxes.forEach((checkbox) => {
+        checkbox.addEventListener("change", setCookie);
+    });
     document.getElementById("form").addEventListener("submit", submitOrder);
 </script>
 </html>
