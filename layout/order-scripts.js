@@ -35,7 +35,20 @@ function saveOrder() {
 }
 // loads the order from the cookie
 function loadOrder() {
+    // split the cookie into each key/value pair for each category of checkboxes
     var orderInfo = document.cookie.split("; ");
+    for (cookiePair of orderInfo) {
+        //keyValue - index 0 is the name of each checkbox in the category, index 1 is a list of values of each checkbox checked in that category
+        var keyValue = cookiePair.split("=");
+        var values = keyValue[1].split(",");
+        var inputGroup = document.querySelectorAll(`input[name=${keyValue[0]}]`);
+        inputGroup.forEach((input) => {
+            // if the checkbox is in the checked list, check the checkbox
+            if (values.indexOf(input.name) != -1) {
+                input.checked = true;
+            }
+        })
+    }
 }
 var loaded = false;
 //Shows a summary of the order. 
