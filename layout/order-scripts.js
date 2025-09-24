@@ -27,16 +27,16 @@ function disableElement(element, bool) {
 // saves the current boxes checked to a cookie
 function saveOrder() {
     document.cookie = "inch=" + findChecked('input[name="inch"]')
-                    + "; bread=" + findChecked('input[name="bread"]')
-                    + "; toasted=" + findChecked('input[name="toasted"]')
-                    + "; protein=" + findChecked('input[name="protein"]')
-                    + "; veggies=" + findChecked('input[name="veggies"]')
-                    + "; condiments=" + findChecked('input[name="condiments"]');
+                    + " bread=" + findChecked('input[name="bread"]')
+                    + " toasted=" + findChecked('input[name="toasted"]')
+                    + " protein=" + findChecked('input[name="protein"]')
+                    + " veggies=" + findChecked('input[name="veggies"]')
+                    + " condiments=" + findChecked('input[name="condiments"]');
 }
-// loads the order from the cookie
+// loads the order from the cookie and adds event listeners to checkboxes to save it when the order is changed
 function loadOrder() {
     // split the cookie into each key/value pair for each category of checkboxes
-    var orderInfo = document.cookie.split("; ");
+    var orderInfo = document.cookie.split(" ");
     for (cookiePair of orderInfo) {
         //keyValue - index 0 is the name of each checkbox in the category, index 1 is a list of values of each checkbox checked in that category
         var keyValue = cookiePair.split("=");
@@ -49,6 +49,10 @@ function loadOrder() {
             }
         })
     }
+    var checkboxes = document.querySelectorAll("input[type='checkbox'], input[type='radio']");
+    checkboxes.forEach((checkbox) => {
+    checkbox.addEventListener("change", saveOrder);
+    });
 }
 var loaded = false;
 //Shows a summary of the order. 
