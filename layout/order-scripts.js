@@ -228,7 +228,8 @@ function validate_form(event) {
         valid = false; 
         alert("You must select a period to pick up.");
     }
-
+    // clear cookies
+    document.cookie = "";
     //alert("Done checking form.");
     return [valid, period]; 
 }

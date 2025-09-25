@@ -242,6 +242,12 @@
 </body>
 <script>
     document.getElementById("form").addEventListener("submit", submitOrder);
+    window.onload() = ()=> {
+        var params = new URLSearchParams(window.location.search);
+        if (params.get("loggedIn") == "true") {
+            responsiveSummary();
+        }
+    }
 </script>
 </html>
 
