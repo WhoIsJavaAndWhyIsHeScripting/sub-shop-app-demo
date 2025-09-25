@@ -22,7 +22,7 @@
 </style>
 
 </head>
-<body onload="loadOrder()">
+<body>
 <script type="text/javascript">
   var elm=document.getElementsByTagName("html")[0];
   elm.style.display="none";
@@ -243,6 +243,7 @@
 <script>
     document.getElementById("form").addEventListener("submit", submitOrder);
     window.onload = ()=> {
+        loadOrder();
         var params = new URLSearchParams(window.location.search);
         if (params.get("loggedIn") == "true") {
             responsiveSummary();
