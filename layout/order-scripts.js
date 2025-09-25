@@ -17,6 +17,7 @@ fetchy()
         }
     })
 })
+
 // simplifying disabling elements to get rid of the like 10 near-identical lines of code when disabling length for salad
 function disableElement(element, bool) {
     if (bool == true) {
@@ -24,6 +25,7 @@ function disableElement(element, bool) {
     }
     document.getElementById(element).disabled = bool;
 }
+
 // saves the current boxes checked to a cookie
 function saveOrder() {
     document.cookie = "period=" + findChecked('input[name="period"]')
@@ -55,6 +57,7 @@ function loadOrder() {
     checkbox.addEventListener("change", saveOrder);
     });
 }
+
 var loaded = false;
 //Shows a summary of the order. 
 function loadSummary() {
@@ -120,6 +123,7 @@ if (loaded == true) {
     }
     loaded = true;
 }
+
 // finds all the checkboxes that are checked
 // query - the query selector for the checkboxes you want e.g. input[name="orange"];
 function findChecked(query) {
