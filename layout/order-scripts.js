@@ -37,7 +37,7 @@ function saveOrder() {
 function loadOrder() {
     // split the cookie into each key/value pair for each category of checkboxes
     var orderInfo = document.cookie.split("; ");
-    if (orderInfo.length > 0) {
+    if (document.cookie.length > 0) {
         for (cookiePair of orderInfo) {
             //keyValue - index 0 is the name of each checkbox in the category, index 1 is a list of values of each checkbox checked in that category
             var keyValue = cookiePair.split("=");
