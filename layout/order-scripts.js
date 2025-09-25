@@ -161,7 +161,7 @@ function submitOrder(event) {
     //Finally, it thanks the user and reminds them when they can pick it up.
     if (valid == true) {
         // delete all order cookies
-        var cookieList = [period, inch, bread, toasted, protein, veggies, condiments];
+        var cookieList = ["period", "inch", "bread", "toasted", "protein", "veggies", "condiments"];
         var date = new Date("1-1-1923");
         for (cookieName of cookieList) {
             document.cookie = `${cookieName}=; expires=${date}`;
