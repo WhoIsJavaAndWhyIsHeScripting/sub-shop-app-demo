@@ -143,4 +143,4 @@ def main(csv_file, settings, skip=[], bold=[], delimiter=',', debug=False):
 if __name__ == "__main__": 
     from settings import PDF_VARS, SKIP, BOLD 
     print(f"Running csv_to_pdf.py at {str(datetime.datetime.now())}.") 
-    main("orders.csv", PDF_VARS, skip=SKIP, bold=BOLD, debug=True)
+    main("../layout/sub-orders.csv", PDF_VARS, skip=SKIP, bold=BOLD, delimiter=";", debug=True)

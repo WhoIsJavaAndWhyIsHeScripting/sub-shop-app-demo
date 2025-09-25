@@ -7,6 +7,13 @@ import csv
 import operator 
 
 def main(file_to_sort: str, fields: list, delimiter=',', reverse=False):
+    '''Sorts a csv file's rows and writes the result back into the original file.
+    
+        file_to_sort - filename of the csv file 
+        fields - csv header fields to sort by 
+        delimiter - seperator for the original csv file's cells 
+        reverse - whether to sort in reverse order 
+    '''
     if not fields: 
         return #do nothing if no fields are specified   
         

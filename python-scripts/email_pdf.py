@@ -28,6 +28,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText  
 
 def main(pdf_file, settings, recipients, csv_file='', debug=False): 
+    '''See module docstring.'''
     #Configuration for the SMTP server. - now uses settings.py 
     #port = 25  
     #server_address = "smtp.uaschools.org" 
