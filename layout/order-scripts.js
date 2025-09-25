@@ -30,7 +30,7 @@ function disableElement(element, bool) {
 function saveOrder() {
     var cookieList = ["period", "inch", "bread", "toasted", "protein", "veggies", "condiments"];
     for (cookieName of cookieList) {
-        document.cookie = `"${cookieName}=` + findChecked(`input[name="${cookieName}"]`);
+        document.cookie = `${cookieName}=` + findChecked(`input[name="${cookieName}"]`);
     }
 }
 // loads the order from the cookie and adds event listeners to checkboxes to save it when the order is changed
