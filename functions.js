@@ -8,7 +8,7 @@ function googleAuth() {
   google.accounts.id.initialize({
     client_id: "702804890232-pj9j2siaa55563pild655ev156i36un5.apps.googleusercontent.com",
     ux_mode: "redirect",
-    login_uri: "https://subshop-dev.uaschools.io/order?loggedIn=true"
+    login_uri: "https://subshop-dev.uaschools.io/order"
   });
   google.accounts.id.renderButton(
         document.getElementById("proceed"),

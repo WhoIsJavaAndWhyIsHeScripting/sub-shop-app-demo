@@ -251,7 +251,7 @@ app.post('/order', (req, res) => {
       maxAge: 1000 * 60 * 60 * 24
     });
 
-    res.redirect('/order');
+    res.redirect('/order?loggedIn=true');
 
   } catch (err) {
       console.error("Token verification failed:", err);
