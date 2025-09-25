@@ -15,12 +15,12 @@ const http = require('http');
 
 // https credentials, uses symbolic links to point to the following credential files
 const credentials = {
-  key: fs.readFileSync('privkey.pem', 'utf-8'), 
+  key: fs.readFileSync('privkey.pem', 'utf-8'),
   cert: fs.readFileSync('fullchain.pem', 'utf-8'),
 };
 
 // creates a session that stores the user email
-const session = require ('express-session');
+const session = require('express-session');
 
 // generate a random string of numbers and letters for every session
 const { randomUUID } = require('crypto');
@@ -43,7 +43,7 @@ function updateTime() {
   var currentTime = new Date();
   var hour = currentTime.getHours();
   var minute = currentTime.getMinutes();
-  hour += minute/60;
+  hour += minute / 60;
   if (hour >= 7.5 && hour < 21.5) {
     isOpen = true;
   } else {
@@ -80,20 +80,20 @@ loadPage('/', path.join(__dirname, 'layout', 'subShopFront.html'), true);
 
 // route for order page
 app.get('/order', (req, res) => {
-    updateTime();
-    if (isOpen) {
-      res.sendFile(path.join(__dirname, 'layout', 'subShopOrder.html'));
-    } else {
-      res.sendFile(path.join(__dirname, 'layout', 'sorry.html'));
-    }
- });
+  updateTime();
+  if (isOpen) {
+    res.sendFile(path.join(__dirname, 'layout', 'subShopOrder.html'));
+  } else {
+    res.sendFile(path.join(__dirname, 'layout', 'sorry.html'));
+  }
+});
 
 // route for credits page
 loadPage('/credits', path.join(__dirname, 'layout', 'credits-page.html'), true);
 
 // Route for admin home
 app.get('/admin-home', (req, res) => {
-    res.sendFile(path.join(__dirname, 'layout', 'admin-page', 'admin-home', 'admin-home.html'));
+  res.sendFile(path.join(__dirname, 'layout', 'admin-page', 'admin-home', 'admin-home.html'));
 });
 
 // route for ingredients page
@@ -132,21 +132,21 @@ app.get('/functions-js', (req, res) => {
 });
 
 // create request body thing i don't really know how this works
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 
 // handle post request when ingredients form submitted
 app.post('/submit', (req, res) => {
   // get the values of the checked checkboxes
- let ingredients = req.body.ingredients;
- // turn it into a comma separated list
- let ingredientsText = "";
- if (ingredients != undefined) {
+  let ingredients = req.body.ingredients;
+  // turn it into a comma separated list
+  let ingredientsText = "";
+  if (ingredients != undefined) {
     ingredientsText += ingredients[0];
     for (let i = 1; i < ingredients.length; i++) {
       ingredientsText += "," + ingredients[i];
-     }
- }
- // replace whatever is in out-of-stock.txt with the new comma separated list
+    }
+  }
+  // replace whatever is in out-of-stock.txt with the new comma separated list
   fs.writeFile(path.join(__dirname, "layout", "admin-page", "admin-ingredients", "out-of-stock.txt"), ingredientsText, (err) => {
     if (err) {
       console.log(err);
@@ -154,8 +154,8 @@ app.post('/submit', (req, res) => {
     console.log("yippee");
   })
 
- // go back to ingredients page
- res.redirect("/ingredients");
+  // go back to ingredients page
+  res.redirect("/ingredients");
 });
 
 // handle post request when users form submitted
@@ -164,24 +164,24 @@ app.post('/submit2', (req, res) => {
   var bannedUser = req.body.banned;
   // append the data to the file with a comma before if it's not empty
   if (bannedUser != null) {
-  if (fs.statSync(path.join(__dirname, "layout", "admin-page", "admin-users", "ban-list.txt")).size != 0) {
+    if (fs.statSync(path.join(__dirname, "layout", "admin-page", "admin-users", "ban-list.txt")).size != 0) {
       fs.appendFile(path.join(__dirname, "layout", "admin-page", "admin-users", "ban-list.txt"), "," + bannedUser, (err) => {
         if (err) {
           throw err;
         }
       })
-  } else {
-    // otherwise just append the data
-    fs.appendFile(path.join(__dirname, "layout", "admin-page", "admin-users", "ban-list.txt"), bannedUser, (err) => {
-      if (err) {
-        throw err;
-      }
-    });
+    } else {
+      // otherwise just append the data
+      fs.appendFile(path.join(__dirname, "layout", "admin-page", "admin-users", "ban-list.txt"), bannedUser, (err) => {
+        if (err) {
+          throw err;
+        }
+      });
+    }
   }
-}
-// handle when a user should be REMOVED from the list
+  // handle when a user should be REMOVED from the list
   var toBeRemoved = req.body.hidden;
-  
+
   if (toBeRemoved != null) {
     // read the banned users list and split by commas
     fs.readFile(path.join(__dirname, "layout", "admin-page", "admin-users", "ban-list.txt"), (err, data) => {
@@ -199,17 +199,17 @@ app.post('/submit2', (req, res) => {
         fs.writeFileSync(path.join(__dirname, "layout", "admin-page", "admin-users", "ban-list.txt"), "");
       } else if (commaSplit.length == 1) {
         // if there's one user left, just write their name
-      fs.writeFileSync(path.join(__dirname, "layout", "admin-page", "admin-users", "ban-list.txt"),commaSplit[0]);
+        fs.writeFileSync(path.join(__dirname, "layout", "admin-page", "admin-users", "ban-list.txt"), commaSplit[0]);
       } else if (commaSplit.length > 1) {
         // if there's 2+ users left, write the first user then append all the other users with commas before
-        fs.writeFileSync(path.join(__dirname, "layout", "admin-page", "admin-users", "ban-list.txt"),commaSplit[0]);
+        fs.writeFileSync(path.join(__dirname, "layout", "admin-page", "admin-users", "ban-list.txt"), commaSplit[0]);
         // do not add empty names
         for (let i = 1; i < commaSplit.length; i++) {
           if (commaSplit[i] != "" && commaSplit[i] != undefined) {
             fs.appendFileSync(path.join(__dirname, "layout", "admin-page", "admin-users", "ban-list.txt"), "," + commaSplit[i]);
+          }
         }
       }
-    }
     });
   }
   // redirect back to the users page
@@ -226,9 +226,9 @@ app.post('/order', (req, res) => {
 
     var email = credential.email;
     var name = credential.given_name + " ";
-  
+
     var family_name = credential.family_name;
-    if(credential.family_name.includes("(Student)")) {
+    if (credential.family_name.includes("(Student)")) {
       name += family_name.split(" ")[0];
     } else {
       name += family_name;
@@ -254,8 +254,8 @@ app.post('/order', (req, res) => {
     res.redirect('/order?loggedIn=true');
 
   } catch (err) {
-      console.error("Token verification failed:", err);
-      res.status(401).send("Invalid token");
+    console.error("Token verification failed:", err);
+    res.status(401).send("Invalid token");
   }
 });
 
@@ -271,11 +271,11 @@ function verifyToken(token) {
 }
 
 // parse Google ID_TOKEN
-function parseJwt (token) {
+function parseJwt(token) {
   const base64Url = token.split('.')[1];
   const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-  const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
-      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+  const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
   }).join(''));
 
   return JSON.parse(jsonPayload);
@@ -322,7 +322,7 @@ app.post('/order-submit', (req, res) => {
   if ("" + inch != "undefined") {
     console.log("1");
     base += inch + " Inch ";
-  } 
+  }
   if (toasted == "Toasted") {
     console.log("2");
     base += "Toasted ";
@@ -343,5 +343,5 @@ app.use((req, res) => {
 // check if a value is undefined, then remove it
 // Start the server
 http.createServer(credentials, app).listen(3000, "localhost", () => {
-    console.log('Server listening on port 3000');
+  console.log('Server listening on port 3000');
 });

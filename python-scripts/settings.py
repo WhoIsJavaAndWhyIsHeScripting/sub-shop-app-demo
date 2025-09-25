@@ -20,9 +20,9 @@ RECIPIENTS = [
     "EMAIL REMOVED", 
     
     # Sub Shop people 
-    "EMAIL REMOVED", 
-    "EMAIL REMOVED", 
-    "EMAIL REMOVED",
+    # "EMAIL REMOVED", 
+    # "EMAIL REMOVED", 
+    # "EMAIL REMOVED",
 ]
 
 CLEAR_CSV = True 
