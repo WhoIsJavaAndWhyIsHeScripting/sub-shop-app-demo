@@ -1,3 +1,5 @@
+// Making order summary 
+
 async function fetchy() {
     const fetcher = await fetch("/out-of-stock");
     data = await fetcher.text();
@@ -5,18 +7,18 @@ async function fetchy() {
 }
 
 fetchy()
-.then((data) => {
-    var dataSplit = data.split(",");
-    var checkboxes = document.querySelectorAll("input[type='checkbox'], input[type='radio']");
-    checkboxes.forEach((checkbox) => {
-        for (i in dataSplit) {
-            // for each checkbox, iterate thru the list of out of stock ingredients, and if it matches one, disable it
-            if (dataSplit[i] == checkbox.id.trim()) {
-                checkbox.disabled = true;
+    .then((data) => {
+        var dataSplit = data.split(",");
+        var checkboxes = document.querySelectorAll("input[type='checkbox'], input[type='radio']");
+        checkboxes.forEach((checkbox) => {
+            for (i in dataSplit) {
+                // for each checkbox, iterate thru the list of out of stock ingredients, and if it matches one, disable it
+                if (dataSplit[i] == checkbox.id.trim()) {
+                    checkbox.disabled = true;
+                }
             }
-        }
+        })
     })
-})
 
 // simplifying disabling elements to get rid of the like 10 near-identical lines of code when disabling length for salad
 function disableElement(element, bool) {
@@ -54,17 +56,17 @@ function loadOrder() {
 
     var checkboxes = document.querySelectorAll("input[type='checkbox'], input[type='radio']");
     checkboxes.forEach((checkbox) => {
-    checkbox.addEventListener("change", saveOrder);
+        checkbox.addEventListener("change", saveOrder);
     });
 }
 
 var loaded = false;
 //Shows a summary of the order. 
 function loadSummary() {
-// if summary has already been loaded, discard old summary
-if (loaded == true) {
-    document.getElementById("container").remove();
-}
+    // if summary has already been loaded, discard old summary
+    if (loaded == true) {
+        document.getElementById("container").remove();
+    }
     var orderForm = document.getElementById("the-form");
     // create a container for the summary
     var container = document.createElement('div');
@@ -75,11 +77,11 @@ if (loaded == true) {
     var base = findChecked('input[name="bread"]');
     var toast = findChecked('input[name="toasted"]');
     if (base == "Salad" || base == "None" || len == "None") {
-    baseText = `\nBase: ${base}`;
+        baseText = `\nBase: ${base}`;
     } else if (toast == "No") {
-    baseText = `\nBase: ${len} ${base}`;
+        baseText = `\nBase: ${len} ${base}`;
     } else {
-    baseText = `\nBase: Toasted ${len} ${base}`;
+        baseText = `\nBase: Toasted ${len} ${base}`;
     }
     var protein = findChecked('input[name="protein"]');
     var toppings = findChecked('input[name="veggies"]');
@@ -91,25 +93,25 @@ if (loaded == true) {
     var p1 = document.createElement('p');
     p1.textContent = baseText;
     if (baseText.trim() == "Base:") {
-    p1.textContent += " None";
+        p1.textContent += " None";
     }
     container.appendChild(p1);
     var p2 = document.createElement('p');
     p2.textContent = "Protein: " + protein;
     if (protein == "") {
-    p2.textContent += "None";
+        p2.textContent += "None";
     }
     container.appendChild(p2);
     var p3 = document.createElement('p');
     p3.textContent = "Toppings: " + toppings;
     if (toppings == "") {
-    p3.textContent += "None";
+        p3.textContent += "None";
     }
     container.appendChild(p3);
     var p4 = document.createElement('p');
     p4.textContent = "Sauce: " + sauces;
     if (sauces == "") {
-    p4.textContent += "None";
+        p4.textContent += "None";
     }
     container.appendChild(p4);
     if (loaded == false) {
@@ -130,17 +132,17 @@ function findChecked(query) {
     var itemsAll = document.querySelectorAll(query);
     var buttonchecked = "";
     itemsAll.forEach((item) => {
-    if (item.checked == true) {
-        if (buttonchecked == "") {
-            buttonchecked += item.parentElement.textContent.trim();
-        } else {
-            buttonchecked += ", " + item.parentElement.textContent.trim();
+        if (item.checked == true) {
+            if (buttonchecked == "") {
+                buttonchecked += item.parentElement.textContent.trim();
+            } else {
+                buttonchecked += ", " + item.parentElement.textContent.trim();
+            }
+
         }
-        
-    }
     })
     if (buttonchecked == "") {
-    buttonchecked = "None";
+        buttonchecked = "None";
     }
     return buttonchecked;
 }
@@ -152,11 +154,16 @@ function responsiveSummary() {
         checkbox.addEventListener("change", loadSummary);
     });
 }
+
+
+
+// Submitting order 
+
 function submitOrder(event) {
     //alert("Form being checked.")
-        
+
     //Checks bread and meats and cheeses. 
-    const [valid, period] = validate_form(event); 
+    const [valid, period] = validate_form(event);
 
     //Finally, it thanks the user and reminds them when they can pick it up.
     if (valid == true) {
@@ -166,76 +173,77 @@ function submitOrder(event) {
         for (cookieName of cookieList) {
             document.cookie = `${cookieName}=; expires=${date}`;
         }
-        alert("Thank you for your order! \n Please remember to pick up your sandwich during "+period+" period lunch.");
+        alert("Thank you for your order! \n Please remember to pick up your sandwich during " + period + " period lunch.");
     }
 }
+
 function countMeatsAndCheeses() {
-    var proteins = document.getElementsByName("protein"); 
-    var total = 0; 
-    for (let i=0; i < proteins.length; ++i) {
+    var proteins = document.getElementsByName("protein");
+    var total = 0;
+    for (let i = 0; i < proteins.length; ++i) {
         if (proteins[i].checked) {
-            total++; 
+            total++;
         }
     }
-    return total; 
+    return total;
 }
 
 function validate_form(event) {
-    var valid = true; 
+    var valid = true;
 
     //Check for a base 
-    var breads = document.getElementsByName("bread"); 
-    var bread_total = 0; 
-    for (let i=0; i < breads.length; ++i) {
+    var breads = document.getElementsByName("bread");
+    var bread_total = 0;
+    for (let i = 0; i < breads.length; ++i) {
         if (breads[i].checked) {
-            bread_total++; 
+            bread_total++;
         }
     }
     if (bread_total == 0) {
-        alert("You must select a base (bread type)."); 
-        event.preventDefault(); 
-        valid = false; 
+        alert("You must select a base (bread type).");
+        event.preventDefault();
+        valid = false;
     } else {
         //check that the user chose a length or chose a salad 
-        if (!document.getElementById("salad").checked && !document.getElementById("6-inch").checked && !document.getElementById("12-inch").checked)  {
-            alert("You must select a length or select a salad."); 
-            event.preventDefault(); 
+        if (!document.getElementById("salad").checked && !document.getElementById("6-inch").checked && !document.getElementById("12-inch").checked) {
+            alert("You must select a length or select a salad.");
+            event.preventDefault();
             valid = false;
         }
     }
     //Check meats and cheeses (no more than 3 allowed)
     var total = countMeatsAndCheeses();
     if (total > 3) {
-        alert("You may only select a total of three meats and cheeses. You have "+total.toString()+"."); 
+        alert("You may only select a total of three meats and cheeses. You have " + total.toString() + ".");
         event.preventDefault(); //prevents form submission 
-        valid = false; 
+        valid = false;
     } else {
         //Reminds the user that length is ignored when selecting a salad. (Not actually needed anymore.)
-        const salad = document.querySelector('input[id="salad"]');  
-        const lengths = document.querySelectorAll('input[name="inch"]'); 
+        const salad = document.querySelector('input[id="salad"]');
+        const lengths = document.querySelectorAll('input[name="inch"]');
         if (salad.checked && (lengths[0].checked || lengths[1].checked)) {
             alert("Length is ignored for salads. \n(No 12 inch salads!)");
-        } 
+        }
     }
 
     // check if a period is selected
-        
+
     // check if period is selected
-    var periods = document.getElementsByName("period"); 
-    var period = ""; 
-    for (let i=0; i < periods.length; ++i) {
+    var periods = document.getElementsByName("period");
+    var period = "";
+    for (let i = 0; i < periods.length; ++i) {
         if (periods[i].checked) {
-            period = periods[i].value; 
+            period = periods[i].value;
         }
     }
     if (period == "") {
-        event.preventDefault(); 
-        valid = false; 
+        event.preventDefault();
+        valid = false;
         alert("You must select a period to pick up.");
     }
     // clear cookies
     document.cookie = "";
     //alert("Done checking form.");
-    return [valid, period]; 
+    return [valid, period];
 }
 
