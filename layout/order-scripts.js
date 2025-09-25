@@ -28,30 +28,30 @@ function disableElement(element, bool) {
 
 // saves the current boxes checked to a cookie
 function saveOrder() {
-    document.cookie = "period=" + findChecked('input[name="period"]')
-                    + "\tinch=" + findChecked('input[name="inch"]')
-                    + "\tbread=" + findChecked('input[name="bread"]')
-                    + "\ttoasted=" + findChecked('input[name="toasted"]')
-                    + "\tprotein=" + findChecked('input[name="protein"]')
-                    + "\tveggies=" + findChecked('input[name="veggies"]')
-                    + "\tcondiments=" + findChecked('input[name="condiments"]');
+    var cookieList = [period, inch, bread, toasted, protein, veggies, condiments];
+    for (cookieName of cookieList) {
+        document.cookie = `"${cookieName}=` + findChecked(`input[name="${cookieName}"]`);
+    }
 }
 // loads the order from the cookie and adds event listeners to checkboxes to save it when the order is changed
 function loadOrder() {
     // split the cookie into each key/value pair for each category of checkboxes
-    var orderInfo = document.cookie.split("\t");
-    for (cookiePair of orderInfo) {
-        //keyValue - index 0 is the name of each checkbox in the category, index 1 is a list of values of each checkbox checked in that category
-        var keyValue = cookiePair.split("=");
-        var values = keyValue[1].split(", ");
-        var inputGroup = document.querySelectorAll(`input[name=${keyValue[0]}]`);
-        inputGroup.forEach((input) => {
-            // if the checkbox is in the checked list, check the checkbox
-            if (values.indexOf(input.parentElement.textContent.trim()) != -1) {
-                input.checked = true;
-            }
-        })
+    var orderInfo = document.cookie.split("; ");
+    if (orderInfo.length > 0) {
+        for (cookiePair of orderInfo) {
+            //keyValue - index 0 is the name of each checkbox in the category, index 1 is a list of values of each checkbox checked in that category
+            var keyValue = cookiePair.split("=");
+            var values = keyValue[1].split(", ");
+            var inputGroup = document.querySelectorAll(`input[name=${keyValue[0]}]`);
+            inputGroup.forEach((input) => {
+                // if the checkbox is in the checked list, check the checkbox
+                if (values.indexOf(input.parentElement.textContent.trim()) != -1) {
+                    input.checked = true;
+                }
+            })
+        }
     }
+
     var checkboxes = document.querySelectorAll("input[type='checkbox'], input[type='radio']");
     checkboxes.forEach((checkbox) => {
     checkbox.addEventListener("change", saveOrder);
@@ -160,8 +160,13 @@ function submitOrder(event) {
 
     //Finally, it thanks the user and reminds them when they can pick it up.
     if (valid == true) {
+        // delete all order cookies
+        var cookieList = [period, inch, bread, toasted, protein, veggies, condiments];
+        var date = new Date("1-1-1923");
+        for (cookieName of cookieList) {
+            document.cookie = `${cookieName}=; expires=${date}`;
+        }
         alert("Thank you for your order! \n Please remember to pick up your sandwich during "+period+" period lunch.");
-        var cookieInput = document.createElement("input");
     }
 }
 function countMeatsAndCheeses() {
