@@ -45,13 +45,14 @@ function updateOpenStatus() {
   var minute = currentTime.getMinutes();
   hour += minute / 60;
   // count the number of lines sub-orders.csv has
-  var subOrders = fs.readFileSync(path.join(__dirname, 'layout', 'sub-orders.csv'));
-  var lines = subOrders.match(/\n\g/);
-  if ((hour >= 7.5 && hour < 21.5) && (lines.length <= 20)) {
-    isOpen = true;
-  } else {
-    isOpen = false;
-  }
+  fs.readFile(path.join(__dirname, 'layout', 'sub-orders.csv'), (err, data) => {
+    var lines = data.match(/\n\g/);
+    if ((hour >= 7.5 && hour < 21.5) && (lines.length <= 20)) {
+      isOpen = true;
+    } else {
+      isOpen = false;
+    }
+  });
 }
 
 // Serve static files from the 'public' folder
@@ -188,7 +189,7 @@ app.post('/submit2', (req, res) => {
   if (toBeRemoved != null) {
     // read the banned users list and split by commas
     fs.readFile(path.join(__dirname, "layout", "admin-page", "admin-users", "ban-list.txt"), (err, data) => {
-      var commaSplit = data.toString().split(",");
+      var commaSplit = data.toString().split(",");x
       // check which user name matches the user to be removed
       // and remove it from the list
       for (guy in commaSplit) {
