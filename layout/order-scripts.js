@@ -161,7 +161,7 @@ function responsiveSummary() {
 
 function check_user() { 
     const fetcher = fetch("/check-for-order");
-    data = fetcher.text();
+    data = fetcher.text;
     console.log(data); 
     return JSON.parse(data).has_ordered;
 }
