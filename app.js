@@ -39,12 +39,15 @@ const client = new OAuth2Client(CLIENT_ID);
 
 // check the server time and open/close the server at given times
 var isOpen = false;
-function updateTime() {
+function updateOpenStatus() {
   var currentTime = new Date();
   var hour = currentTime.getHours();
   var minute = currentTime.getMinutes();
   hour += minute / 60;
-  if (hour >= 7.5 && hour < 21.5) {
+  // count the number of lines sub-orders.csv has
+  var subOrders = fs.readFileSync(path.join(__dirname, 'layout', 'sub-orders.csv'));
+  var lines = subOrders.match(/\n\g/);
+  if ((hour >= 7.5 && hour < 21.5) && (lines.length <= 20)) {
     isOpen = true;
   } else {
     isOpen = false;
@@ -64,7 +67,7 @@ app.use(express.static(__dirname));
 function loadPage(route, sendPath, verify) {
   app.get(route, (req, res) => {
     if (verify) {
-      updateTime();
+      updateOpenStatus();
       if (isOpen) {
         res.sendFile(sendPath);
       } else {
@@ -80,7 +83,7 @@ loadPage('/', path.join(__dirname, 'layout', 'subShopFront.html'), true);
 
 // route for order page
 app.get('/order', (req, res) => {
-  updateTime();
+  updateOpenStatus();
   if (isOpen) {
     res.sendFile(path.join(__dirname, 'layout', 'subShopOrder.html'));
   } else {
