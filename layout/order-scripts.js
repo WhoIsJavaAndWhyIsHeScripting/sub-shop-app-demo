@@ -159,8 +159,21 @@ function responsiveSummary() {
 
 // Submitting order 
 
+function check_user() { 
+    const fetcher = fetch("/check-for-order");
+    data = fetcher.text();
+    return Boolean(data.trim());
+}
+
 function submitOrder(event) {
     //alert("Form being checked.")
+
+    // verify that the user has not already submitted an order 
+    if (!check_user()) {
+        alert("Sorry, you may only submit one order each day.");
+        event.preventDefault(); 
+        return; 
+    }
 
     //Checks bread and meats and cheeses. 
     const [valid, period] = validate_form(event);

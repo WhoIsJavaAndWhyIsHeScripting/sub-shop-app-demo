@@ -198,7 +198,7 @@ app.post('/submit2', (req, res) => {
   if (toBeRemoved != null) {
     // read the banned users list and split by commas
     fs.readFile(path.join(__dirname, "layout", "admin-page", "admin-users", "ban-list.txt"), (err, data) => {
-      var commaSplit = data.toString().split(",");x
+      var commaSplit = data.toString().split(",");
       // check which user name matches the user to be removed
       // and remove it from the list
       for (guy in commaSplit) {
@@ -346,6 +346,23 @@ app.post('/order-submit', (req, res) => {
     res.redirect('/');
   });
 
+});
+
+app.get('check-for-order', (req, res) => {
+  username = req.session.name; 
+  fs.readFile(path.join(__dirname, 'layout', 'sub-orders.csv'), (err, data) => {
+    if (err) {
+      res.send(err);
+    }
+    var lines = data.toString().split("\n"); 
+    for (item in lines) {
+      if ((item.split(" ")[0]).trim() == username) {
+        res.send("true"); 
+      } else {
+        res.send("false"); 
+      }
+    }
+  }); 
 });
 
 // 404 error handler
