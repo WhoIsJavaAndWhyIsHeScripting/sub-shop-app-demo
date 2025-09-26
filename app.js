@@ -49,7 +49,13 @@ function updateOpenStatus() {
     if (err) {
       res.send(err);
     }
-    var lines = data.toString().match(/\n\g/);
+    var newLineMatch = data.toString().match(/\n\g/);
+    var lines;
+    if (newLineMatch != null) {
+      lines = newLineMatch.length;
+    } else {
+      lines = 0;
+    }
     if ((hour >= 7.5 && hour < 21.5) && (lines.length <= 20)) {
       isOpen = true;
     } else {
