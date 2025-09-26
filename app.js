@@ -348,7 +348,7 @@ app.post('/order-submit', (req, res) => {
 
 });
 
-app.get('check-for-order', (req, res) => {
+app.get('/check-for-order', (req, res) => {
   username = req.session.name; 
   fs.readFile(path.join(__dirname, 'layout', 'sub-orders.csv'), (err, data) => {
     if (err) {
