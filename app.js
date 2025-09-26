@@ -357,9 +357,9 @@ app.get('/check-for-order', (req, res) => {
     var lines = data.toString().split("\n"); 
     for (item in lines) {
       if ((item.split(" ")[0]).trim() == username) {
-        res.send("true"); 
+        res.json({ has_ordered : "true"}); 
       } else {
-        res.send("false"); 
+        res.json({ has_ordered : "false"}); 
       }
     }
   }); 
