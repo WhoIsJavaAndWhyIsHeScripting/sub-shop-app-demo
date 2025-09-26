@@ -349,26 +349,29 @@ app.post('/order-submit', (req, res) => {
 });
 
 app.get('/check-for-order', (req, res) => {
-  username = req.session.name; 
+  username = req.session.name;
   fs.readFile(path.join(__dirname, 'layout', 'sub-orders.csv'), (err, data) => {
     if (err) {
       res.send(err);
       return;
     } else {
-      var lines = data.toString().split("\n"); 
-      for (item in lines) {
-        if ((item.split(" ")[0]).trim() == username) {
-          res.json({ has_ordered : "true" }); 
+      var lines = data.toString().split("\n");
+      //console.log(lines);
+      for (const item of lines) {
+        //console.log(item);
+        if ((item.split(";")[0]).trim() == username) {
+          console.log({ has_ordered: "true" });
           console.log("This user has ordered.");
-          return; 
-        } else {
-          res.json({ has_ordered : "false" }); 
-          console.log("This user has not ordered.");
           return;
+        } else {
+          continue
         }
       }
+      console.log({ has_ordered: "false" });
+      console.log("This user has not ordered.");
+      return;
     }
-  }); 
+  })
 });
 
 // 404 error handler
