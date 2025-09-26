@@ -46,6 +46,9 @@ function updateOpenStatus() {
   hour += minute / 60;
   // count the number of lines sub-orders.csv has
   fs.readFile(path.join(__dirname, 'layout', 'sub-orders.csv'), (err, data) => {
+    if (err) {
+      res.send(err);
+    }
     var lines = data.match(/\n\g/);
     if ((hour >= 7.5 && hour < 21.5) && (lines.length <= 20)) {
       isOpen = true;
