@@ -353,13 +353,14 @@ app.get('/check-for-order', (req, res) => {
   fs.readFile(path.join(__dirname, 'layout', 'sub-orders.csv'), (err, data) => {
     if (err) {
       res.send(err);
-    }
-    var lines = data.toString().split("\n"); 
-    for (item in lines) {
-      if ((item.split(" ")[0]).trim() == username) {
-        res.json({ has_ordered : "true"}); 
-      } else {
-        res.json({ has_ordered : "false"}); 
+    } else {
+      var lines = data.toString().split("\n"); 
+      for (item in lines) {
+        if ((item.split(" ")[0]).trim() == username) {
+          res.json({ has_ordered : "true"}); 
+        } else {
+          res.json({ has_ordered : "false"}); 
+        }
       }
     }
   }); 
