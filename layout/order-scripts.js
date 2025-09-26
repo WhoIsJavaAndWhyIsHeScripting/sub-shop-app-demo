@@ -158,16 +158,14 @@ function responsiveSummary() {
 
 
 // Submitting order 
-function check_user() { 
-    const data = fetch("/check-for-order")
-            .then(response => {
-                if (!response.ok) {
-                throw new Error('Error from server: '+response);
-                }
-                return response.json();
-            }); 
-    console.log(data); 
-    return JSON.parse(data).has_ordered;
+async function check_user() { 
+    const data = await fetch("/check-for-order"); 
+    if (!data.ok) {
+        throw new Error('Error from server: '+data);
+    }
+    console.log(data);
+    data_obj = await data.json();
+    return data_obj.has_ordered; 
 }
 
 function submitOrder(event) {
