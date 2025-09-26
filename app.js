@@ -56,7 +56,7 @@ function updateOpenStatus() {
     } else {
       lines = 0;
     }
-    if ((hour >= 7.5 && hour < 21.5) && (lines.length <= 20)) {
+    if ((hour >= 7.5 && hour < 21.5) && (lines <= 20)) {
       isOpen = true;
     } else {
       isOpen = false;
