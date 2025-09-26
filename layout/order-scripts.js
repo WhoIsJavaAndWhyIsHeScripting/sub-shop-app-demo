@@ -160,8 +160,13 @@ function responsiveSummary() {
 // Submitting order 
 
 function check_user() { 
-    const fetcher = fetch("/check-for-order");
-    data = fetcher.text;
+    const data = fetch("/check-for-order")
+            .then(response => {
+                if (!response.ok) {
+                throw new Error('Error from server: '+response);
+                }
+                return response.json();
+            }); 
     console.log(data); 
     return JSON.parse(data).has_ordered;
 }
