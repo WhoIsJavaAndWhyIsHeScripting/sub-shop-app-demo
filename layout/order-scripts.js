@@ -158,7 +158,6 @@ function responsiveSummary() {
 
 
 // Submitting order 
-
 function check_user() { 
     const data = fetch("/check-for-order")
             .then(response => {
