@@ -172,7 +172,7 @@ function submitOrder(event) {
     //alert("Form being checked.")
 
     // verify that the user has not already submitted an order 
-    if (!check_user()) {
+    if (check_user()) {
         alert("Sorry, you may only submit one order each day.");
         event.preventDefault(); 
         return; 
