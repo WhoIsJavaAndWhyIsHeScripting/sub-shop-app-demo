@@ -105,7 +105,7 @@ if __name__ == "__main__":  # i.e if not imported as a module
                 header = f.readline() 
                 f.truncate(0) 
             with open(settings.CSV_PATH, 'w') as f:
-                f.write(header) 
+                f.write(header.strip())  # does not include newline 
             logging.debug(f"Cleared {settings.CSV_PATH}.")
 
     if errors: 
