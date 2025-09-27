@@ -108,6 +108,7 @@ loadPage('/credits', path.join(__dirname, 'layout', 'credits-page.html'), true);
 loadPage('/log-in', path.join(__dirname, 'layout', 'admin-page', 'log-in', 'log-in.html'), false);
 // check if the password entered was correct and log in user if so
 app.post('/check-password', (req, res) => {
+  console.log(req.body);
   if (req.body.password == "PASSWORD_REMOVED") {
     req.session.user = {username: admin};
   }
