@@ -158,6 +158,7 @@ function responsiveSummary() {
 
 
 // Submitting order 
+
 async function check_user() { 
     const data = await fetch("/check-for-order"); 
     if (!data.ok) {

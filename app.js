@@ -360,14 +360,14 @@ app.get('/check-for-order', (req, res) => {
       for (const item of lines) {
         //console.log(item);
         if ((item.split(";")[0]).trim() == username) {
-          res.json({ has_ordered: "true" });
+          res.json({ has_ordered: true });
           console.log("This user has ordered.");
           return;
         } else {
           continue
         }
       }
-      res.json({ has_ordered: "false" });
+      res.json({ has_ordered: false });
       console.log("This user has not ordered.");
       return;
     }
