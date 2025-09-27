@@ -118,8 +118,12 @@ app.post('/log-in', (req, res) => {
 // file - the folder name
 function loadAdminPage(path, file) {
   app.get('/' + path, (req, res) => {
-    if (req.session.user.username == "admin") {
-    res.sendFile(path.join(__dirname, 'layout', 'admin-page', file, file + ".html"));
+    if (req.session.user != undefined) {
+      if (req.session.user.username == "admin") {
+        res.sendFile(path.join(__dirname, 'layout', 'admin-page', file, file + ".html"));
+      } else {
+        res.redirect('/log-in');
+      }
     } else {
       res.redirect('/log-in');
     }
