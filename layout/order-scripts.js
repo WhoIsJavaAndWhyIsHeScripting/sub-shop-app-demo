@@ -163,8 +163,8 @@ async function check_user() {
     if (!data.ok) {
         throw new Error('Error from server: '+data);
     }
-    console.log(data);
     data_obj = await data.json();
+    console.log(data.has_ordered);
     return data_obj.has_ordered; 
 }
 
