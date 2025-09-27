@@ -104,20 +104,35 @@ app.get('/order', (req, res) => {
 // route for credits page
 loadPage('/credits', path.join(__dirname, 'layout', 'credits-page.html'), true);
 
+// route for log in page
+loadPage('/log-in', path.join(__dirname, 'layout', 'admin-page', 'log-in', 'log-in.html'), false);
+// check if the password entered was correct and log in user if so
+app.post('log-in', (req, res) => {
+  if (req.body.password == "PASSWORD_REMOVED") {
+    req.session.user = {username: admin};
+  }
+  res.redirect('/admin-home');
+})
+// function for pages with admin verification
+// path - the path name
+// file - the folder name
+function loadAdminPage(path, file) {
+  app.get('/' + path, (req, res) => {
+    if (req.session.user.username == "admin") {
+    res.sendFile(path.join(__dirname, 'layout', 'admin-page', file, file + ".html"));
+    } else {
+      res.redirect('/log-in');
+    }
+  })
+}
 // Route for admin home
-app.get('/admin-home', (req, res) => {
-  res.sendFile(path.join(__dirname, 'layout', 'admin-page', 'admin-home', 'admin-home.html'));
-});
+loadAdminPage('admin-home', 'admin-home');
 
 // route for ingredients page
-app.get('/ingredients', (req, res) => {
-  res.sendFile(path.join(__dirname, 'layout', 'admin-page', 'admin-ingredients', 'admin-ingredients.html'));
-});
+loadAdminPage('ingredients', 'admin-ingredients');
 
 // route for users page
-app.get('/users', (req, res) => {
-  res.sendFile(path.join(__dirname, 'layout', 'admin-page', 'admin-users', 'admin-users.html'));
-});
+loadAdminPage('users', 'admin-users');
 
 // create route for css boilerplate
 app.get('/boilerplate', (req, res) => {
