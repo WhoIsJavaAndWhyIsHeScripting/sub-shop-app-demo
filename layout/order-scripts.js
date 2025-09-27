@@ -165,7 +165,7 @@ async function check_user() {
         throw new Error('Error from server: '+data);
     }
     data_obj = await data.json();
-    console.log(data_obj.has_ordered);
+    console.log(typeof data_obj.has_ordered);
     return data_obj.has_ordered; 
 }
 
@@ -173,7 +173,7 @@ function submitOrder(event) {
     //alert("Form being checked.")
 
     // verify that the user has not already submitted an order 
-    if (check_user()) {
+    if (check_user() == true) {
         alert("Sorry, you may only submit one order each day.");
         event.preventDefault(); 
         return; 
