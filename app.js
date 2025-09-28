@@ -114,7 +114,7 @@ app.use(express.urlencoded({ extended: true }));
 app.post('/check-password', (req, res) => {
   console.log(req.body);
   if (req.body.password == "PASSWORD_REMOVED") {
-    req.session.user = {username: admin};
+    req.session.user = {username: "admin"};
   }
   res.redirect('/admin-home');
 })
