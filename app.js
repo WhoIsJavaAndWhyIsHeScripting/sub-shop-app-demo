@@ -121,8 +121,8 @@ app.post('/check-password', (req, res) => {
 // function for pages with admin verification
 // path - the path name
 // file - the folder name
-function loadAdminPage(path, file) {
-  app.get('/' + path, (req, res) => {
+function loadAdminPage(filePath, file) {
+  app.get('/' + filePath, (req, res) => {
     if (req.session.user != undefined) {
       if (req.session.user.username == "admin") {
         res.sendFile(path.join(__dirname, 'layout', 'admin-page', file, file + ".html"));
