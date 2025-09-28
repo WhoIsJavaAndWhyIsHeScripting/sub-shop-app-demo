@@ -106,6 +106,10 @@ loadPage('/credits', path.join(__dirname, 'layout', 'credits-page.html'), true);
 
 // route for log in page
 loadPage('/log-in', path.join(__dirname, 'layout', 'admin-page', 'log-in', 'log-in.html'), false);
+
+// create request body thing i don't really know how this works
+app.use(express.urlencoded({ extended: true }));
+
 // check if the password entered was correct and log in user if so
 app.post('/check-password', (req, res) => {
   console.log(req.body);
@@ -163,9 +167,6 @@ app.get('/order-scripts-js', (req, res) => {
 app.get('/functions-js', (req, res) => {
   res.sendFile(path.join(__dirname, 'functions.js'));
 });
-
-// create request body thing i don't really know how this works
-app.use(express.urlencoded({ extended: true }));
 
 // handle post request when ingredients form submitted
 app.post('/submit', (req, res) => {
