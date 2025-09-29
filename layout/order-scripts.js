@@ -162,7 +162,7 @@ function responsiveSummary() {
 async function check_user() { 
     const data = await fetch("/check-for-order"); 
     if (!data.ok) {
-        throw new Error('Error from server: '+data);
+        throw new Error('Error from server: ' + data);
     }
     //console.log(data.status); 
     data_obj = await data.json();
@@ -170,51 +170,47 @@ async function check_user() {
     return data_obj.has_ordered; 
 }
 
+const HAS_ORDERED_TODAY = check_user(); 
+
 function submitOrder(event) {
     alert("Form being checked.")
 
     // verify that the user has not already submitted an order 
-    //await check_user()
-    //     .then(result => {
-    //         if (result == true) {
-    //             alert("Sorry, you may only submit one order each day.");
-    //             event.preventDefault(); 
-    //             return; 
-    //         } else {
-    //             //Checks bread and meats and cheeses. 
-    //             const [valid, period] = validate_form(event);
+    if (HAS_ORDERED_TODAY == true) {
+        alert("Sorry, you may only submit one order each day.");
+        event.preventDefault(); 
+        return; 
+    } else {
+        //Checks bread and meats and cheeses. 
+        const [valid, period] = validate_form(event);
 
-    //             //Finally, it thanks the user and reminds them when they can pick it up.
-    //             if (valid == true) {
-    //                 // delete all order cookies
-    //                 var cookieList = ["period", "inch", "bread", "toasted", "protein", "veggies", "condiments"];
-    //                 var date = new Date("1-1-1923");
-    //                 for (cookieName of cookieList) {
-    //                     document.cookie = `${cookieName}=; expires=${date}`;
-    //                 }
-    //                 alert("Thank you for your order! \n Please remember to pick up your sandwich during " + period + " period lunch.");
-    //             }
-    //         }})
-    //     .catch(error => {
-    //         event.preventDefault();  
-    //         console.error('Error during fetch:', error);
-    //     }
-    // ); 
-
-    
-    // Checks bread and meats and cheeses. 
-    const [valid, period] = validate_form(event);
-
-    //Finally, it thanks the user and reminds them when they can pick it up.
-    if (valid == true) {
-        // delete all order cookies
-        var cookieList = ["period", "inch", "bread", "toasted", "protein", "veggies", "condiments"];
-        var date = new Date("1-1-1923");
-        for (cookieName of cookieList) {
-            document.cookie = `${cookieName}=; expires=${date}`;
+        //Finally, it thanks the user and reminds them when they can pick it up.
+        if (valid == true) {
+            // delete all order cookies
+            var cookieList = ["period", "inch", "bread", "toasted", "protein", "veggies", "condiments"];
+            var date = new Date("1-1-1923");
+            for (cookieName of cookieList) {
+                document.cookie = `${cookieName}=; expires=${date}`;
+            }
+            alert("Thank you for your order! \n Please remember to pick up your sandwich during " + period + " period lunch.");
         }
-        alert("Thank you for your order! \n Please remember to pick up your sandwich during " + period + " period lunch.");
     }
+
+    // Old code 
+    
+    // // Checks bread and meats and cheeses. 
+    // const [valid, period] = validate_form(event);
+
+    // // Finally, it thanks the user and reminds them when they can pick it up.
+    // if (valid == true) {
+    //     // delete all order cookies
+    //     var cookieList = ["period", "inch", "bread", "toasted", "protein", "veggies", "condiments"];
+    //     var date = new Date("1-1-1923");
+    //     for (cookieName of cookieList) {
+    //         document.cookie = `${cookieName}=; expires=${date}`;
+    //     }
+    //     alert("Thank you for your order! \n Please remember to pick up your sandwich during " + period + " period lunch.");
+    // }
 }
 
 function countMeatsAndCheeses() {
