@@ -173,11 +173,13 @@ function submitOrder(event) {
     //alert("Form being checked.")
 
     // verify that the user has not already submitted an order 
-    if (check_user() == true) {
-        alert("Sorry, you may only submit one order each day.");
-        event.preventDefault(); 
-        return; 
+    check_user().then((result => {
+        if (result == true) {
+            alert("Sorry, you may only submit one order each day.");
+            event.preventDefault(); 
+            return; 
     }
+    })); 
 
     //Checks bread and meats and cheeses. 
     const [valid, period] = validate_form(event);
