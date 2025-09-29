@@ -171,7 +171,7 @@ async function check_user() {
 }
 
 function submitOrder(event) {
-    //alert("Form being checked.")
+    alert("Form being checked.")
 
     // verify that the user has not already submitted an order 
     //await check_user()
