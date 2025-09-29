@@ -174,7 +174,7 @@ const HAS_ORDERED_TODAY = check_user();
 
 function submitOrder(event) {
     console.log(HAS_ORDERED_TODAY); 
-    alert("Form being checked."); 
+    //alert("Form being checked."); 
 
     // verify that the user has not already submitted an order 
     if (HAS_ORDERED_TODAY) {
