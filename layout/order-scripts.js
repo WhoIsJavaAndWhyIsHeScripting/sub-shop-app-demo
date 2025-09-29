@@ -195,8 +195,8 @@ function submitOrder(event) {
                 }
             }})
         .catch(error => {
+            event.preventDefault();  
             console.error('Error during fetch:', error);
-            event.preventDefault(); 
         }
     ); 
 }
