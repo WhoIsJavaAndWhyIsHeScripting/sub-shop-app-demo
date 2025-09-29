@@ -178,22 +178,22 @@ function submitOrder(event) {
             alert("Sorry, you may only submit one order each day.");
             event.preventDefault(); 
             return; 
-    }
-    })); 
+        } else {
+            //Checks bread and meats and cheeses. 
+            const [valid, period] = validate_form(event);
 
-    //Checks bread and meats and cheeses. 
-    const [valid, period] = validate_form(event);
-
-    //Finally, it thanks the user and reminds them when they can pick it up.
-    if (valid == true) {
-        // delete all order cookies
-        var cookieList = ["period", "inch", "bread", "toasted", "protein", "veggies", "condiments"];
-        var date = new Date("1-1-1923");
-        for (cookieName of cookieList) {
-            document.cookie = `${cookieName}=; expires=${date}`;
+            //Finally, it thanks the user and reminds them when they can pick it up.
+            if (valid == true) {
+                // delete all order cookies
+                var cookieList = ["period", "inch", "bread", "toasted", "protein", "veggies", "condiments"];
+                var date = new Date("1-1-1923");
+                for (cookieName of cookieList) {
+                    document.cookie = `${cookieName}=; expires=${date}`;
+                }
+                alert("Thank you for your order! \n Please remember to pick up your sandwich during " + period + " period lunch.");
+            }
         }
-        alert("Thank you for your order! \n Please remember to pick up your sandwich during " + period + " period lunch.");
-    }
+    })); 
 }
 
 function countMeatsAndCheeses() {
