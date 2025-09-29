@@ -171,12 +171,13 @@ async function check_user() {
 }
 
 const HAS_ORDERED_TODAY = check_user(); 
+console.log(HAS_ORDERED_TODAY); 
 
 function submitOrder(event) {
-    alert("Form being checked.")
+    alert("Form being checked."); 
 
     // verify that the user has not already submitted an order 
-    if (HAS_ORDERED_TODAY == true) {
+    if (HAS_ORDERED_TODAY) {
         alert("Sorry, you may only submit one order each day.");
         event.preventDefault(); 
         return; 
