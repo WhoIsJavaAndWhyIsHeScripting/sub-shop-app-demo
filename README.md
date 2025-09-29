@@ -4,7 +4,7 @@ Welcome to the SubShopApp project!
 
 <img src="./assets/bearbiteslogo.png" height="100"> 
 
-This repository and Gitlab project contains the code for a web application for ordering sub sandwiches from the Bear Bites shop at UAHS. This code is run on a school server, which is only accessible (if running) on UACS wi-fi. 
+This repository and Gitlab project contains the code for a web application for ordering sub sandwiches from the Bear Bites shop at UAHS. This code is run on a school server. 
 
 ## Overview 
 
@@ -14,12 +14,12 @@ For now, our data (orders as well as admin settings) is stored in plain text in 
 
 ## File Structure 
 
-- layout - the folder for all of our frontend stuff. This includes HTML, CSS and frontend JS files. Our 3 main pages visible to users are in the top level folder. 
-- - admin-page - the folder for the three admin pages.
-- - styles - this is where we put any CSS that isn't specific to one page.
+- layout - the folder for all of our frontend stuff. This includes HTML, CSS and frontend JS files. Our 3 main pages visible to users are in the top level folder. The file sub-orders.csv contains the actual orders (the copy on Gitlab should only have the headers).
+  - admin-page - the folder for the three admin pages.
+  - styles - this is where we put any CSS that isn't specific to one page.
 - assets - this is where we keep our images.  
 - python-scripts - this is where all our python is contained, which handles turning the CSV order data into a PDF and emailing it.  
-- app.js - this is where our server is. This is where routing and form validation are handled.  
+- app.js - this is where our server is. This is where routing and some form validation are handled.  
 
 ## Resources 
 
@@ -51,5 +51,3 @@ or anything in python-scripts.
 
 EMAIL REMOVED - Evan, worked with the backend.  
 Contact me as backup. I contributed to the Python scripts as well some client-side Javascript. I can't help much with Node or the most of the front end. 
-
--- Finish --
