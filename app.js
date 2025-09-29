@@ -104,6 +104,9 @@ app.get('/order', (req, res) => {
 // route for credits page
 loadPage('/credits', path.join(__dirname, 'layout', 'credits-page.html'), true);
 
+// route for contact page
+loadPage('/contact-us', path.join(__dirname, 'layout', 'contact-us.html'), true);
+
 // route for log in page
 loadPage('/log-in', path.join(__dirname, 'layout', 'admin-page', 'log-in', 'log-in.html'), false);
 
