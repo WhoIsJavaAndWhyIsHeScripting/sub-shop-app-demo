@@ -164,17 +164,17 @@ async function check_user() {
     if (!data.ok) {
         throw new Error('Error from server: '+data);
     }
-    console.log(data.status); 
+    //console.log(data.status); 
     data_obj = await data.json();
     console.log(typeof data_obj.has_ordered);
     return data_obj.has_ordered; 
 }
 
-function submitOrder(event) {
+async function submitOrder(event) {
     //alert("Form being checked.")
 
     // verify that the user has not already submitted an order 
-    check_user()
+    await check_user()
         .then(result => {
             if (result == true) {
                 alert("Sorry, you may only submit one order each day.");
