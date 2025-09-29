@@ -170,11 +170,11 @@ async function check_user() {
     return data_obj.has_ordered; 
 }
 
-async function submitOrder(event) {
+function submitOrder(event) {
     //alert("Form being checked.")
 
     // verify that the user has not already submitted an order 
-    await check_user()
+    //await check_user()
     //     .then(result => {
     //         if (result == true) {
     //             alert("Sorry, you may only submit one order each day.");
