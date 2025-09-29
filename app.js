@@ -55,7 +55,7 @@ function updateTime() {
 app.use(express.static(path.join(__dirname, 'layout', 'admin-page', 'admin-ingredients')));
 app.use(express.static(path.join(__dirname, 'layout', 'admin-page', 'admin-home')));
 app.use(express.static(path.join(__dirname, 'layout', 'admin-page', 'admin-users')));
-app.use(express.static(__dirname));
+app.use(express.static(path.join(__dirname, 'assets')));
 
 // function for sending a file to a path
 // route - the actual path on the server/the subpage on the internet (subshop-dev.uaschools.io/route)
