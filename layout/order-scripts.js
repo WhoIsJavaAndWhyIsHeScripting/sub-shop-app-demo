@@ -173,7 +173,7 @@ function submitOrder(event) {
     //alert("Form being checked.")
 
     // verify that the user has not already submitted an order 
-    check_user().then((result => {
+    check_user().then(result => {
         if (result == true) {
             alert("Sorry, you may only submit one order each day.");
             event.preventDefault(); 
@@ -192,8 +192,11 @@ function submitOrder(event) {
                 }
                 alert("Thank you for your order! \n Please remember to pick up your sandwich during " + period + " period lunch.");
             }
+        }})
+        .catch(error => {
+            console.error('Error during fetch:', error);
         }
-    })); 
+    ); 
 }
 
 function countMeatsAndCheeses() {
