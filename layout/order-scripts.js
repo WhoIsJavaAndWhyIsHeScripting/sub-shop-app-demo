@@ -171,9 +171,9 @@ async function check_user() {
 }
 
 const HAS_ORDERED_TODAY = check_user(); 
-console.log(HAS_ORDERED_TODAY); 
 
 function submitOrder(event) {
+    console.log(HAS_ORDERED_TODAY); 
     alert("Form being checked."); 
 
     // verify that the user has not already submitted an order 
