@@ -159,31 +159,31 @@ function responsiveSummary() {
 
 // Submitting order 
 
-async function check_user() { 
-    const data = await fetch("/check-for-order"); 
+async function check_user() {
+    const data = await fetch("/check-for-order");
     if (!data.ok) {
         throw new Error('Error from server: ' + data);
     }
     //console.log(data.status); 
     data_obj = await data.json();
-    console.log(typeof data_obj.has_ordered);
-    return data_obj.has_ordered; 
+    return data_obj.has_ordered;
 }
 
-check_user() 
+// checks to see if the user has ordered today and stores the result in a global 
+check_user()
     .then((result) => {
-        window.HAS_ORDERED_TODAY = result; 
-    }); 
+        window.HAS_ORDERED_TODAY = result;
+    });
 
 function submitOrder(event) {
-    console.log(HAS_ORDERED_TODAY); 
+    //console.log(HAS_ORDERED_TODAY);
     //alert("Form being checked."); 
 
     // verify that the user has not already submitted an order 
     if (window.HAS_ORDERED_TODAY) {
         alert("Sorry, you may only submit one order each day.");
-        event.preventDefault(); 
-        return; 
+        event.preventDefault();
+        return;
     } else {
         //Checks bread and meats and cheeses. 
         const [valid, period] = validate_form(event);
@@ -199,22 +199,6 @@ function submitOrder(event) {
             alert("Thank you for your order! \n Please remember to pick up your sandwich during " + period + " period lunch.");
         }
     }
-
-    // Old code 
-    
-    // // Checks bread and meats and cheeses. 
-    // const [valid, period] = validate_form(event);
-
-    // // Finally, it thanks the user and reminds them when they can pick it up.
-    // if (valid == true) {
-    //     // delete all order cookies
-    //     var cookieList = ["period", "inch", "bread", "toasted", "protein", "veggies", "condiments"];
-    //     var date = new Date("1-1-1923");
-    //     for (cookieName of cookieList) {
-    //         document.cookie = `${cookieName}=; expires=${date}`;
-    //     }
-    //     alert("Thank you for your order! \n Please remember to pick up your sandwich during " + period + " period lunch.");
-    // }
 }
 
 function countMeatsAndCheeses() {
@@ -251,6 +235,7 @@ function validate_form(event) {
             valid = false;
         }
     }
+
     //Check meats and cheeses (no more than 3 allowed)
     var total = countMeatsAndCheeses();
     if (total > 3) {
@@ -265,8 +250,6 @@ function validate_form(event) {
             alert("Length is ignored for salads. \n(No 12 inch salads!)");
         }
     }
-
-    // check if a period is selected
 
     // check if period is selected
     var periods = document.getElementsByName("period");
