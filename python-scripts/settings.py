@@ -1,4 +1,4 @@
-'''This files includes various constants and settings for the other python scripts.''' 
+"""This files includes various constants and settings for the other python scripts."""
 
 from logging import DEBUG, INFO, WARNING, ERROR, CRITICAL 
 
@@ -55,6 +55,6 @@ PDF_VARS = {
 EMAIL_VARS = {
     "port" : 25, 
     #"server_address" : "smtp.uaschools.org", 
-    "server_address" : "localhost",   # the server now has a SMTP server on the local machine
+    "server_address" : "localhost",   # the server now has an SMTP server on the local machine
     "sender_email" : "subshopapp@subshop-dev.uaschools.io", 
 }      

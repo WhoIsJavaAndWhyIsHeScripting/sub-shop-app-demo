@@ -1,14 +1,14 @@
-'''
-A simple Python script to convert orders for the UAHS Subshop App 
-from a CSV to a printable PDF. 
+"""
+A simple Python script to convert orders for the UAHS Subshop App
+from a CSV to a printable PDF.
 
 (Uses reportlab to create the pdf; target template is Avery Presta 9
 4215 w/ 6 labels per page)
 
-A settings file is used to read the CSV and make the PDF. 
+A settings file is used to read the CSV and make the PDF.
 
-Written November 2024, extensively modified May 2025. 
-'''
+Written November 2024, extensively modified May 2025.
+"""
 
 import csv  
 import datetime 
@@ -36,7 +36,7 @@ def main(csv_file, settings, skip=[], bold=[], delimiter=',', debug=False):
     # adjusts the location of the origin for drawing on the pdf 
     pdf.translate(0, height) 
     # This puts the origin in the top left corner, though the 
-    # disadvantage is that negative y values are neeeded. 
+    # disadvantage is that negative y values are needed.
 
     # Define the text style 
     styles = getSampleStyleSheet() 

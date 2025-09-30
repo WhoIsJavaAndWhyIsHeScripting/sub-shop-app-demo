@@ -6,7 +6,7 @@ The python-scripts directory is explained below\:
 Files\:  
 csv_to_pdf.py \- takes the data in orders.csv and produces a pdf (orders.pdf)  
 
-settings.py \- contains setttings for the other python scripts (imported by \_\_main\_\_.py)
+settings.py \- contains settings for the other python scripts (imported by \_\_main\_\_.py)
 
 *If there is a setting (e.g. server address, pdf font, email recipients) to change this is the file to modify!* 
 

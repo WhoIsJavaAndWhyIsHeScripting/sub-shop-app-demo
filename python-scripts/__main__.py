@@ -1,12 +1,12 @@
 #!./env/bin python3 
-'''This script runs csv_to_pdf.py and email_pdf.py before saving the total 
+"""This script runs csv_to_pdf.py and email_pdf.py before saving the total
 number of orders.
 It is intended to be the script run by the server's Node.js or cron.
 
-THIS SCRIPT NEEDS TO BE RUN FROM ITS CONTAINING DIRECTORY! 
-(Otherwise the relative paths break.) 
+THIS SCRIPT NEEDS TO BE RUN FROM ITS CONTAINING DIRECTORY!
+(Otherwise the relative paths break.)
 
-Written March 2025.''' 
+Written March 2025."""
 
 # Get various constants and settings for the scripts 
 import settings 
@@ -18,7 +18,7 @@ import sort_csv
 import csv_to_pdf 
 import email_pdf 
 
-if __name__ == "__main__":  # i.e if not imported as a module  
+if __name__ == "__main__":  # i.e. if not imported as a module
     if settings.LOG_FILE: 
         logging.basicConfig(filename=settings.LOG_FILE, level=settings.LOG_LEVEL) 
         print(f"Running at {str(datetime.datetime.now())}.") 
@@ -40,7 +40,7 @@ if __name__ == "__main__":  # i.e if not imported as a module
         try: 
             sort_csv.main(settings.CSV_PATH, settings.SORT_BY, delimiter=settings.CSV_DELIMITER) 
         except Exception as e: 
-            logging.error("Exception occured sorting csv.")
+            logging.error("Exception occurred sorting csv.")
             logging.error(e)
             errors = True 
             #traceback.print_exc(file=settings.LOG_FILE)   
@@ -57,7 +57,7 @@ if __name__ == "__main__":  # i.e if not imported as a module
         try: 
             email_pdf.main("", settings.EMAIL_VARS, settings.RECIPIENTS)  # a blank file name indicates that there were no orders 
         except Exception as e:  
-            logging.error("Exception occured emailing no orders message.")
+            logging.error("Exception occurred emailing no orders message.")
             logging.error(e)
             errors = True 
             #traceback.print_exc(file=settings.LOG_FILE)   
@@ -74,7 +74,7 @@ if __name__ == "__main__":  # i.e if not imported as a module
                 delimiter=settings.CSV_DELIMITER, 
                 ) 
         except Exception as e: 
-            logging.error("Exception occured making pdf.")
+            logging.error("Exception occurred making pdf.")
             logging.error(e)
             errors = True 
             #traceback.print_exc(file=settings.LOG_FILE)  
@@ -88,7 +88,7 @@ if __name__ == "__main__":  # i.e if not imported as a module
                            csv_file=settings.CSV_PATH,
                            )  
         except Exception as e:  
-            logging.error("Exception occured emailing pdf.")
+            logging.error("Exception occurred emailing pdf.")
             logging.error(e)
             errors = True 
             #traceback.print_exc(file=settings.LOG_FILE)   
