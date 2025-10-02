@@ -39,7 +39,7 @@ function saveOrder() {
 function loadOrder() {
     for (itemName of itemList) {
         var checkedItems = localStorage.getItem(itemName);
-        if (checkedItems.length > 0) {
+        if (checkedItems != null && checkedItems.length > 0) {
             //split the list of ingredients checked into an array
             var checkedList = checkedItems.split(", ");
             //grab a list of all checkboxes in the category
