@@ -1,24 +1,24 @@
 #!./env/bin python3 
-'''This script runs csv_to_pdf.py and email_pdf.py before saving the total 
+"""This script runs csv_to_pdf.py and email_pdf.py before saving the total 
 number of orders.
 It is intended to be the script run by the server's Node.js or cron.
 
 THIS SCRIPT NEEDS TO BE RUN FROM ITS CONTAINING DIRECTORY! 
 (Otherwise the relative paths break.) 
 
-Written March 2025.''' 
+Written March 2025.""" 
 
-# Get various constants and settings for the scripts 
+# Various constants and settings for the scripts 
 import settings 
 
-import datetime 
-import logging 
-import logging 
-
-import sort_csv 
+# Other python scripts 
 import sort_csv 
 import csv_to_pdf 
 import email_pdf 
+
+# Standard library modules 
+import datetime 
+import logging 
 
 if __name__ == "__main__":  # i.e if not imported as a module  
     if settings.LOG_FILE: 
@@ -51,8 +51,6 @@ if __name__ == "__main__":  # i.e if not imported as a module
 
     # Counts the number of orders in csv file. 
     with open(settings.CSV_PATH) as f:
-    # Counts the number of orders in csv file. 
-    with open(settings.CSV_PATH) as f:
         order_count = sum(1 for line in f) - 1 
     
     logging.debug(f"There were {order_count} order(s) in the CSV file.") 
@@ -70,6 +68,7 @@ if __name__ == "__main__":  # i.e if not imported as a module
     
     else: 
         try: 
+            # Make PDF 
             csv_to_pdf.main(
                 settings.CSV_PATH, 
                 settings.PDF_VARS, 
@@ -86,6 +85,7 @@ if __name__ == "__main__":  # i.e if not imported as a module
             logging.debug("Made PDF.")
 
         try: 
+            # Email the PDF just made 
             email_pdf.main("orders.pdf", 
                            settings.EMAIL_VARS, 
                            settings.RECIPIENTS, 
@@ -104,15 +104,7 @@ if __name__ == "__main__":  # i.e if not imported as a module
             f.write(f"{datetime.date.today()}, {order_count}\n") 
 
         if settings.CLEAR_CSV: 
-            #Clears all but first line (header) of csv file 
-            with open(settings.CSV_PATH, 'r+') as f: 
-                header = f.readline() 
-                f.truncate(0) 
-            with open(settings.CSV_PATH, 'w') as f:
-                f.write(header.strip())  # does not include newline 
-            logging.debug(f"Cleared {settings.CSV_PATH}.")
-        if settings.CLEAR_CSV: 
-            #Clears all but first line (header) of csv file 
+            # Clears all but first line (header) of csv file 
             with open(settings.CSV_PATH, 'r+') as f: 
                 header = f.readline() 
                 f.truncate(0) 
@@ -122,7 +114,5 @@ if __name__ == "__main__":  # i.e if not imported as a module
 
     if errors: 
         logging.info(f"Tasks finished with errors at {str(datetime.datetime.now())}. \n") 
-        logging.info(f"Tasks finished with errors at {str(datetime.datetime.now())}. \n") 
     else: 
-        logging.info(f"Tasks completed at {str(datetime.datetime.now())}. \n") 
         logging.info(f"Tasks completed at {str(datetime.datetime.now())}. \n") 

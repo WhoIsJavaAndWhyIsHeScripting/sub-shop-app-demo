@@ -1,4 +1,4 @@
-'''This files includes various constants and settings for the other python scripts.''' 
+"""This file includes various constants and settings for the other python scripts.""" 
 
 from logging import DEBUG, INFO, WARNING, ERROR, CRITICAL 
 
@@ -33,6 +33,7 @@ CSV_DELIMITER = ";"
 # Logging 
 LOG_FILE = "log.txt"  # use an empty string for the console  
 LOG_LEVEL = DEBUG 
+
 
 # For csv_to_pdf.py 
 PDF_VARS = {
