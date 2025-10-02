@@ -27,27 +27,26 @@ function disableElement(element, bool) {
     }
     document.getElementById(element).disabled = bool;
 }
-
-// saves the current boxes checked to a cookie
+// all categories of ingredients of the order
+var itemList = ["period", "inch", "bread", "toasted", "protein", "veggies", "condiments"];
+// saves the current boxes checked to localStorage
 function saveOrder() {
-    var cookieList = ["period", "inch", "bread", "toasted", "protein", "veggies", "condiments"];
-    for (cookieName of cookieList) {
-        document.cookie = `${cookieName}=` + findChecked(`input[name="${cookieName}"]`);
+    for (itemName of itemList) {
+        localStorage.setItem(itemName, findChecked(`input[name="${cookieName}"]`));
     }
 }
-// loads the order from the cookie and adds event listeners to checkboxes to save it when the order is changed
+// loads the order from localStorage and adds event listeners to checkboxes to save it when the order is changed
 function loadOrder() {
-    // split the cookie into each key/value pair for each category of checkboxes
-    var orderInfo = document.cookie.split("; ");
-    if (document.cookie.length > 0) {
-        for (cookiePair of orderInfo) {
-            //keyValue - index 0 is the name of each checkbox in the category, index 1 is a list of values of each checkbox checked in that category
-            var keyValue = cookiePair.split("=");
-            var values = keyValue[1].split(", ");
-            var inputGroup = document.querySelectorAll(`input[name=${keyValue[0]}]`);
+    for (itemName of itemList) {
+        var checkedItems = localStorage.getItem(itemName);
+        if (checkedItems.length > 0) {
+            //split the list of ingredients checked into an array
+            var checkedList = checkedItems.split(", ");
+            //grab a list of all checkboxes in the category
+            var inputGroup = document.querySelectorAll(`input[name="${itemName}"]`);
             inputGroup.forEach((input) => {
                 // if the checkbox is in the checked list, check the checkbox
-                if (values.indexOf(input.parentElement.textContent.trim()) != -1) {
+                if (checkedList.indexOf(input.parentElement.textContent.trim()) != -1) {
                     input.checked = true;
                 }
             })
@@ -196,6 +195,7 @@ function submitOrder(event) {
             for (cookieName of cookieList) {
                 document.cookie = `${cookieName}=; expires=${date}`;
             }
+            localStorage.clear();
             alert("Thank you for your order! \n Please remember to pick up your sandwich during " + period + " period lunch.");
         }
     }
@@ -264,8 +264,6 @@ function validate_form(event) {
         valid = false;
         alert("You must select a period to pick up.");
     }
-    // clear cookies
-    document.cookie = "";
     //alert("Done checking form.");
     return [valid, period];
 }
