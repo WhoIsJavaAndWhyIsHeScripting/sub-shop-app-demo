@@ -1,44 +1,47 @@
 :root {
-    --ua-gold: #f8d000;
-    --ua-teal:  #017d8f;
+   --ua-gold: #f8d000;
+   --ua-teal: #017d8f;
 }
 
 * {
-    font-family: Montserrat, Verdana, Geneva, Tahoma, sans-serif;
-    box-sizing: border-box;
+   font-family: Montserrat, Verdana, Geneva, Tahoma, sans-serif;
+   box-sizing: border-box;
 }
 
 body {
-    width: 100%;
-    margin-top: 60px;
+   width: 100%;
+   height: 100vh; /* keeps footer at the bottom */ 
+   margin-top: 60px;
 }
 
 .headerbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    display: flex;
-    background-color: var(--ua-gold);
-    padding: 5px;
-    width: 100%;
-    font-weight: 500;
-    font-size: 1.75em;
-    align-items: center;
+   position: fixed;
+   top: 0;
+   left: 0;
+   display: flex;
+   background-color: var(--ua-gold);
+   padding: 5px;
+   width: 100%;
+   font-weight: 500;
+   font-size: 1.75em;
+   align-items: center;
 }
+
 /* get rid of default link styles for header bar */
 .headerbar a {
-    margin: 5px;
-    color: black;
-    text-decoration: none; 
-    display: flex; 
-    align-items: center;
+   margin: 5px;
+   color: black;
+   text-decoration: none;
+   display: flex;
+   align-items: center;
 }
 
 .headerbar img {
-    height: 80px;
-    clip-path: circle();
-    margin: 5px;
+   height: 80px;
+   clip-path: circle();
+   margin: 5px;
 }
+
 /* navigation buttons */
 .navbutton {
    display: block;
@@ -54,6 +57,7 @@ body {
    font-size: 24px;
    box-shadow: 0px 5px 5px lightgray;
 }
+
 /* button changes color with 
 transition when you hover */
 .navbutton:hover {
@@ -62,6 +66,7 @@ transition when you hover */
    color: var(--ua-gold);
    border-color: black;
 }
+
 /* transition when you stop hovering */
 .navbutton:not(:hover) {
    transition: 0.1s;
@@ -75,49 +80,55 @@ hr {
    background-color: var(--ua-teal);
    border: none;
 }
+
 .flex {
    display: flex;
    justify-content: space-around;
    margin: 10px auto;
    align-items: center;
-   
-}
-section{
-    float: left;
-   font-size: medium;
-}
-aside{
-    float: right;
+
 }
 
-button{
-    width: 40%;
-    margin: auto;
+section {
+   float: left;
+   font-size: medium;
 }
+
+aside {
+   float: right;
+}
+
+button {
+   width: 40%;
+   margin: auto;
+}
+
 .myButton {
    background-color: var(--ua-teal);
    display: inline-block;
    cursor: pointer;
    color: white;
-   font-family:Arial;
+   font-family: Arial;
    font-size: 20px;
    padding: .5em;
-   text-decoration:none;
+   text-decoration: none;
    text-align: center;
    border-radius: 10px;
    border: none;
    margin: 10px;
 
 }
+
 label:has(input:disabled) {
    text-decoration: line-through;
    color: gray;
 }
+
 input {
    accent-color: var(--ua-teal);
 }
 
-footer{
+footer {
    display: block;
    background-color: var(--ua-gold);
    margin-left: -8px;
@@ -126,15 +137,18 @@ footer{
    width: 100%;
    padding: 1em;
 }
-.Front{
+
+.Front {
    width: 600px;
    height: 400px;
    border: 50px;
 }
-.box{
+
+.box {
    width: 80%;
    margin: auto;
 }
+
 #sub-shop {
    float: right;
    width: 100%;
@@ -152,13 +166,13 @@ footer{
 
 @media only screen and (max-width: 800px) {
    aside {
-      float:none;
+      float: none;
       display: block;
       width: 100%;
    }
 
    section {
-      float:none;
+      float: none;
       display: block;
       width: 100%;
    }
@@ -170,7 +184,10 @@ footer{
    td {
       display: block;
    }
-   table, tbody, tr {
+
+   table,
+   tbody,
+   tr {
       display: block;
       width: auto;
    }
@@ -178,17 +195,18 @@ footer{
    #order-now {
       width: 80%;
    }
+
    #proceed-container {
       flex-direction: column;
    }
-   .button-container > button, .button-container > a {
+
+   .button-container>button,
+   .button-container>a {
       width: 70%;
    }
 }
 
-@media only screen and (max-width: 600px) {
-
-}
+@media only screen and (max-width: 600px) {}
 
 
 
@@ -197,7 +215,8 @@ footer{
    width: 50%;
    padding: 15px 5px;
 }
-.submit{
+
+.submit {
    border: none;
    background-color: var(--ua-gold);
    text-align: center;
@@ -205,40 +224,47 @@ footer{
    width: 100%;
    padding: 15px 0;
 }
+
 h1 {
    font-size: 1.5em;
    font-weight: 600;
    padding: 10px;
 }
+
 p {
    padding: 10px;
    border-bottom: solid 1px gray;
 }
+
 a {
    color: var(--ua-teal);
 }
 
-table, td, th {
-  border: 1px solid black;
-  font-size: 24px;
+table,
+td,
+th {
+   border: 1px solid black;
+   font-size: 24px;
 }
 
 table {
-  border-collapse: collapse;
-  margin: 30px;
+   border-collapse: collapse;
+   margin: 30px;
 }
 
 td {
-  text-align: left;
-  font-size: 16px;
-    vertical-align: top;
-    padding: 5px;
+   text-align: left;
+   font-size: 16px;
+   vertical-align: top;
+   padding: 5px;
 
 }
+
 th {
-   
-    font-size: 24px;
+
+   font-size: 24px;
 }
+
 legend {
-    font-weight: bold;
+   font-weight: bold;
 }
