@@ -8,7 +8,7 @@ CSV_PATH = "../layout/sub-orders.csv"
 SORT_CSV = True 
 
 # What to do with different headers in the CSV 
-SORT_BY = ["PERIOD", "LAST"] 
+SORT_BY = ["PERIOD", "NAME"] 
 BOLD = SORT_BY  # Bold increase font of these values 
 SKIP = ["TIME"] # Skip omits these values on the labels 
 
@@ -20,9 +20,9 @@ RECIPIENTS = [
     "EMAIL REMOVED", 
     
     # Sub Shop people 
-    "EMAIL REMOVED", 
-    "EMAIL REMOVED", 
-    "EMAIL REMOVED",
+    # "EMAIL REMOVED", 
+    # "EMAIL REMOVED", 
+    # "EMAIL REMOVED",
 ]
 
 CLEAR_CSV = True 

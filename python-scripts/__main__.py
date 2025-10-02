@@ -13,7 +13,9 @@ import settings
 
 import datetime 
 import logging 
+import logging 
 
+import sort_csv 
 import sort_csv 
 import csv_to_pdf 
 import email_pdf 
@@ -47,6 +49,8 @@ if __name__ == "__main__":  # i.e if not imported as a module
         else: 
            logging.debug("Sorted CSV file.") 
 
+    # Counts the number of orders in csv file. 
+    with open(settings.CSV_PATH) as f:
     # Counts the number of orders in csv file. 
     with open(settings.CSV_PATH) as f:
         order_count = sum(1 for line in f) - 1 
@@ -105,10 +109,20 @@ if __name__ == "__main__":  # i.e if not imported as a module
                 header = f.readline() 
                 f.truncate(0) 
             with open(settings.CSV_PATH, 'w') as f:
-                f.write(header) 
+                f.write(header.strip())  # does not include newline 
+            logging.debug(f"Cleared {settings.CSV_PATH}.")
+        if settings.CLEAR_CSV: 
+            #Clears all but first line (header) of csv file 
+            with open(settings.CSV_PATH, 'r+') as f: 
+                header = f.readline() 
+                f.truncate(0) 
+            with open(settings.CSV_PATH, 'w') as f:
+                f.write(header.strip())  # does not include newline 
             logging.debug(f"Cleared {settings.CSV_PATH}.")
 
     if errors: 
         logging.info(f"Tasks finished with errors at {str(datetime.datetime.now())}. \n") 
+        logging.info(f"Tasks finished with errors at {str(datetime.datetime.now())}. \n") 
     else: 
+        logging.info(f"Tasks completed at {str(datetime.datetime.now())}. \n") 
         logging.info(f"Tasks completed at {str(datetime.datetime.now())}. \n") 

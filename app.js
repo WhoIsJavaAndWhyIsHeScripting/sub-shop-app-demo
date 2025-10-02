@@ -39,16 +39,29 @@ const { randomUUID } = require('crypto');
 
 // check the server time and open/close the server at given times
 var isOpen = false;
-function updateTime() {
+function updateOpenStatus() {
   var currentTime = new Date();
   var hour = currentTime.getHours();
   var minute = currentTime.getMinutes();
-  hour += minute/60;
-  if (hour >= 7.5 && hour < 21.5) {
-    isOpen = true;
-  } else {
-    isOpen = false;
-  }
+  hour += minute / 60;
+  // count the number of lines sub-orders.csv has
+  fs.readFile(path.join(__dirname, 'layout', 'sub-orders.csv'), (err, data) => {
+    if (err) {
+      res.send(err);
+    }
+    var newLineMatch = data.toString().match(/\n\g/);
+    var lines;
+    if (newLineMatch != null) {
+      lines = newLineMatch.length;
+    } else {
+      lines = 0;
+    }
+    if ((hour >= 7.5 && hour < 21.5) && (lines <= 20)) {
+      isOpen = true;
+    } else {
+      isOpen = false;
+    }
+  });
 }
 
 // Serve static files from the 'public' folder
@@ -94,20 +107,47 @@ app.get('/order', (req, res) => {
 // route for credits page
 loadPage('/credits', path.join(__dirname, 'layout', 'credits-page.html'), true);
 
+// route for contact page
+loadPage('/contact-us', path.join(__dirname, 'layout', 'contact-us.html'), true);
+
+// route for log in page
+loadPage('/log-in', path.join(__dirname, 'layout', 'admin-page', 'log-in', 'log-in.html'), false);
+
+// create request body thing i don't really know how this works
+app.use(express.urlencoded({ extended: true }));
+
+// check if the password entered was correct and log in user if so
+app.post('/check-password', (req, res) => {
+  console.log(req.body);
+  if (req.body.password == "PASSWORD_REMOVED") {
+    req.session.user = {username: "admin"};
+  }
+  res.redirect('/admin-home');
+})
+// function for pages with admin verification
+// path - the path name
+// file - the folder name
+function loadAdminPage(filePath, file) {
+  app.get('/' + filePath, (req, res) => {
+    if (req.session.user != undefined) {
+      if (req.session.user.username == "admin") {
+        res.sendFile(path.join(__dirname, 'layout', 'admin-page', file, file + ".html"));
+      } else {
+        res.redirect('/log-in');
+      }
+    } else {
+      res.redirect('/log-in');
+    }
+  })
+}
 // Route for admin home
-app.get('/admin-home', (req, res) => {
-    res.sendFile(path.join(__dirname, 'layout', 'admin-page', 'admin-home', 'admin-home.html'));
-});
+loadAdminPage('admin-home', 'admin-home');
 
 // route for ingredients page
-app.get('/ingredients', (req, res) => {
-  res.sendFile(path.join(__dirname, 'layout', 'admin-page', 'admin-ingredients', 'admin-ingredients.html'));
-});
+loadAdminPage('ingredients', 'admin-ingredients');
 
 // route for users page
-app.get('/users', (req, res) => {
-  res.sendFile(path.join(__dirname, 'layout', 'admin-page', 'admin-users', 'admin-users.html'));
-});
+loadAdminPage('users', 'admin-users');
 
 // create route for css boilerplate
 app.get('/boilerplate', (req, res) => {
@@ -134,22 +174,19 @@ app.get('/functions-js', (req, res) => {
   res.sendFile(path.join(__dirname, 'functions.js'));
 });
 
-// create request body thing i don't really know how this works
-app.use(express.urlencoded({extended: true}));
-
 // handle post request when ingredients form submitted
 app.post('/submit', (req, res) => {
   // get the values of the checked checkboxes
- let ingredients = req.body.ingredients;
- // turn it into a comma separated list
- let ingredientsText = "";
- if (ingredients != undefined) {
+  let ingredients = req.body.ingredients;
+  // turn it into a comma separated list
+  let ingredientsText = "";
+  if (ingredients != undefined) {
     ingredientsText += ingredients[0];
     for (let i = 1; i < ingredients.length; i++) {
       ingredientsText += "," + ingredients[i];
-     }
- }
- // replace whatever is in out-of-stock.txt with the new comma separated list
+    }
+  }
+  // replace whatever is in out-of-stock.txt with the new comma separated list
   fs.writeFile(path.join(__dirname, "layout", "admin-page", "admin-ingredients", "out-of-stock.txt"), ingredientsText, (err) => {
     if (err) {
       console.log(err);
@@ -157,8 +194,8 @@ app.post('/submit', (req, res) => {
     console.log("yippee");
   })
 
- // go back to ingredients page
- res.redirect("/ingredients");
+  // go back to ingredients page
+  res.redirect("/ingredients");
 });
 
 // handle post request when users form submitted
@@ -167,24 +204,24 @@ app.post('/submit2', (req, res) => {
   var bannedUser = req.body.banned;
   // append the data to the file with a comma before if it's not empty
   if (bannedUser != null) {
-  if (fs.statSync(path.join(__dirname, "layout", "admin-page", "admin-users", "ban-list.txt")).size != 0) {
+    if (fs.statSync(path.join(__dirname, "layout", "admin-page", "admin-users", "ban-list.txt")).size != 0) {
       fs.appendFile(path.join(__dirname, "layout", "admin-page", "admin-users", "ban-list.txt"), "," + bannedUser, (err) => {
         if (err) {
           throw err;
         }
       })
-  } else {
-    // otherwise just append the data
-    fs.appendFile(path.join(__dirname, "layout", "admin-page", "admin-users", "ban-list.txt"), bannedUser, (err) => {
-      if (err) {
-        throw err;
-      }
-    });
+    } else {
+      // otherwise just append the data
+      fs.appendFile(path.join(__dirname, "layout", "admin-page", "admin-users", "ban-list.txt"), bannedUser, (err) => {
+        if (err) {
+          throw err;
+        }
+      });
+    }
   }
-}
-// handle when a user should be REMOVED from the list
+  // handle when a user should be REMOVED from the list
   var toBeRemoved = req.body.hidden;
-  
+
   if (toBeRemoved != null) {
     // read the banned users list and split by commas
     fs.readFile(path.join(__dirname, "layout", "admin-page", "admin-users", "ban-list.txt"), (err, data) => {
@@ -202,17 +239,17 @@ app.post('/submit2', (req, res) => {
         fs.writeFileSync(path.join(__dirname, "layout", "admin-page", "admin-users", "ban-list.txt"), "");
       } else if (commaSplit.length == 1) {
         // if there's one user left, just write their name
-      fs.writeFileSync(path.join(__dirname, "layout", "admin-page", "admin-users", "ban-list.txt"),commaSplit[0]);
+        fs.writeFileSync(path.join(__dirname, "layout", "admin-page", "admin-users", "ban-list.txt"), commaSplit[0]);
       } else if (commaSplit.length > 1) {
         // if there's 2+ users left, write the first user then append all the other users with commas before
-        fs.writeFileSync(path.join(__dirname, "layout", "admin-page", "admin-users", "ban-list.txt"),commaSplit[0]);
+        fs.writeFileSync(path.join(__dirname, "layout", "admin-page", "admin-users", "ban-list.txt"), commaSplit[0]);
         // do not add empty names
         for (let i = 1; i < commaSplit.length; i++) {
           if (commaSplit[i] != "" && commaSplit[i] != undefined) {
             fs.appendFileSync(path.join(__dirname, "layout", "admin-page", "admin-users", "ban-list.txt"), "," + commaSplit[i]);
+          }
         }
       }
-    }
     });
   }
   // redirect back to the users page
@@ -254,7 +291,7 @@ app.post('/order', (req, res) => {
     //   maxAge: 1000 * 60 * 60 * 24
     // });
 
-    res.redirect('/order');
+    res.redirect('/order?loggedIn=true');
 
   // } catch (err) {
   //     console.error("Token verification failed:", err);
@@ -274,11 +311,11 @@ app.post('/order', (req, res) => {
 // }
 
 // parse Google ID_TOKEN
-function parseJwt (token) {
+function parseJwt(token) {
   const base64Url = token.split('.')[1];
   const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-  const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
-      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+  const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
   }).join(''));
 
   return JSON.parse(jsonPayload);
@@ -326,7 +363,7 @@ app.post('/order-submit', (req, res) => {
   if ("" + inch != "undefined") {
     console.log("1");
     base += inch + " Inch ";
-  } 
+  }
   if (toasted == "Toasted") {
     console.log("2");
     base += "Toasted ";
@@ -337,6 +374,32 @@ app.post('/order-submit', (req, res) => {
   res.redirect('/');
   });
 
+});
+
+app.get('/check-for-order', (req, res) => {
+  username = req.session.name;
+  fs.readFile(path.join(__dirname, 'layout', 'sub-orders.csv'), (err, data) => {
+    if (err) {
+      res.send(err);
+      return;
+    } else {
+      var lines = data.toString().split("\n");
+      //console.log(lines);
+      for (const item of lines) {
+        //console.log(item);
+        if ((item.split(";")[0]).trim() == username) {
+          res.json({ has_ordered: true });
+          console.log("This user has ordered.");
+          return;
+        } else {
+          continue
+        }
+      }
+      res.json({ has_ordered: false });
+      console.log("This user has not ordered.");
+      return;
+    }
+  })
 });
 
 // 404 error handler
