@@ -20,7 +20,7 @@ const http = require('http');
 // };
 
 // creates a session that stores the user email
-const session = require ('express-session');
+//const session = require ('express-session');
 
 // generate a random string of numbers and letters for every session
 const { randomUUID } = require('crypto');
