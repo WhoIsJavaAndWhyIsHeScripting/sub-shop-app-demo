@@ -32,7 +32,7 @@ var itemList = ["period", "inch", "bread", "toasted", "protein", "veggies", "con
 // saves the current boxes checked to localStorage
 function saveOrder() {
     for (itemName of itemList) {
-        localStorage.setItem(itemName, findChecked(`input[name="${cookieName}"]`));
+        localStorage.setItem(itemName, findChecked(`input[name="${itemName}"]`));
     }
 }
 // loads the order from localStorage and adds event listeners to checkboxes to save it when the order is changed
