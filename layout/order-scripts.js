@@ -229,12 +229,20 @@ function validate_form(event) {
         valid = false;
     } else {
         //check that the user chose a length or chose a salad 
-        if (!document.getElementById("salad").checked && !document.getElementById("6-inch").checked && !document.getElementById("12-inch").checked) {
-            alert("You must select a length or select a salad.");
-            event.preventDefault();
-            valid = false;
+        if (!document.getElementById("salad").checked) {
+            if (!document.getElementById("6-inch").checked && !document.getElementById("12-inch").checked) {
+                alert("You must select a length or select a salad.");
+                event.preventDefault();
+                valid = false;
+            }
+            if (!document.getElementById("toasted").checked && !document.getElementById("not-toasted").checked) {
+                alert("Please select whether you want your sandwich toasted.");
+                event.preventDefault();
+                valid = false;
+            }
         }
     }
+
 
     //Check meats and cheeses (no more than 3 allowed)
     var total = countMeatsAndCheeses();
@@ -249,6 +257,11 @@ function validate_form(event) {
         if (salad.checked && (lengths[0].checked || lengths[1].checked)) {
             alert("Length is ignored for salads. \n(No 12 inch salads!)");
         }
+    }
+    // check if toasted selected
+    var toasted = findChecked('input[name="toasted"]');
+    if (toasted == "") {
+
     }
 
     // check if period is selected
