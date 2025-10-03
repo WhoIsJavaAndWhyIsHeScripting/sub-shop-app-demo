@@ -77,7 +77,7 @@ function loadSummary() {
     var toast = findChecked('input[name="toasted"]');
     if (base == "Salad" || base == "None" || len == "None") {
         baseText = `\nBase: ${base}`;
-    } else if (toast == "No") {
+    } else if (toast == "No" || toast == "None") {
         baseText = `\nBase: ${len} ${base}`;
     } else {
         baseText = `\nBase: Toasted ${len} ${base}`;
