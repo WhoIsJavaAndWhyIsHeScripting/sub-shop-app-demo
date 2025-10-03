@@ -118,7 +118,8 @@ function loadSummary() {
         submitter.style = "visibility: visible";
         var goBack = document.createElement("a");
         goBack.textContent = "Cancel";
-        goBack.href = "/order";
+        goBack.href = "/";
+        goBack.onclick = localStorage.clear();
         goBack.id = "goBackButton";
         document.getElementById("goBack").appendChild(goBack);
     }
