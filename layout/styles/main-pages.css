@@ -224,7 +224,6 @@ footer {
 
 #goBack {
    border: none;
-   background-color: lightgray;
    text-align: center;
    border-radius: 10px;
    width: 50%;
@@ -236,6 +235,7 @@ footer {
 
 #goBackButton {
    color: black;
+   background-color: lightgray;
    text-decoration: none;
 }
 
