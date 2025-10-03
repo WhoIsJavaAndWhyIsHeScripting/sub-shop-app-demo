@@ -222,6 +222,15 @@ footer {
    padding: 15px 5px;
 }
 
+#goBack {
+   border: none;
+   background-color: lightgray;
+   text-align: center;
+   border-radius: 10px;
+   width: 100%;
+   padding: 15px 0;
+}
+
 .submit {
    border: none;
    background-color: var(--ua-gold);
