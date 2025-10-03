@@ -121,8 +121,8 @@ button {
 
 label:has(input[type=checkbox]) {
    display: block;
-   text-indent: -4px;
-   margin-left: 4px;
+   text-indent: -25px;
+   margin-left: 25px;
 }
 
 label:has(input:disabled) {
