@@ -119,7 +119,7 @@ button {
 
 }
 
-label:has(input[type=checkbox]) {
+label:has(input[type=checkbox]), label:has(input[type=radio]) {
    display: block;
    text-indent: -25px;
    margin-left: 25px;
