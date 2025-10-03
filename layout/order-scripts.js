@@ -1,5 +1,5 @@
-// Making order summary 
 
+// get the file that lists out of stock ingredients
 async function fetchy() {
     const fetcher = await fetch("/out-of-stock");
     data = await fetcher.text();
@@ -26,6 +26,20 @@ function disableElement(element, bool) {
         document.getElementById(element).checked = !bool;
     }
     document.getElementById(element).disabled = bool;
+}
+// disable options for length and toasting if "salad" is checked as base
+function disableSaladLength() {
+    if (document.getElementById("salad").checked) {
+        disableElement("6-inch", true);
+        disableElement("12-inch", true);
+        disableElement("toasted", true);
+        disableElement("not-toasted", true);
+    } else {
+        disableElement("6-inch", false);
+        disableElement("12-inch", false);
+        disableElement("toasted", false);
+        disableElement("not-toasted", false);
+    }
 }
 // all categories of ingredients of the order
 var itemList = ["period", "inch", "bread", "toasted", "protein", "veggies", "condiments"];
@@ -57,6 +71,8 @@ function loadOrder() {
     checkboxes.forEach((checkbox) => {
         checkbox.addEventListener("change", saveOrder);
     });
+
+    disableSaladLength();
 }
 
 var loaded = false;

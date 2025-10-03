@@ -96,18 +96,7 @@
                                 var breads = document.getElementsByName("bread");
                                 breads.forEach((bread) => {
                                     bread.addEventListener("change", () => {
-                                        // disable options for length and toasting if "salad" is checked as base
-                                        if (document.getElementById("salad").checked) {
-                                            disableElement("6-inch", true);
-                                            disableElement("12-inch", true);
-                                            disableElement("toasted", true);
-                                            disableElement("not-toasted", true);
-                                        } else {
-                                            disableElement("6-inch", false);
-                                            disableElement("12-inch", false);
-                                            disableElement("toasted", false);
-                                            disableElement("not-toasted", false);
-                                        }
+                                        disableSaladLength();
                                     })
                                 })
                             </script>
