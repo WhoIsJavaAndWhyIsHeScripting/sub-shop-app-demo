@@ -49,7 +49,7 @@ function updateOpenStatus() {
     if (err) {
       res.send(err);
     }
-    var newLineMatch = data.toString().match(/\n\g/);
+    var newLineMatch = data.toString().match(/\n/g);
     console.log(newLineMatch);
     var lines;
     if (newLineMatch != null) {
