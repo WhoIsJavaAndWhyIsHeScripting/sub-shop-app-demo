@@ -190,7 +190,7 @@ check_user()
 
 // check if the user has an email entered
 function checkLoginStatus() {
-    if (document.cookie.match("cookie") == null) {
+    if (document.cookie.match("email=") == null) {
         return false;
     } else {
         return true;
