@@ -50,14 +50,14 @@ function updateOpenStatus() {
       res.send(err);
     }
     var newLineMatch = data.toString().match(/\n/g);
-    console.log(newLineMatch);
     var lines;
     if (newLineMatch != null) {
       lines = newLineMatch.length;
     } else {
       lines = 0;
     }
-    if ((hour >= 7.5 && hour < 21.5) && (lines <= 20)) {
+    const orderLimit = 20;
+    if ((hour >= 7.5 && hour < 21.5) && (lines <= orderLimit + 1)) {
       isOpen = true;
     } else {
       isOpen = false;
