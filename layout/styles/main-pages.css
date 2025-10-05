@@ -211,6 +211,10 @@ footer {
    .button-container>a {
       width: 70%;
    }
+
+   #goBack {
+      width: 70%;
+   }
 }
 
 @media only screen and (max-width: 600px) {}
