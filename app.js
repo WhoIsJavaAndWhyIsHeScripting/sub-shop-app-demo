@@ -50,6 +50,7 @@ function updateOpenStatus() {
       res.send(err);
     }
     var newLineMatch = data.toString().match(/\n\g/);
+    console.log(newLineMatch);
     var lines;
     if (newLineMatch != null) {
       lines = newLineMatch.length;
