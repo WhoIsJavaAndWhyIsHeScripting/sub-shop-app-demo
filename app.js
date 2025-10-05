@@ -277,13 +277,13 @@ app.post('/order', (req, res) => {
     console.log(name);
 
     res.cookie('email', email, {
-      httpOnly: true,
+      httpOnly: false,
       secure: true,
       sameSite: 'Lax',
       maxAge: 1000 * 60 * 60 * 24
     });
     res.cookie('name', name, {
-      httpOnly: true,
+      httpOnly: false,
       secure: true,
       sameSite: 'Lax',
       maxAge: 1000 * 60 * 60 * 24

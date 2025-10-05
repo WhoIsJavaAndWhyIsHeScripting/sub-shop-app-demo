@@ -170,9 +170,6 @@ function responsiveSummary() {
         checkbox.addEventListener("change", loadSummary);
     });
 }
-
-
-
 // Submitting order 
 
 async function check_user() {
@@ -191,12 +188,25 @@ check_user()
         window.HAS_ORDERED_TODAY = result;
     });
 
+// check if the user has an email entered
+function checkLoginStatus() {
+    if (document.cookie.match("cookie") == null) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
 function submitOrder(event) {
     //console.log(HAS_ORDERED_TODAY);
     //alert("Form being checked."); 
 
     // verify that the user has not already submitted an order 
-    if (window.HAS_ORDERED_TODAY) {
+    if (checkLoginStatus() == false) {
+        alert("Error: You are not logged in. Please try again.");
+        event.preventDefault();
+        return;
+    } else if (window.HAS_ORDERED_TODAY) {
         alert("Sorry, you may only submit one order each day.");
         event.preventDefault();
         return;
