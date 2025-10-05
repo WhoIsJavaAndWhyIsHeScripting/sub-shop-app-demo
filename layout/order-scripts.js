@@ -206,11 +206,11 @@ function submitOrder(event) {
         alert("Error: You are not logged in. Please try again.");
         event.preventDefault();
         return;
-    } /*else if (window.HAS_ORDERED_TODAY) {
+    } else if (window.HAS_ORDERED_TODAY) {
         alert("Sorry, you may only submit one order each day.");
         event.preventDefault();
         return;
-    }*/ else {
+    } else {
         //Checks bread and meats and cheeses. 
         const [valid, period] = validate_form(event);
 
