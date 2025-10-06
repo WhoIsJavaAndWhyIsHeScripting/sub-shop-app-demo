@@ -57,7 +57,7 @@ function updateOpenStatus() {
       lines = 0;
     }
     const orderLimit = 20;
-    if ((hour >= 7.5 && hour < 21.5) && (lines <= orderLimit)) {
+    if ((hour >= 7.5 && hour < 21.5) && (lines < orderLimit)) {
       isOpen = true;
     } else {
       isOpen = false;
