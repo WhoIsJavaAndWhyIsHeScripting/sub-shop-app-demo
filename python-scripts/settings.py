@@ -8,12 +8,14 @@ CSV_PATH = "../layout/sub-orders.csv"
 SORT_CSV = True 
 
 # What to do with different headers in the CSV 
-# (<header title>, <function to process value>) 
+# (<header title>, <function to process value before sorting>) 
 SORT_BY = [
     ("PERIOD", lambda x: x), 
-    ("NAME", lambda x: x.split()[-1]) # sorts by last name 
+    
+    #        extracts last names
+    ("NAME", lambda x: x.split()[-1]),  
     ] 
-BOLD = [header[0] for header in SORT_BY]  # Bold increase font of these values 
+BOLD = [field[0] for field in SORT_BY]  # Bold increase font of these values 
 SKIP = ["TIME"] # Skip omits these values on the labels 
 
 RECIPIENTS = [
