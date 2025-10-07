@@ -40,7 +40,7 @@ const client = new OAuth2Client(CLIENT_ID);
 // check the server time and open/close the server at given times
 var isOpen = false;
 function updateOpenStatus() {
-  var currentTime = new Date();
+  /*var currentTime = new Date();
   var hour = currentTime.getHours();
   var minute = currentTime.getMinutes();
   hour += minute / 60;
@@ -62,7 +62,8 @@ function updateOpenStatus() {
     } else {
       isOpen = false;
     }
-  });
+  });*/
+  isOpen = false;
 }
 
 // Serve static files from the 'public' folder
