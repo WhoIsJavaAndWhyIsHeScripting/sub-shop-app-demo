@@ -1,0 +1,5 @@
+# robots.txt for subshop-dev.uaschools.io 
+# some bots may choose to ignore this :( 
+
+User-agent: * 
+Disallow: /
