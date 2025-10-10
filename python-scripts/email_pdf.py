@@ -1,4 +1,4 @@
-"""Sends an email with orders.pdf as an attachement. 
+"""Sends an email with orders.pdf as an attachment.
 
 Commented out code is for using a Google oauth file or
 for ssl; it is best left as is.

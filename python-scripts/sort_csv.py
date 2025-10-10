@@ -10,7 +10,7 @@ def _keys(field_ids, funcs):
     """Returns a key function for the .sort() method.
 
     Args:
-        field_ids (list): a list of integers of the indices to sort by 
+        field_ids (tuple): a list of integers of the indices to sort by
         funcs (list): a list of functions to process field values (use 
             lambda x:x to do nothing to a field's value) 
 
@@ -32,11 +32,12 @@ def _keys(field_ids, funcs):
 def main(file_to_sort: str, fields: list, delimiter=',', reverse=False):
     """Sorts a csv file's rows and writes the result back into the original file.
     
-        file_to_sort - filename of the csv file 
-        fields - csv header fields to sort by as well as the functions to 
+    Args: 
+        file_to_sort : filename of the csv file 
+        fields : csv header fields to sort by as well as the functions to 
             process each value  
-        delimiter - seperator for the original csv file's cells 
-        reverse - whether to sort in reverse order 
+        delimiter : separator for the original csv file's cells 
+        reverse : whether to sort in reverse order 
     """
     if not fields: 
         return # do nothing if no fields are specified   

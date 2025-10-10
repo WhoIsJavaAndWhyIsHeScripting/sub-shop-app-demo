@@ -20,7 +20,7 @@ import email_pdf
 import datetime 
 import logging 
 
-if __name__ == "__main__":  # i.e if not imported as a module  
+if __name__ == "__main__":  # i.e. if not imported as a module
     if settings.LOG_FILE: 
         logging.basicConfig(filename=settings.LOG_FILE, level=settings.LOG_LEVEL) 
         print(f"Running at {str(datetime.datetime.now())}.") 
@@ -42,7 +42,7 @@ if __name__ == "__main__":  # i.e if not imported as a module
         try: 
             sort_csv.main(settings.CSV_PATH, settings.SORT_BY, delimiter=settings.CSV_DELIMITER) 
         except Exception as e: 
-            logging.error("Exception occured sorting csv.")
+            logging.error("Exception occurred sorting csv.")
             logging.error(e)
             errors = True 
             #traceback.print_exc(file=settings.LOG_FILE)   
@@ -59,7 +59,7 @@ if __name__ == "__main__":  # i.e if not imported as a module
         try: 
             email_pdf.main("", settings.EMAIL_VARS, settings.RECIPIENTS)  # a blank file name indicates that there were no orders 
         except Exception as e:  
-            logging.error("Exception occured emailing no orders message.")
+            logging.error("Exception occurred emailing no orders message.")
             logging.error(e)
             errors = True 
             #traceback.print_exc(file=settings.LOG_FILE)   
@@ -77,7 +77,7 @@ if __name__ == "__main__":  # i.e if not imported as a module
                 delimiter=settings.CSV_DELIMITER, 
                 ) 
         except Exception as e: 
-            logging.error("Exception occured making pdf.")
+            logging.error("Exception occurred making pdf.")
             logging.error(e)
             errors = True 
             #traceback.print_exc(file=settings.LOG_FILE)  
@@ -92,7 +92,7 @@ if __name__ == "__main__":  # i.e if not imported as a module
                            csv_file=settings.CSV_PATH,
                            )  
         except Exception as e:  
-            logging.error("Exception occured emailing pdf.")
+            logging.error("Exception occurred emailing pdf.")
             logging.error(e)
             errors = True 
             #traceback.print_exc(file=settings.LOG_FILE)   
@@ -116,3 +116,4 @@ if __name__ == "__main__":  # i.e if not imported as a module
         logging.info(f"Tasks finished with errors at {str(datetime.datetime.now())}. \n") 
     else: 
         logging.info(f"Tasks completed at {str(datetime.datetime.now())}. \n") 
+

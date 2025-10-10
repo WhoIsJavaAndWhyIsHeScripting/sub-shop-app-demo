@@ -21,22 +21,28 @@ from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 from reportlab.platypus import Paragraph, Frame 
 
 
-def main(csv_file, settings, skip=[], bold=[], delimiter=',', debug=False): 
+def main(csv_file, settings, skip=None, bold=None, delimiter=',', debug=False):
     """Makes a pdf file from a csv file of sub orders. 
     See module docstring for more details. 
 
-    Args: 
-        csv_file : filename of the CSV file from which the PDF shall be made 
+    Args:
+        csv_file : filename of the CSV file from which the PDF shall be made
         settings : a dictionary of various dimensions for making the PDF (format in settings.py) 
         skip : headers (and their values) to omit from the PDF 
-        bold : headers (and values) to place first and in bold on the PDF 
+        bold : headers (and values) to place first and in bold on the PDF
+        delimiter: separating character for cells in the csv file
     """
+    if skip is None:
+        skip = []
+    if bold is None:
+        bold = []
+
     pdf = canvas.Canvas("orders.pdf", pagesize=letter)
     width, height = letter  
     # adjusts the location of the origin for drawing on the pdf 
     pdf.translate(0, height) 
     # This puts the origin in the top left corner, though the 
-    # disadvantage is that negative y values are neeeded. 
+    # disadvantage is that negative y values are needed.
 
     # Define the text style 
     styles = getSampleStyleSheet() 
