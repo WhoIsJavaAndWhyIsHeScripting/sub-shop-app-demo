@@ -1,25 +1,20 @@
 {
-  "name": "admin-home",
-  "version": "0.0.0",
-  "private": true,
-  "scripts": {
-    "start": "node bin/www"
-  },
-  "dependencies": {
-    "cookie-parser": "~1.4.4",
-    "debug": "~2.6.9",
-    "dotenv": "^16.5.0",
-    "ejs": "^3.1.10",
-    "express": "^4.21.2",
-    "express-session": "^1.18.2",
-    "express-validator": "^7.2.1",
-    "google-auth-library": "^9.15.1",
-    "http-errors": "~1.6.3",
-    "jade": "^0.29.0",
-    "morgan": "~1.9.1"
-  },
+  "name": "subshopapp",
+  "version": "1.0.0",
+  "description": "Welcome to the SubShopApp project!",
   "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "(https://gitlab-student.uaschools.org/compsci-club/subshopapp.git)"
+  },
   "author": "",
   "license": "ISC",
-  "description": ""
+  "dependencies": {
+    "express": "^5.1.0",
+    "express-session": "^1.18.2",
+    "google-auth-library": "^10.4.0"
+  }
 }
