@@ -70,8 +70,6 @@ function updateOpenStatus() {
 }
 
 updateOpenStatus();
-console.log(hour);
-      console.log(orderLimit);
 
 // Serve static files from the 'public' folder
 app.use(express.static(path.join(__dirname, 'layout', 'admin-page', 'admin-ingredients')));
