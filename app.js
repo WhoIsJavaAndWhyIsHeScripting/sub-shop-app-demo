@@ -40,10 +40,12 @@ const client = new OAuth2Client(CLIENT_ID);
 // check the server time and open/close the server at given times
 var isOpen = false;
 function updateOpenStatus() {
-  
   var currentTime = new Date();
+  console.log(currentTime);
   var hour = currentTime.getHours();
+  console.log(hour);
   var minute = currentTime.getMinutes();
+  console.log(minute);
   hour += minute / 60;
   // count the number of lines sub-orders.csv has
   fs.readFile(path.join(__dirname, 'layout', 'sub-orders.csv'), (err, data) => {
