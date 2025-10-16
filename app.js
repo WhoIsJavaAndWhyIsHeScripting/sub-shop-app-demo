@@ -40,7 +40,7 @@ const client = new OAuth2Client(CLIENT_ID);
 // check the server time and open/close the server at given times
 var isOpen = false;
 function updateOpenStatus() {
-  /*var currentTime = new Date();
+  var currentTime = new Date();
   var hour = currentTime.getHours();
   var minute = currentTime.getMinutes();
   hour += minute / 60;
@@ -62,7 +62,7 @@ function updateOpenStatus() {
     } else {
       isOpen = false;
     }
-  });*/
+  });
   isOpen = false;
 }
 
@@ -343,7 +343,6 @@ app.post('/order-submit', (req, res) => {
     } else {
       // add spaces between items
       let spacedEntry = "";
-      console.log(arrayize[i][0]);
       // check if element is an actual array in a lazy way so strings aren't separated by character
       if (arrayize[i][0].length > 1) {
         spacedEntry += arrayize[i][0];
@@ -352,7 +351,6 @@ app.post('/order-submit', (req, res) => {
         }
         arrayize[i] = spacedEntry;
       }
-      console.log(arrayize);
     }
 
   }
@@ -369,10 +367,13 @@ app.post('/order-submit', (req, res) => {
   }
   base += bread;
   arrayize[2] = base;
-  fs.appendFile(path.join(__dirname, "layout", "sub-orders.csv"), `\n${arrayize[0]};${arrayize[1]};${arrayize[2]};${arrayize[3]};${arrayize[4]};${arrayize[5]}`, () => {
-    res.redirect('/');
-  });
-
+  if ("" + name != "undefined") {
+    fs.appendFile(path.join(__dirname, "layout", "sub-orders.csv"), `\n${arrayize[0]};${arrayize[1]};${arrayize[2]};${arrayize[3]};${arrayize[4]};${arrayize[5]}`, () => {
+      res.redirect('/');
+    });
+  } else {
+    res.send("ERROR: Order denied. You attempted to send an order without an order name. Please try again.\n\nIf you believe this is an error, submit a bug report (linked on the contacts page). If you're trying to hack us... go away >:(");
+  }
 });
 
 app.get('/check-for-order', (req, res) => {
