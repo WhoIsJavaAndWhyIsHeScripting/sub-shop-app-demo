@@ -40,10 +40,13 @@ const client = new OAuth2Client(CLIENT_ID);
 // check the server time and open/close the server at given times
 var isOpen = false;
 function updateOpenStatus() {
+  
   var currentTime = new Date();
   var hour = currentTime.getHours();
   var minute = currentTime.getMinutes();
   hour += minute / 60;
+  console.log(hour);
+      console.log(orderLimit);
   // count the number of lines sub-orders.csv has
   fs.readFile(path.join(__dirname, 'layout', 'sub-orders.csv'), (err, data) => {
     if (err) {
@@ -59,16 +62,18 @@ function updateOpenStatus() {
     const orderLimit = 20;
     if ((hour >= 7.5 && hour < 21.5) && (lines < orderLimit)) {
       isOpen = true;
+      return hour;
     } else {
       isOpen = false;
-      console.log(hour);
-      console.log(orderLimit);
+      return hour;
     }
   });
   isOpen = false;
 }
 
 updateOpenStatus();
+console.log(hour);
+      console.log(orderLimit);
 
 // Serve static files from the 'public' folder
 app.use(express.static(path.join(__dirname, 'layout', 'admin-page', 'admin-ingredients')));
@@ -91,7 +96,7 @@ function loadPage(route, sendPath, verify) {
         res.sendFile(path.join(__dirname, 'layout', 'sorry.html'));
       }
     } else {
-      res.sendFile(path.join(sendPath));
+      res.send("the hour is " + updateOpenStatus());
     }
   })
 }
