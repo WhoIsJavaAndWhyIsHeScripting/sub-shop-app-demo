@@ -68,7 +68,6 @@ function updateOpenStatus() {
       return hour;
     }
   });
-  isOpen = false;
 }
 
 updateOpenStatus();
