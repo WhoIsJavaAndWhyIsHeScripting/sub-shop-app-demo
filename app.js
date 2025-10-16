@@ -89,7 +89,7 @@ function loadPage(route, sendPath, verify) {
       if (isOpen) {
         res.sendFile(sendPath);
       } else {
-        res.sendFile(path.join(__dirname, 'layout', 'sorry.html'));
+       res.send("the hour is " + updateOpenStatus());
       }
     } else {
       res.send("the hour is " + updateOpenStatus());
