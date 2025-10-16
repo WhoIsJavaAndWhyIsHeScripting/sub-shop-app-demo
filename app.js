@@ -41,11 +41,8 @@ const client = new OAuth2Client(CLIENT_ID);
 var isOpen = false;
 function updateOpenStatus() {
   var currentTime = new Date();
-  console.log(currentTime);
   var hour = currentTime.getHours();
-  console.log(hour);
   var minute = currentTime.getMinutes();
-  console.log(minute);
   hour += minute / 60;
   // count the number of lines sub-orders.csv has
   fs.readFile(path.join(__dirname, 'layout', 'sub-orders.csv'), (err, data) => {
@@ -62,15 +59,11 @@ function updateOpenStatus() {
     const orderLimit = 20;
     if ((hour >= 7.5 && hour < 21.5) && (lines < orderLimit)) {
       isOpen = true;
-      return hour;
     } else {
       isOpen = false;
-      return hour;
     }
   });
 }
-
-updateOpenStatus();
 
 // Serve static files from the 'public' folder
 app.use(express.static(path.join(__dirname, 'layout', 'admin-page', 'admin-ingredients')));
@@ -90,10 +83,10 @@ function loadPage(route, sendPath, verify) {
       if (isOpen) {
         res.sendFile(sendPath);
       } else {
-       res.send("the hour is " + updateOpenStatus());
+        res.sendFile(path.join(__dirname, 'layout', 'sorry.html'));
       }
     } else {
-      res.send("the hour is " + updateOpenStatus());
+      res.sendFile(path.join(sendPath));
     }
   })
 }
@@ -114,7 +107,7 @@ app.get('/order', (req, res) => {
 loadPage('/credits', path.join(__dirname, 'layout', 'credits-page.html'), true);
 
 // route for contact page
-loadPage('/contact-us', path.join(__dirname, 'layout', 'contact-us.html'), false);
+loadPage('/contact-us', path.join(__dirname, 'layout', 'contact-us.html'), true);
 
 // route for log in page
 loadPage('/log-in', path.join(__dirname, 'layout', 'admin-page', 'log-in', 'log-in.html'), false);
