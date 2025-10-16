@@ -61,6 +61,8 @@ function updateOpenStatus() {
       isOpen = true;
     } else {
       isOpen = false;
+      console.log(hour);
+      console.log(orderLimit);
     }
   });
   isOpen = false;
@@ -108,7 +110,7 @@ app.get('/order', (req, res) => {
 loadPage('/credits', path.join(__dirname, 'layout', 'credits-page.html'), true);
 
 // route for contact page
-loadPage('/contact-us', path.join(__dirname, 'layout', 'contact-us.html'), true);
+loadPage('/contact-us', path.join(__dirname, 'layout', 'contact-us.html'), false);
 
 // route for log in page
 loadPage('/log-in', path.join(__dirname, 'layout', 'admin-page', 'log-in', 'log-in.html'), false);
