@@ -45,8 +45,6 @@ function updateOpenStatus() {
   var hour = currentTime.getHours();
   var minute = currentTime.getMinutes();
   hour += minute / 60;
-  console.log(hour);
-      console.log(orderLimit);
   // count the number of lines sub-orders.csv has
   fs.readFile(path.join(__dirname, 'layout', 'sub-orders.csv'), (err, data) => {
     if (err) {
