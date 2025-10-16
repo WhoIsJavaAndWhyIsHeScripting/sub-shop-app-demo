@@ -68,6 +68,8 @@ function updateOpenStatus() {
   isOpen = false;
 }
 
+updateOpenStatus();
+
 // Serve static files from the 'public' folder
 app.use(express.static(path.join(__dirname, 'layout', 'admin-page', 'admin-ingredients')));
 app.use(express.static(path.join(__dirname, 'layout', 'admin-page', 'admin-home')));
