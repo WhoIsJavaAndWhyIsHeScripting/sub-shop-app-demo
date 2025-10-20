@@ -5,6 +5,7 @@ be passed through a function before sorting.
 Written April 2025. """
 
 import csv 
+from typing import List, Tuple, Callable, Any 
 
 def _keys(field_ids, funcs): 
     """Returns a key function for the .sort() method.
@@ -22,25 +23,33 @@ def _keys(field_ids, funcs):
     
     def getter(line): 
         items = [] 
-        for index, func in zip(field_ids, funcs): 
-            items.append(func(line[index])) 
+        for index, func in zip(field_ids, funcs):
+            try: 
+                items.append(func(line[index]))
+            except IndexError:  # skip in case of empty rows or missing cells  
+                continue 
         return tuple(items) 
     
     return getter 
 
 
-def main(file_to_sort: str, fields: list, delimiter=',', reverse=False):
+def main(
+        file_to_sort: str, 
+        fields: List[Tuple[str, Callable[[Any], Any]]], 
+        delimiter=',', 
+        reverse=False
+        ):
     """Sorts a csv file's rows and writes the result back into the original file.
     
     Args: 
-        file_to_sort : filename of the csv file 
-        fields : csv header fields to sort by as well as the functions to 
-            process each value  
-        delimiter : separator for the original csv file's cells 
-        reverse : whether to sort in reverse order 
+        file_to_sort: filename of the csv file 
+        fields: list of csv header fields to sort by as 
+            well as the functions to process each value  
+        delimiter: separator for the original csv file's cells 
+        reverse: whether to sort in reverse order 
     """
     if not fields: 
-        return # do nothing if no fields are specified   
+        return # exit function if no fields are specified   
         
     with open(file_to_sort, "r") as f: 
         reader = csv.reader(f, delimiter=delimiter) 
@@ -66,6 +75,7 @@ def main(file_to_sort: str, fields: list, delimiter=',', reverse=False):
 
 if __name__ == "__main__": 
     main(
-        "../layout/sub-orders.csv", 
+        "sub-orders.csv", 
         [("PERIOD", lambda x: x), ("NAME", lambda x: x.split()[-1])], 
-        delimiter=";") 
+        delimiter=";"
+        ) 
