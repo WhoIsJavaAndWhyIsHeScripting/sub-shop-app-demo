@@ -400,6 +400,7 @@ app.get('/check-user', async (req, res) => {
     res.json({
       has_ordered: has_ordered,
       is_banned: is_banned,
+      username: username,
     });
 
   } catch (error) {
