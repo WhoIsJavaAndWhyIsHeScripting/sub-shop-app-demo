@@ -173,19 +173,24 @@ function responsiveSummary() {
 // Submitting order 
 
 async function check_user() {
-    const data = await fetch("/check-for-order");
+    const data = await fetch("/check-user");
     if (!data.ok) {
         throw new Error('Error from server: ' + data);
     }
     //console.log(data.status); 
     data_obj = await data.json();
-    return data_obj.has_ordered;
+
+    if (data_obj.has_ordered || data_obj.is_banned) {
+        return false; 
+    } else {
+        return true; 
+    }
 }
 
 // checks to see if the user has ordered today and stores the result in a global 
 check_user()
     .then((result) => {
-        window.HAS_ORDERED_TODAY = result;
+        window.ALLOWED_TO_ORDER = result;
     });
 
 // check if the user has an email entered
@@ -198,7 +203,6 @@ function checkLoginStatus() {
 }
 
 function submitOrder(event) {
-    //console.log(HAS_ORDERED_TODAY);
     //alert("Form being checked."); 
 
     // verify that the user has not already submitted an order 
@@ -206,8 +210,8 @@ function submitOrder(event) {
         alert("Error: You are not logged in. Please try again.");
         event.preventDefault();
         return;
-    } else if (window.HAS_ORDERED_TODAY) {
-        alert("Sorry, you may only submit one order each day.");
+    } else if (!window.ALLOWED_TO_ORDER) {
+        alert("Sorry, you are not allowed to order. Users are limited to one order per day.");
         event.preventDefault();
         return;
     } else {

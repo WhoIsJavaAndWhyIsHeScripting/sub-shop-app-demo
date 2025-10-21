@@ -69,7 +69,7 @@ function updateOpenStatus() {
 app.use(express.static(path.join(__dirname, 'layout', 'admin-page', 'admin-ingredients')));
 app.use(express.static(path.join(__dirname, 'layout', 'admin-page', 'admin-home')));
 app.use(express.static(path.join(__dirname, 'layout', 'admin-page', 'admin-users')));
-app.use(express.static(path.join(__dirname, 'assets'))); 
+app.use(express.static(path.join(__dirname, 'assets')));
 // if adding more paths here, never let __dirname be served directly! 
 
 // function for sending a file to a path
@@ -119,7 +119,7 @@ app.use(express.urlencoded({ extended: true }));
 app.post('/check-password', (req, res) => {
   console.log(req.body);
   if (req.body.password == "PASSWORD_REMOVED") {
-    req.session.user = {username: "admin"};
+    req.session.user = { username: "admin" };
   }
   res.redirect('/admin-home');
 })
@@ -375,30 +375,37 @@ app.post('/order-submit', (req, res) => {
   }
 });
 
-app.get('/check-for-order', (req, res) => {
+app.get('/check-user', async (req, res) => {
   username = req.session.name;
-  fs.readFile(path.join(__dirname, 'layout', 'sub-orders.csv'), (err, data) => {
-    if (err) {
-      res.send(err);
-      return;
-    } else {
-      var lines = data.toString().split("\n");
-      //console.log(lines);
-      for (const item of lines) {
-        //console.log(item);
-        if ((item.split(";")[0]).trim() == username) {
-          res.json({ has_ordered: true });
-          console.log("This user has ordered.");
-          return;
-        } else {
-          continue
-        }
+  try {
+    let banned_data = await fs.promises.readFile(path.join(__dirname, "layout", "admin-page", "admin-users", "ban-list.txt"));
+    let banned = banned_data.toString().split(",");
+    let is_banned = false;
+    for (const guy of banned) {
+      if (guy == username) {
+        is_banned = true;
       }
-      res.json({ has_ordered: false });
-      console.log("This user has not ordered.");
-      return;
     }
-  })
+
+    let order_data = await fs.promises.readFile(path.join(__dirname, "layout", "sub-orders.csv"));
+    let orders = order_data.toString().split("\n");
+    let has_ordered = false
+    for (const item of orders) {
+      if ((item.split(";")[0]).trim() == username) {
+        has_ordered = true;
+        break;
+      }
+    }
+
+    res.json({
+      has_ordered: has_ordered,
+      is_banned: is_banned,
+    });
+
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    res.status(500).send('Internal Server Error');
+  }
 });
 
 // 404 error handler
