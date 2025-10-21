@@ -376,7 +376,7 @@ app.post('/order-submit', (req, res) => {
 });
 
 app.get('/check-user', async (req, res) => {
-  username = req.session.name;
+  let username = req.session.name;
   try {
     let banned_data = await fs.promises.readFile(path.join(__dirname, "layout", "admin-page", "admin-users", "ban-list.txt"));
     let banned = banned_data.toString().split(",");
