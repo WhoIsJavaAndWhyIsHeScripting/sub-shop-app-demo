@@ -382,7 +382,7 @@ app.get('/check-user', async (req, res) => {
     let banned = banned_data.toString().split(",");
     let is_banned = false;
     for (const guy of banned) {
-      if (guy == username) {
+      if (guy.trim() == username) {
         is_banned = true;
       }
     }
@@ -400,7 +400,6 @@ app.get('/check-user', async (req, res) => {
     res.json({
       has_ordered: has_ordered,
       is_banned: is_banned,
-      username: username,
     });
 
   } catch (error) {
