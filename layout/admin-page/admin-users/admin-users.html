@@ -28,13 +28,9 @@
         </header>
         <main>
             <h1>Manage Users</h1>
-            <p>To enable/disable student pre-ordering, toggle the switch below.</p>
+            <p>To enable/disable student pre-ordering, click the button below.</p>
             <form id="open-close" action="/open-close" method="POST">
-                <label id="slider-container">
-                    <input type="checkbox">
-                    <span id="slider"></span>
-                </label>
-                <input type="submit" value="Save Changes" id="submit-open-close">
+                <button id="close-button" onclick="document.forms['open-close'].submit()"></button>
             </form>
             <p>
                 If a student ordered a sandwich and 
