@@ -10,10 +10,10 @@ async function updateCloseButton() {
     let closeButton = document.getElementById("close-button");
     var status = await getOpenStatus();
     if (status == "true") {
-        closeButton.textContent = "The sub shop is currently <b>OPEN</b> and accepting orders today. Click to close shop.";
+        closeButton.innerHTML = "The sub shop is currently <b>OPEN</b> and accepting orders today. Click to close shop.";
         closeButton.className = "shop-open";
     } else if (status == "false") {
-        closeButton.textContent = "The sub shop is currently <b>CLOSED</b> and NOT accepting orders today. Click to open shop.";
+        closeButton.innerHTML = "The sub shop is currently <b>CLOSED</b> and NOT accepting orders today. Click to open shop.";
         closeButton.className = "shop-closed";
     } else {
         alert(status);

@@ -27,14 +27,20 @@ label {
     font-size: 1em;
 }
 
+#close-button {
+    color: white;
+    border: solid 2px black;
+    display: block;
+    margin: auto;
+    max-width: 40%;
+}
 .shop-open {
     background-color: green;
-    color: white;
+
 }
 
 .shop-closed {
     background-color: #d21d10;
-    color: white;
 }
 
 input {
