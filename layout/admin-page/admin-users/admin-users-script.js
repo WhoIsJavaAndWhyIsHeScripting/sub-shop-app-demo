@@ -15,6 +15,8 @@ function updateCloseButton() {
     } else if (status == "false") {
         closeButton.textContent = "The sub shop is currently <b>CLOSED</b> and NOT accepting orders today. Click to open shop.";
         closeButton.className = "shop-closed";
+    } else {
+        alert(status);
     }
     
 }
