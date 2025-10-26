@@ -113,6 +113,8 @@ loadPage('/contact-us', path.join(__dirname, 'layout', 'contact-us.html'), true)
 // route for log in page
 loadPage('/log-in', path.join(__dirname, 'layout', 'admin-page', 'log-in', 'log-in.html'), false);
 
+loadPage('/admin-users-script', path.join(__dirname, 'layout', 'admin-page', 'admin-users', 'admin-users-script.js'));
+
 // create request body thing i don't really know how this works
 app.use(express.urlencoded({ extended: true }));
 
