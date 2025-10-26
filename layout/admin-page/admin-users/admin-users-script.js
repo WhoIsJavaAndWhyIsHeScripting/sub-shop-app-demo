@@ -6,9 +6,9 @@ async function getOpenStatus() {
     return json.open;
 }
 // update button text based on whether the store is open or closed
-function updateCloseButton() {
+async function updateCloseButton() {
     let closeButton = document.getElementById("close-button");
-    var status = getOpenStatus();
+    var status = await getOpenStatus();
     if (status == "true") {
         closeButton.textContent = "The sub shop is currently <b>OPEN</b> and accepting orders today. Click to close shop.";
         closeButton.className = "shop-open";
