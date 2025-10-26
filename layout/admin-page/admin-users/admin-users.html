@@ -28,6 +28,10 @@
         </header>
         <main>
             <h1>Manage Users</h1>
+            <p>To enable/disable student pre-ordering, click the button below.</p>
+            <form id="open-close" action="/open-close" method="POST">
+                <button id="close-button" onclick="document.forms['open-close'].submit()"></button>
+            </form>
             <p>
                 If a student ordered a sandwich and 
                 did not come to the sub shop to pay 
@@ -50,19 +54,7 @@
                 the "X" next to a student's name to 
                 remove them from the no-access list.
             </p>
-            <ul id="ban-list">
-                <script>
-                    /*
-                <?php 
-                    $i = 0;
-                    foreach ($banexploded as $item) {
-                        echo "<li class=\"list\"id=\"list$i\">$item<button class=\"remover\" id=\"remover$i\" onclick=\"remove(this)\">X</button></li>";
-                        $i++;
-                    }
-                ?>
-                */
-                </script>
-            </ul>
+            <ul id="ban-list"></ul>
         </main>
     </body>
     <script>

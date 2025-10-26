@@ -27,6 +27,16 @@ label {
     font-size: 1em;
 }
 
+.shop-open {
+    background-color: green;
+    color: white;
+}
+
+.shop-closed {
+    background-color: #d21d10;
+    color: white;
+}
+
 input {
     border: solid 1px gray;
     border-radius: 2px;

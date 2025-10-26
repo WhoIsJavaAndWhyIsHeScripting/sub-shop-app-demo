@@ -39,6 +39,7 @@ const client = new OAuth2Client(CLIENT_ID);
 
 // check the server time and open/close the server at given times
 var isOpen = false;
+var openToday = true;
 function updateOpenStatus() {
   var currentTime = new Date();
   var hour = currentTime.getHours();
@@ -196,7 +197,15 @@ app.post('/submit', (req, res) => {
   // go back to ingredients page
   res.redirect("/ingredients");
 });
-
+// handle post request when open/close switch toggled
+app.post('/open-close', (req, res) => {
+  openToday = !openToday;
+  res.redirect('/users');
+});
+// get open status
+app.get('/open-close', (req, res) => {
+  res.json({open: openToday.toString()});
+})
 // handle post request when users form submitted
 app.post('/submit2', (req, res) => {
   // handle when a user is ADDED to the list
