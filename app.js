@@ -345,7 +345,7 @@ app.post('/order-submit', (req, res) => {
   let sauces = req.body.condiments;
   let name = req.session.name;
   let base = "";
-  let arrayize = [name, lunchPeriod, base, protein, toppings, sauces];
+  let arrayize = [name, lunchPeriod, base, toasted, protein, toppings, sauces];
   // clean up data
   for (let i = 3; i < arrayize.length; i++) {
     if ("" + arrayize[i] == "undefined") {
@@ -365,20 +365,13 @@ app.post('/order-submit', (req, res) => {
 
   }
   // conglomerate length, base type and toasted into one "base" cell
-  console.log(inch, toasted, bread);
-  console.log(toasted == "Toasted");
   if ("" + inch != "undefined") {
-    console.log("1");
     base += inch + " Inch ";
-  }
-  if (toasted == "Toasted") {
-    console.log("2");
-    base += "Toasted ";
   }
   base += bread;
   arrayize[2] = base;
   if ("" + name != "undefined") {
-    fs.appendFile(path.join(__dirname, "layout", "sub-orders.csv"), `\n${arrayize[0]};${arrayize[1]};${arrayize[2]};${arrayize[3]};${arrayize[4]};${arrayize[5]}`, () => {
+    fs.appendFile(path.join(__dirname, "layout", "sub-orders.csv"), `\n${arrayize[0]};${arrayize[1]};${arrayize[2]};${arrayize[3]};${arrayize[4]};${arrayize[5]};${arrayize[6]}`, () => {
       res.redirect('/');
     });
   } else {
