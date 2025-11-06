@@ -27,7 +27,7 @@ def main(csv_file, settings, skip=None, bold=None, delimiter=',', debug=False):
 
     Args:
         csv_file : filename of the CSV file from which the PDF shall be made
-        settings : a dictionary of various dimensions for making the PDF (format in settings.py) 
+        settings : a dictionary of various dimensions for making the PDF (for format, see settings.py) 
         skip : headers (and their values) to omit from the PDF 
         bold : headers (and values) to place first and in bold on the PDF
         delimiter: separating character for cells in the csv file
@@ -39,6 +39,7 @@ def main(csv_file, settings, skip=None, bold=None, delimiter=',', debug=False):
 
     pdf = canvas.Canvas("orders.pdf", pagesize=letter)
     width, height = letter  
+
     # adjusts the location of the origin for drawing on the pdf 
     pdf.translate(0, height) 
     # This puts the origin in the top left corner, though the 
@@ -51,7 +52,7 @@ def main(csv_file, settings, skip=None, bold=None, delimiter=',', debug=False):
         parent=styles["Normal"], 
         fontSize=settings["font-size"], 
         fontName=settings["font"],  
-        leading=settings["font-size"]+1,  # line spacing 
+        leading=settings["font-size"]+2,  # line spacing 
     )
     font_size_bold = settings["font-size-bold"]
 
@@ -85,11 +86,11 @@ def main(csv_file, settings, skip=None, bold=None, delimiter=',', debug=False):
 
             # Frames contain other objects like Paragraphs. 
             frame_object = Frame( 
-                #The measurements below are for Avery Label Paper Presta 94207 (10 labels per page) instead. 
-                #(5/32 + (133/32)*(i%2))*inch, 
-                #-(0.5 + 2*(math.floor((i/2)%5)))*inch, 
+                # The measurements below are for Avery Label Paper Presta 94207 (10 labels per page) instead. 
+                # (5/32 + (133/32)*(i%2))*inch, 
+                # -(0.5 + 2*(math.floor((i/2)%5)))*inch, 
 
-                #(margin + appropriate displacement for the ith box)*inch
+                # (margin + appropriate displacement for the ith box)*inch
 
                 # x location 
                 (
@@ -110,7 +111,7 @@ def main(csv_file, settings, skip=None, bold=None, delimiter=',', debug=False):
                 leftPadding = settings["xpadding"] * inch, 
                 topPadding = settings["ypadding"] * inch,
 
-                showBoundary=int(debug), # only draw Frame boundary if debug==True 
+                showBoundary=int(debug),  # only draw Frame boundary if debug==True 
             )
 
             
