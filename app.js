@@ -27,8 +27,18 @@ const { randomUUID } = require('crypto');
 
 // initialize session
 app.use(session({
+  cookie: {
+    maxAge: 86400000,
+    httpOnly: true,
+    secure: true, 
+    sameSite: "strict"
+  },
+  store: new MemoryStore({
+    checkPeriod: 86400000
+  }),
   secret: randomUUID(),
   resave: true,
+  rolling: true,
   saveUninitialized: false
 }))
 
@@ -92,7 +102,7 @@ function loadPage(route, sendPath, verify) {
   })
 }
 // route for home page
-loadPage('/', path.join(__dirname, 'layout', 'subShopFront.html'), true);
+loadPage('/', path.join(__dirname, 'layout', 'subShopFront.html'), false);
 
 // route for order page
 app.get('/order', (req, res) => {
@@ -105,10 +115,10 @@ app.get('/order', (req, res) => {
 });
 
 // route for credits page
-loadPage('/credits', path.join(__dirname, 'layout', 'credits-page.html'), true);
+loadPage('/credits', path.join(__dirname, 'layout', 'credits-page.html'), false);
 
 // route for contact page
-loadPage('/contact-us', path.join(__dirname, 'layout', 'contact-us.html'), true);
+loadPage('/contact-us', path.join(__dirname, 'layout', 'contact-us.html'), false);
 
 // route for log in page
 loadPage('/log-in', path.join(__dirname, 'layout', 'admin-page', 'log-in', 'log-in.html'), false);
@@ -349,8 +359,8 @@ app.post('/order-submit', (req, res) => {
   if ("" + toasted == "undefined") {
     toasted = "N/A";
   }
-  
-  let arrayize = [name, lunchPeriod, base, toasted, protein, toppings, sauces];
+
+  let arrayize = [name, lunchPeriod, base, protein, toasted, toppings, sauces];
   // clean up data
   for (let i = 3; i < arrayize.length; i++) {
     if ("" + arrayize[i] == "undefined") {
