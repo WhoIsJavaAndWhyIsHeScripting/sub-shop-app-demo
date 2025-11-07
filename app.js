@@ -345,6 +345,11 @@ app.post('/order-submit', (req, res) => {
   let sauces = req.body.condiments;
   let name = req.session.name;
   let base = "";
+
+  if ("" + toasted == "undefined") {
+    toasted = "N/A";
+  }
+  
   let arrayize = [name, lunchPeriod, base, toasted, protein, toppings, sauces];
   // clean up data
   for (let i = 3; i < arrayize.length; i++) {
