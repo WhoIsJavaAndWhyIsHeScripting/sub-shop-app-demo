@@ -23,21 +23,20 @@ const credentials = {
 const session = require('express-session');
 
 // database stuff for express session
-import {RedisStore} from "connect-redis"
-import session from "express-session"
-import {createClient} from "redis"
+const redis = require("redis");
+const RedisStore = require("connect-redis").default;
 
 // generate a random string of numbers and letters for every session
 const { randomUUID } = require('crypto');
 
 // create database
 // don't ask me how this works i just copied it off the docs
-const redisClient = redis.createClient();
-redisClient.connect().catch(console.error);
-
-const redisStore = new RedisStore({
-  client: redisClient
+const redisClient = redis.createClient({
+  host: 'localhost',
+  port: 6379
 });
+
+const RedisStore = connectRedis(session);
 
 // initialize session
 app.use(session({
@@ -47,7 +46,7 @@ app.use(session({
     secure: true, 
     sameSite: "strict"
   },
-  store: redisStore,
+  store: new RedisStore({client: redisClient}),
   secret: randomUUID(),
   resave: true,
   rolling: true,
