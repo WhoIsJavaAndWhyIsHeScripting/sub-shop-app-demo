@@ -23,8 +23,9 @@ const credentials = {
 const session = require('express-session');
 
 // database stuff for express session
-const redis = require('redis');
-const connectRedis = require('connect-redis').default;
+import {RedisStore} from "connect-redis"
+import session from "express-session"
+import {createClient} from "redis"
 
 // generate a random string of numbers and letters for every session
 const { randomUUID } = require('crypto');
