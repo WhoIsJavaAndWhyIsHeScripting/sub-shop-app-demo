@@ -23,8 +23,9 @@ const credentials = {
 const session = require('express-session');
 
 // database stuff for express session
+// needs a connect-redis version of less than 7 to work 
 const redis = require("redis");
-const connectRedis = require("connect-redis").default;
+const connectRedis = require("connect-redis");
 
 // generate a random string of numbers and letters for every session
 const { randomUUID } = require('crypto');
