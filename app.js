@@ -20,38 +20,16 @@ const credentials = {
 };
 
 // creates a session that stores the user email
-const session = require('express-session');
-
-// database stuff for express session
-// needs a connect-redis version of less than 7 to work 
-const redis = require("redis");
-const connectRedis = require("connect-redis");
+const session = require('cookie-session');
 
 // generate a random string of numbers and letters for every session
 const { randomUUID } = require('crypto');
 
-// create database
-// don't ask me how this works i just copied it off the docs
-const redisClient = redis.createClient({
-  host: 'localhost',
-  port: 6379
-});
-
-const RedisStore = connectRedis(session);
-
 // initialize session
 app.use(session({
-  cookie: {
-    maxAge: 86400000,
-    httpOnly: true,
-    secure: true, 
-    sameSite: "strict"
-  },
-  store: new RedisStore({client: redisClient}),
+  name: 'session',
   secret: randomUUID(),
-  resave: true,
-  rolling: true,
-  saveUninitialized: false
+  maxAge: 24*60*60*1000 // session expires after 24 hrs
 }))
 
 // for verifying Google ID_TOKENs
