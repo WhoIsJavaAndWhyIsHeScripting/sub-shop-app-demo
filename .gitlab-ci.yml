@@ -10,6 +10,7 @@ deploy-job:
     - subshop-dev
   script:
     - echo "Deploying application..."
+    - whoami
     - cd /srv
     - '[ -d "/srv/SubShopApp/.git" ] && (cd /srv/SubShopApp && git pull) || (git clone https://oauth2:$GITLAB_WEB_TOKEN@gitlab-student.uaschools.org/compsci-club/subshopapp.git SubShopApp)'
     - cd /srv/SubShopApp
