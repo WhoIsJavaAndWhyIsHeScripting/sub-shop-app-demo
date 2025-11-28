@@ -350,7 +350,7 @@ app.post('/order-submit', (req, res) => {
     toasted = "N/A";
   }
 
-  let arrayize = [name, lunchPeriod, base, protein, toasted, toppings, sauces];
+  let arrayize = [name, lunchPeriod, base, toasted, protein, toppings, sauces];
   // clean up data
   for (let i = 3; i < arrayize.length; i++) {
     if ("" + arrayize[i] == "undefined") {
