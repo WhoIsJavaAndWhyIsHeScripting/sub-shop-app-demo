@@ -331,7 +331,6 @@ function parseJwt(token) {
   return JSON.parse(jsonPayload);
 }
 
-
 // populate the sub order csv with the form data
 app.post('/order-submit', (req, res) => {
   let time = new Date();
@@ -350,7 +349,7 @@ app.post('/order-submit', (req, res) => {
     toasted = "N/A";
   }
 
-  let arrayize = [name, lunchPeriod, base, protein, toasted, toppings, sauces];
+  let arrayize = [name, lunchPeriod, base, toasted, protein, toppings, sauces];
   // clean up data
   for (let i = 3; i < arrayize.length; i++) {
     if ("" + arrayize[i] == "undefined") {
