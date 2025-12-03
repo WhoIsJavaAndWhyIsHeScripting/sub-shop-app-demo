@@ -94,13 +94,14 @@ def main(csv_file, settings, skip=None, bold=None, delimiter=',', debug=False):
 
                 # x location 
                 (
-                    settings["xmargin"] + settings["sticker-width"]*(i%2)
+                    settings["x-margin"] + (settings["x-sticker-spacing"]+settings["sticker-width"])*(i%2)
                     ) * inch, 
 
                 # y location 
                 -(
-                    settings["ymargin"] + 
-                    settings["sticker-height"]*math.floor(((i/2) % (settings["labels"]/2)))
+                    settings["y-margin"] + 
+                        (settings["y-sticker-spacing"]+settings["sticker-height"])
+                        *math.floor(((i/2) % (settings["labels"]/2)))
                     # This extra settings["sticker-height"] is since Frame measures from the bottom left. 
                     + settings["sticker-height"]) * inch,
                 
@@ -108,8 +109,8 @@ def main(csv_file, settings, skip=None, bold=None, delimiter=',', debug=False):
                 settings["sticker-width"] * inch, 
                 settings["sticker-height"] * inch, 
 
-                leftPadding = settings["xpadding"] * inch, 
-                topPadding = settings["ypadding"] * inch,
+                leftPadding = settings["x-padding"] * inch, 
+                topPadding = settings["y-padding"] * inch,
 
                 showBoundary=int(debug),  # only draw Frame boundary if debug==True 
             )

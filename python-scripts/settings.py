@@ -43,18 +43,32 @@ LOG_LEVEL = DEBUG
 
 # For csv_to_pdf.py 
 PDF_VARS = {
-    # These settings are for Avery Presta 94215 label paper. 
-    # Dimensions have been adjusted for space between stickers. 
+    # All measurements are in inches. The values of sticker-height and 
+    # sticker-width include space between adjacent stickers. 
+
     "font" : "Times-Roman",  # Supports only fonts available in the reportlab library 
     "font-size": 14, 
     "font-size-bold": 20,  # For bolded values, not headers 
     "labels" : 6,
-    "sticker-height" : 3.3333,
-    "sticker-width" : 4.1888,
-    "xmargin" : 0.1563,
-    "ymargin" : 0.7500,
-    "xpadding" : 0.5000,
-    "ypadding" : 0.2500,
+
+    # These measurements are for Avery Presta 94215 label paper. 
+    # "sticker-height" : 3.3333,
+    # "sticker-width" : 4.1888,
+    # "xmargin" : 0.1563,
+    # "ymargin" : 0.7500,
+    # "xpadding" : 0.2500,
+    # "ypadding" : 0.2500,
+
+    # These measurements are for Avery 5264 label paper 
+    "sticker-height" : 3.3333, 
+    "sticker-width" : 4.0000, 
+    "x-sticker-spacing" : 0.1875,
+    "y-sticker-spacing" : 0.0000,
+    "x-margin" : 0.1563, 
+    "y-margin" : 0.5000, 
+    "x-padding" : 0.1250, 
+    "y-padding" : 0.1250, 
+
 }
 
 
