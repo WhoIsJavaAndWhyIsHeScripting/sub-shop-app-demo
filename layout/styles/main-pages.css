@@ -39,7 +39,6 @@ body {
 
 .headerbar img {
    height: 80px;
-   clip-path: circle();
    margin: 5px;
 }
 
