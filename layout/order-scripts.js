@@ -28,7 +28,7 @@ function disableElement(element, bool) {
     document.getElementById(element).disabled = bool;
 }
 // disable options for length and toasting if "salad" is checked as base
-function disableSaladLength() {
+/*function disableSaladLength() {
     if (document.getElementById("salad").checked) {
         disableElement("6-inch", true);
         disableElement("12-inch", true);
@@ -40,7 +40,7 @@ function disableSaladLength() {
         disableElement("toasted", false);
         disableElement("not-toasted", false);
     }
-}
+}*/
 // all categories of ingredients of the order
 var itemList = ["period", "inch", "bread", "toasted", "protein", "veggies", "condiments"];
 // saves the current boxes checked to localStorage
@@ -72,7 +72,7 @@ function loadOrder() {
         checkbox.addEventListener("change", saveOrder);
     });
 
-    disableSaladLength();
+    /*disableSaladLength();*/
 }
 
 var loaded = false;
