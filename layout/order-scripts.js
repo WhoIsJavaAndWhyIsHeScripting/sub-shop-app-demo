@@ -260,7 +260,7 @@ function validate_form(event) {
         valid = false;
     } else {
         //check that the user chose a length or chose a salad 
-        if (!document.getElementById("salad").checked) {
+        /*if (!document.getElementById("salad").checked) {
             if (!document.getElementById("6-inch").checked && !document.getElementById("12-inch").checked) {
                 alert("You must select a length or select a salad.");
                 event.preventDefault();
@@ -271,7 +271,7 @@ function validate_form(event) {
                 event.preventDefault();
                 valid = false;
             }
-        }
+        }*/
     }
 
 
@@ -283,16 +283,11 @@ function validate_form(event) {
         valid = false;
     } else {
         //Reminds the user that length is ignored when selecting a salad. (Not actually needed anymore.)
-        const salad = document.querySelector('input[id="salad"]');
+        /*const salad = document.querySelector('input[id="salad"]');
         const lengths = document.querySelectorAll('input[name="inch"]');
         if (salad.checked && (lengths[0].checked || lengths[1].checked)) {
             alert("Length is ignored for salads. \n(No 12 inch salads!)");
-        }
-    }
-    // check if toasted selected
-    var toasted = findChecked('input[name="toasted"]');
-    if (toasted == "") {
-
+        }*/
     }
 
     // check if period is selected
