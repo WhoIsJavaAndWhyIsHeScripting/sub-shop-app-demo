@@ -32,9 +32,9 @@
 
 <script>
    async function getClosedReason() {
-         const data = await fetch("/closed-reason");
-         const dataJson = await data.json();
-         document.getElementById("reason").textContent = dataJson.closedReason;
+      const data = await fetch("/closed-reason");
+      const dataJson = await data.json();
+      document.getElementById("reason").textContent = dataJson.closedReason;
    }
    getClosedReason();
 </script>

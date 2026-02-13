@@ -107,7 +107,7 @@ function loadPage(route, sendPath, verify) {
 
 app.get('/close-reason', (req, res) => {
   let reason = getClosedReason();
-  res.json({closedReason: reason});
+  res.json({"closedReason" : reason});
 })
 // route for home page
 loadPage('/', path.join(__dirname, 'layout', 'subShopFront.html'), false);
