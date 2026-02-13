@@ -37,27 +37,31 @@ const { OAuth2Client } = require('google-auth-library');
 const CLIENT_ID = "702804890232-pj9j2siaa55563pild655ev156i36un5.apps.googleusercontent.com";
 const client = new OAuth2Client(CLIENT_ID);
 
-// check the server time and open/close the server at given times
+// this variable controls whether you can access the order page
 var isOpen = false;
+// this variable represents whether the nutrition staff have chosen to open or close the sub shop
 var openToday = true;
+// the number of orders currently placed
+var lines = 0;
+// order limit for the day
+const orderLimit = 10;
+// check the server time and open/close the server at given times
 function updateOpenStatus() {
   var currentTime = new Date();
   var hour = currentTime.getHours();
   var minute = currentTime.getMinutes();
   hour += minute / 60;
   // count the number of lines sub-orders.csv has
-  fs.readFile(path.join(__dirname, 'layout', 'sub-orders.csv'), (err, data) => {
+  fs.readFileSync(path.join(__dirname, 'layout', 'sub-orders.csv'), (err, data) => {
     if (err) {
       res.send(err);
     }
     var newLineMatch = data.toString().match(/\n/g);
-    var lines;
     if (newLineMatch != null) {
       lines = newLineMatch.length;
     } else {
       lines = 0;
     }
-    const orderLimit = 10;
     if ((hour >= 7.5 && hour < 9) && (lines < orderLimit) && openToday) {
       isOpen = true;
     } else {
@@ -65,7 +69,16 @@ function updateOpenStatus() {
     }
   });
 }
-
+// gets the reason the sub shop is closed
+// returns a string of the reason the shop is closed
+function getClosedReason() {
+  var time = new Date();
+  var formattedTime = time.getHours() + time.getMinutes()/60;
+  if (formattedTime < 7.5 || formattedTime > 9) return "You are attempting to order outside the time window (7:30-8:00 AM). Come back tomorrow!";
+  else if (!openToday) return "The staff have chosen to close the sub shop for the day (this is usually due to staffing issues). Try again tomorrow!";
+  else if (lines >= orderLimit) return "The order limit has been reached for the day. Try coming back earlier tomorrow!";
+  else return "Unknown reason. This may be due to an error. If you are seeing this message, you can fill out the feedback form on the contacts page to report the issue.";
+}
 // Serve static files from the 'public' folder
 app.use(express.static(path.join(__dirname, 'layout', 'admin-page', 'admin-ingredients')));
 app.use(express.static(path.join(__dirname, 'layout', 'admin-page', 'admin-home')));
@@ -91,6 +104,11 @@ function loadPage(route, sendPath, verify) {
     }
   })
 }
+
+app.get('/close-reason', (req, res) => {
+  let reason = getClosedReason();
+  res.json({closedReason: reason});
+})
 // route for home page
 loadPage('/', path.join(__dirname, 'layout', 'subShopFront.html'), false);
 

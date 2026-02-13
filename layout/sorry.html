@@ -21,14 +21,7 @@
         </head>
 <body>
     <h3> Sorry! Bear Bites is closed!</h3>
-    <p style="border: none;">You may be seeing this page because:</p>
-    <ol>
-      <li>You are attempting to order outside the ordering window (7:30-9:00 am).</li>
-      <li>The maximum order limit has been met.</li>
-      <li>The nutrition staff have chosen to close pre-ordering for the day due to staffing or other issues.</li>
-      <li>You are the first person of the day ordering. If this is the case, refreshing should lead you to the correct page. 
-         This is a known bug that will be fixed in the future.</li>
-    </ol>
+    <p style="border: none;">Reason for closure: <span id="reason"></span></p>
 </body>
 
 
@@ -36,4 +29,10 @@
    Made by UAHS Computer Science Club &copy;2025<br>
 	Got Questions? <a href="/contact-us">Contact Us!</a>
 </footer>
+
+<script>
+   const data = await fetch("/closed-reason");
+   const dataJson = await data.json();
+   document.getElementById("reason").textContent = dataJson.closedReason;
+</script>
 </html>
