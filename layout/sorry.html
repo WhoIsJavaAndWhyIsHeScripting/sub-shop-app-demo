@@ -31,8 +31,11 @@
 </footer>
 
 <script>
-   const data = await fetch("/closed-reason");
-   const dataJson = await data.json();
-   document.getElementById("reason").textContent = dataJson.closedReason;
+   async function getClosedReason() {
+         const data = await fetch("/closed-reason");
+         const dataJson = await data.json();
+         document.getElementById("reason").textContent = dataJson.closedReason;
+   }
+   getClosedReason();
 </script>
 </html>
