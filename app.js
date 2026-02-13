@@ -74,7 +74,7 @@ function updateOpenStatus() {
 function getClosedReason() {
   var time = new Date();
   var formattedTime = time.getHours() + time.getMinutes()/60;
-  if (formattedTime < 7.5 || formattedTime > 9) return "You are attempting to order outside the time window (7:30-8:00 AM). Come back tomorrow!";
+  if (formattedTime < 7.5 || formattedTime > 9) return "You are attempting to order outside the time window (7:30-9:00 AM). Come back tomorrow!";
   else if (!openToday) return "The staff have chosen to close the sub shop for the day (this is usually due to staffing issues). Try again tomorrow!";
   else if (lines >= orderLimit) return "The order limit has been reached for the day. Try coming back earlier tomorrow!";
   else return "Unknown reason. This may be due to an error. If you are seeing this message, you can fill out the feedback form on the contacts page to report the issue.";
