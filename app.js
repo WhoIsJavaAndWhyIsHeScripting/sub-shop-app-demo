@@ -55,7 +55,10 @@ function updateOpenStatus() {
   fs.readFileSync(path.join(__dirname, 'layout', 'sub-orders.csv'), (err, data) => {
     if (err) {
       res.send(err);
-    }
+      console.log(err);
+      }
+      console.log(data);
+    });
     var newLineMatch = data.toString().match(/\n/g);
     if (newLineMatch != null) {
       lines = newLineMatch.length;
@@ -67,8 +70,7 @@ function updateOpenStatus() {
     } else {
       isOpen = false;
     }
-  });
-}
+  }
 // gets the reason the sub shop is closed
 // returns a string of the reason the shop is closed
 function getClosedReason() {
