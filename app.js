@@ -57,7 +57,6 @@ function updateOpenStatus() {
       res.send(err);
       console.log(err);
       }
-      if (data.length > 0) console.log(data);
   });
     var newLineMatch = data.toString().match(/\n/g);
     if (newLineMatch != null) {
