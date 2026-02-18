@@ -52,12 +52,7 @@ function updateOpenStatus() {
   var minute = currentTime.getMinutes();
   hour += minute / 60;
   // count the number of lines sub-orders.csv has
-  fs.readFileSync(path.join(__dirname, 'layout', 'sub-orders.csv'), (err, data) => {
-    if (err) {
-      res.send(err);
-      console.log(err);
-      }
-  });
+    var data = fs.readFileSync(path.join(__dirname, 'layout', 'sub-orders.csv'));
     var newLineMatch = data.toString().match(/\n/g);
     if (newLineMatch != null) {
       lines = newLineMatch.length;
