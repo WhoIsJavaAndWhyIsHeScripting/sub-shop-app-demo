@@ -57,8 +57,8 @@ function updateOpenStatus() {
       res.send(err);
       console.log(err);
       }
-      console.log(data);
-    });
+      if (data.length > 0) console.log(data);
+  });
     var newLineMatch = data.toString().match(/\n/g);
     if (newLineMatch != null) {
       lines = newLineMatch.length;
