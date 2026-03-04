@@ -1,11 +1,11 @@
 // for node instance creation
 const express = require('express');
 
-// for file reading
-const fs = require('fs');
-
 // the node instance
 const app = express();
+
+// for file reading
+const fs = require('fs');
 
 // for file paths
 const path = require('path');
@@ -29,7 +29,7 @@ const { randomUUID } = require('crypto');
 app.use(session({
   name: 'session',
   secret: randomUUID(),
-  maxAge: 24*60*60*1000 // session expires after 24 hrs
+  maxAge: 24 * 60 * 60 * 1000 // session expires after 24 hrs
 }))
 
 // for verifying Google ID_TOKENs
@@ -45,6 +45,7 @@ var openToday = true;
 var lines = 0;
 // order limit for the day
 var orderLimit = 10;
+
 // check the server time and open/close the server at given times
 function updateOpenStatus() {
   var currentTime = new Date();
@@ -52,28 +53,34 @@ function updateOpenStatus() {
   var minute = currentTime.getMinutes();
   hour += minute / 60;
   // count the number of lines sub-orders.csv has
-    var data = fs.readFileSync(path.join(__dirname, 'layout', 'sub-orders.csv'));
-    var newLineMatch = data.toString().match(/\n/g);
-    if (newLineMatch != null) {
-      lines = newLineMatch.length;
-    } else {
-      lines = 0;
-    }
-    if ((hour >= 7.5 && hour < 9) && (lines < orderLimit) && openToday) {
-      isOpen = true;
-    } else {
-      isOpen = false;
-    }
+  var data = fs.readFileSync(path.join(__dirname, "layout", "data", "sub-orders.csv"));
+  var newLineMatch = data.toString().match(/\n/g);
+  if (newLineMatch != null) {
+    lines = newLineMatch.length;
+  } else {
+    lines = 0;
   }
+  if ((hour >= 7.5 && hour < 9) && (lines < orderLimit) && openToday) {
+    isOpen = true;
+  } else {
+    isOpen = false;
+  }
+}
+
 // gets the reason the sub shop is closed
 // returns a string of the reason the shop is closed
 function getClosedReason() {
   var time = new Date();
-  var formattedTime = time.getHours() + time.getMinutes()/60;
-  if (formattedTime < 7.5 || formattedTime > 9) return "You are attempting to order outside the time window (7:30-9:00 AM). Come back tomorrow!";
-  else if (!openToday) return "The staff have chosen to close the sub shop for the day (this is usually due to staffing issues). Try again tomorrow!";
-  else if (lines >= orderLimit) return "The order limit has been reached for the day. Try coming back earlier tomorrow!";
-  else return "Unknown reason. This may be due to an error. If you are seeing this message, you can fill out the feedback form on the contacts page to report the issue.";
+  var formattedTime = time.getHours() + time.getMinutes() / 60;
+  if (formattedTime < 7.5 || formattedTime > 9) {
+    return "You are attempting to order outside the time window (7:30-9:00 AM). Come back tomorrow!";
+  } else if (!openToday) {
+    return "The staff have chosen to close the sub shop for the day (this is usually due to staffing issues). Try again tomorrow!";
+  } else if (lines >= orderLimit) {
+    return "The order limit has been reached for the day. Try coming back earlier tomorrow!";
+  } else {
+    return "Unknown reason. This may be due to an error. If you are seeing this message, you can fill out the feedback form on the contacts page to report the issue.";
+  }
 }
 // Serve static files from the 'public' folder
 app.use(express.static(path.join(__dirname, 'layout', 'admin-page', 'admin-ingredients')));
@@ -103,11 +110,11 @@ function loadPage(route, sendPath, verify) {
 
 app.get('/closed-reason', (req, res) => {
   let reason = getClosedReason();
-  res.json({closedReason : reason});
+  res.json({ closedReason: reason });
 })
 
 app.get('/order-limit', (req, res) => {
-  res.json({limit : orderLimit});
+  res.json({ limit: orderLimit });
 })
 // route for home page
 loadPage('/', path.join(__dirname, 'layout', 'subShopFront.html'), false);
@@ -212,7 +219,7 @@ app.post('/submit', (req, res) => {
     }
   }
   // replace whatever is in out-of-stock.txt with the new comma separated list
-  fs.writeFile(path.join(__dirname, "layout", "admin-page", "admin-ingredients", "out-of-stock.txt"), ingredientsText, (err) => {
+  fs.writeFile(path.join(__dirname, "data", "admin", "out-of-stock.txt"), ingredientsText, (err) => {
     if (err) {
       console.log(err);
     }
@@ -229,7 +236,7 @@ app.post('/open-close', (req, res) => {
 });
 // get open status
 app.get('/open-close', (req, res) => {
-  res.json({open: openToday.toString()});
+  res.json({ open: openToday.toString() });
 })
 // handle post request when users form submitted
 app.post('/submit2', (req, res) => {
@@ -237,15 +244,15 @@ app.post('/submit2', (req, res) => {
   var bannedUser = req.body.banned;
   // append the data to the file with a comma before if it's not empty
   if (bannedUser != null) {
-    if (fs.statSync(path.join(__dirname, "layout", "admin-page", "admin-users", "ban-list.txt")).size != 0) {
-      fs.appendFile(path.join(__dirname, "layout", "admin-page", "admin-users", "ban-list.txt"), "," + bannedUser, (err) => {
+    if (fs.statSync(path.join(__dirname, "data", "admin", "ban-list.txt")).size != 0) {
+      fs.appendFile(path.join(__dirname, "data", "admin", "ban-list.txt"), "," + bannedUser, (err) => {
         if (err) {
           throw err;
         }
       })
     } else {
       // otherwise just append the data
-      fs.appendFile(path.join(__dirname, "layout", "admin-page", "admin-users", "ban-list.txt"), bannedUser, (err) => {
+      fs.appendFile(path.join(__dirname, "data", "admin", "ban-list.txt"), bannedUser, (err) => {
         if (err) {
           throw err;
         }
@@ -257,7 +264,7 @@ app.post('/submit2', (req, res) => {
 
   if (toBeRemoved != null) {
     // read the banned users list and split by commas
-    fs.readFile(path.join(__dirname, "layout", "admin-page", "admin-users", "ban-list.txt"), (err, data) => {
+    fs.readFile(path.join(__dirname, "data", "admin", "ban-list.txt"), (err, data) => {
       var commaSplit = data.toString().split(",");
       // check which user name matches the user to be removed
       // and remove it from the list
@@ -269,17 +276,17 @@ app.post('/submit2', (req, res) => {
       // recreate the file with the user removed based on length
       if (commaSplit.length == 0) {
         // if there's no users left, just make the file empty
-        fs.writeFileSync(path.join(__dirname, "layout", "admin-page", "admin-users", "ban-list.txt"), "");
+        fs.writeFileSync(path.join(__dirname, "data", "admin", "ban-list.txt"), "");
       } else if (commaSplit.length == 1) {
         // if there's one user left, just write their name
-        fs.writeFileSync(path.join(__dirname, "layout", "admin-page", "admin-users", "ban-list.txt"), commaSplit[0]);
+        fs.writeFileSync(path.join(__dirname, "data", "admin", "ban-list.txt"), commaSplit[0]);
       } else if (commaSplit.length > 1) {
         // if there's 2+ users left, write the first user then append all the other users with commas before
-        fs.writeFileSync(path.join(__dirname, "layout", "admin-page", "admin-users", "ban-list.txt"), commaSplit[0]);
+        fs.writeFileSync(path.join(__dirname, "data", "admin", "ban-list.txt"), commaSplit[0]);
         // do not add empty names
         for (let i = 1; i < commaSplit.length; i++) {
           if (commaSplit[i] != "" && commaSplit[i] != undefined) {
-            fs.appendFileSync(path.join(__dirname, "layout", "admin-page", "admin-users", "ban-list.txt"), "," + commaSplit[i]);
+            fs.appendFileSync(path.join(__dirname, "data", "admin", "ban-list.txt"), "," + commaSplit[i]);
           }
         }
       }
@@ -398,9 +405,11 @@ app.post('/order-submit', (req, res) => {
   base += bread;
   arrayize[2] = base;
   if ("" + name != "undefined") {
-    fs.appendFile(path.join(__dirname, "layout", "sub-orders.csv"), `\n${arrayize[0]};${arrayize[1]};${arrayize[2]};${arrayize[3]};${arrayize[4]};${arrayize[5]};${arrayize[6]}`, () => {
-      res.redirect('/');
-    });
+    fs.appendFile(
+      path.join(__dirname, "data", "sub-orders.csv"),
+      `\n${arrayize[0]};${arrayize[1]};${arrayize[2]};${arrayize[3]};${arrayize[4]};${arrayize[5]};${arrayize[6]}`, () => {
+        res.redirect('/');
+      });
   } else {
     res.send("ERROR: Order denied. You attempted to send an order without an order name. Please try again.\n\nIf you believe this is an error, submit a bug report (linked on the contacts page). If you're trying to hack us... go away >:(");
   }
@@ -409,7 +418,7 @@ app.post('/order-submit', (req, res) => {
 app.get('/check-user', async (req, res) => {
   let username = req.session.name;
   try {
-    let banned_data = await fs.promises.readFile(path.join(__dirname, "layout", "admin-page", "admin-users", "ban-list.txt"));
+    let banned_data = await fs.promises.readFile(path.join(__dirname, "data", "admin", "ban-list.txt"));
     let banned = banned_data.toString().split(",");
     let is_banned = false;
     for (const guy of banned) {
@@ -418,7 +427,7 @@ app.get('/check-user', async (req, res) => {
       }
     }
 
-    let order_data = await fs.promises.readFile(path.join(__dirname, "layout", "sub-orders.csv"));
+    let order_data = await fs.promises.readFile(path.join(__dirname, "data", "sub-orders.csv"));
     let orders = order_data.toString().split("\n");
     let has_ordered = false
     for (const item of orders) {

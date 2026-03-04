@@ -5,9 +5,9 @@ from a CSV to a printable PDF.
 (Uses reportlab to create the pdf; target template is Avery Presta 9
 4215 w/ 6 labels per page)
 
-A settings file is used to read the CSV and make the PDF. 
+A settings file is used to read the CSV and make the PDF.
 
-Written November 2024, extensively modified May 2025. 
+Written November 2024, extensively modified May 2025.
 """
 
 import csv
@@ -21,14 +21,23 @@ from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 from reportlab.platypus import Paragraph, Frame
 
 
-def main(csv_file, settings, skip=None, bold=None, delimiter=',', debug=False):
-    """Makes a pdf file from a csv file of sub orders. 
-    See module docstring for more details. 
+def main(
+    csv_file: str,
+    settings: dict,
+    pdf_file: str | None = None,
+    skip=None,
+    bold=None,
+    delimiter=",",
+    debug=False,
+):
+    """Makes a pdf file from a csv file of sub orders.
+    See module docstring for more details.
 
     Args:
         csv_file : filename of the CSV file from which the PDF shall be made
-        settings : a dictionary of various dimensions for making the PDF (for format, see settings.py) 
-        skip : headers (and their values) to omit from the PDF 
+        settings : a dictionary of various dimensions for making the PDF (for format, see settings.py)
+        pdf_file : the path to write the PDF to; if None, then "orders.pdf" will be used
+        skip : headers (and their values) to omit from the PDF
         bold : headers (and values) to place first and in bold on the PDF
         delimiter: separating character for cells in the csv file
     """
@@ -36,8 +45,10 @@ def main(csv_file, settings, skip=None, bold=None, delimiter=',', debug=False):
         skip = []
     if bold is None:
         bold = []
+    if pdf_file is None:
+        pdf_file = "orders.pdf"
 
-    pdf = canvas.Canvas("orders.pdf", pagesize=letter)
+    pdf = canvas.Canvas(pdf_file, pagesize=letter)
     width, height = letter
 
     # adjusts the location of the origin for drawing on the pdf
@@ -52,7 +63,7 @@ def main(csv_file, settings, skip=None, bold=None, delimiter=',', debug=False):
         parent=styles["Normal"],
         fontSize=settings["font-size"],
         fontName=settings["font"],
-        leading=settings["font-size"]+2,  # line spacing
+        leading=settings["font-size"] + 2,  # line spacing
     )
     font_size_bold = settings["font-size-bold"]
 
@@ -66,31 +77,34 @@ def main(csv_file, settings, skip=None, bold=None, delimiter=',', debug=False):
 
             # Frames contain other objects like Paragraphs.
             frame_object = Frame(
-
                 # (margin + appropriate displacement for the ith box)*inch
-
                 # x location
                 (
-                    settings["x-margin"] +
-                    (settings["x-sticker-spacing"] +
-                     settings["sticker-width"])*(i % 2)
-                ) * inch,
-
+                    settings["x-margin"]
+                    + (
+                        settings["x-sticker-spacing"]
+                        + settings["sticker-width"]
+                    )
+                    * (i % 2)
+                )
+                * inch,
                 # y location
                 -(
-                    settings["y-margin"] +
-                    (settings["y-sticker-spacing"]+settings["sticker-height"])
-                    * math.floor(((i/2) % (settings["labels"]/2)))
+                    settings["y-margin"]
+                    + (
+                        settings["y-sticker-spacing"]
+                        + settings["sticker-height"]
+                    )
+                    * math.floor(((i / 2) % (settings["labels"] / 2)))
                     # This extra settings["sticker-height"] is since Frame measures from the bottom left.
-                    + settings["sticker-height"]) * inch,
-
+                    + settings["sticker-height"]
+                )
+                * inch,
                 # width and height of Frame
                 settings["sticker-width"] * inch,
                 settings["sticker-height"] * inch,
-
                 leftPadding=settings["x-padding"] * inch,
                 topPadding=settings["y-padding"] * inch,
-
                 # only draw Frame boundary if debug==True
                 showBoundary=int(debug),
             )
@@ -99,7 +113,8 @@ def main(csv_file, settings, skip=None, bold=None, delimiter=',', debug=False):
             for h in bold:  # add values such as name and period first
                 if h not in skip and h in headers:
                     text.append(
-                        f"<font size={font_size_bold}><b>{h}: {row[h]}</b></font>")
+                        f"<font size={font_size_bold}><b>{h}: {row[h]}</b></font>"
+                    )
                 if debug:
                     print(text)
 
@@ -115,7 +130,7 @@ def main(csv_file, settings, skip=None, bold=None, delimiter=',', debug=False):
                 pdf.translate(0, height)
 
             frame_object.addFromList(
-                [Paragraph('<br/>'.join(text), text_style)],
+                [Paragraph("<br/>".join(text), text_style)],
                 pdf,
             )
 
@@ -129,6 +144,13 @@ def main(csv_file, settings, skip=None, bold=None, delimiter=',', debug=False):
 
 if __name__ == "__main__":
     from settings import PDF_VARS, SKIP, BOLD
+
     print(f"Running csv_to_pdf.py at {str(datetime.datetime.now())}.")
-    main("../layout/sub-orders.csv", PDF_VARS,
-         skip=SKIP, bold=BOLD, delimiter=";", debug=True)
+    main(
+        "../layout/sub-orders.csv",
+        PDF_VARS,
+        skip=SKIP,
+        bold=BOLD,
+        delimiter=";",
+        debug=True,
+    )
