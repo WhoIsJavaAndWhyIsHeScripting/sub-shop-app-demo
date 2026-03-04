@@ -44,7 +44,7 @@ var openToday = true;
 // the number of orders currently placed
 var lines = 0;
 // order limit for the day
-const orderLimit = 10;
+var orderLimit = 10;
 // check the server time and open/close the server at given times
 function updateOpenStatus() {
   var currentTime = new Date();
@@ -104,6 +104,15 @@ function loadPage(route, sendPath, verify) {
 app.get('/closed-reason', (req, res) => {
   let reason = getClosedReason();
   res.json({closedReason : reason});
+})
+
+app.post('/change-order-limit', (req, res) => {
+  orderLimit = parseInt(req.body["order-limit"]);
+  console.log(orderLimit);
+})
+
+app.get('/order-limit', (req, res) => {
+  res.send(orderLimit);
 })
 // route for home page
 loadPage('/', path.join(__dirname, 'layout', 'subShopFront.html'), false);

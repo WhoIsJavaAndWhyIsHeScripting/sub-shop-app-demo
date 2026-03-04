@@ -20,6 +20,12 @@ async function updateCloseButton() {
     }
     
 }
+
+async function currentLimit() {
+    let data = await fetch('/order-limit');
+    let limit = data.toString();
+    document.getElementById("order-limit").placeholder = limit;
+}
 // remove a list item
 function remove(e) {
     let hiddenInput = document.createElement("input");
