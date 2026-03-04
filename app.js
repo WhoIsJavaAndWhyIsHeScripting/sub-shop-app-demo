@@ -172,6 +172,7 @@ loadAdminPage('users', 'admin-users');
 app.post('/change-order-limit', (req, res) => {
   orderLimit = req.body.limit;
   console.log(orderLimit);
+  res.redirect('/users');
 })
 
 // create route for css boilerplate
