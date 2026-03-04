@@ -48,6 +48,7 @@ input {
     border-radius: 2px;
     font-size: 0.85em;
     padding: 2px;
+    margin: 3px;
 }
 
 input:hover {
@@ -65,6 +66,8 @@ input:focus {
     padding: 2px;
     outline: solid 2px var(--ua-gold);
 }
+
+
 
 #addButton {
     all: unset;
