@@ -1,6 +1,6 @@
 // get open status
 async function getOpenStatus() {
-    const data = await fetch('/admin/open-close');
+    const data = await fetch('/open-close');
     if (!data.ok) throw err;
     const json = await data.json();
     return json.open;

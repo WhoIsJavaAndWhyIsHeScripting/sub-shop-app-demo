@@ -102,6 +102,27 @@ app.get('/admin-home', (req, res) => {
   res.redirect("/admin/log-in");
 });
 
+// The following three routes work with global variables and therefore are here
+//  instead of in admin.js.
+
+// handle post request when open/close switch toggled
+app.post('/open-close', (req, res) => {
+  openToday = !openToday;
+  res.redirect('/admin/users');
+});
+
+// get open status
+app.get('/open-close', (req, res) => {
+  res.json({ open: openToday.toString() });
+})
+
+// change the order limit from the users page
+app.post('/change-order-limit', (req, res) => {
+  orderLimit = req.body.limit;
+  console.log(orderLimit);
+  res.redirect('/admin/users');
+})
+
 // function for sending a file to a path
 // route - the actual path on the server/the subpage on the internet (subshop-dev.uaschools.io/route)
 // path - the path for the file that will be sent
