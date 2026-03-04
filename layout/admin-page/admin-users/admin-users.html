@@ -38,7 +38,10 @@
             <form id="change-order-limit" action="/change-order-limit" method = "POST">
                 <input type="text" id="order-limit" name="limit"></input><button type="submit">Save Changes</button>
             </form>
-            <script>updateCloseButton()</script>
+            <script>
+                updateCloseButton()
+                getCurrentLimit()
+            </script>
             <p>
                 If a student ordered a sandwich and 
                 did not come to the sub shop to pay 

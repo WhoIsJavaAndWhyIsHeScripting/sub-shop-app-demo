@@ -138,7 +138,6 @@ app.use(express.urlencoded({ extended: true }));
 
 // check if the password entered was correct and log in user if so
 app.post('/check-password', (req, res) => {
-  console.log(req.body);
   if (req.body.password == "PASSWORD_REMOVED") {
     req.session.user = { username: "admin" };
   }

@@ -21,7 +21,7 @@ async function updateCloseButton() {
     
 }
 
-async function currentLimit() {
+async function getCurrentLimit() {
     let data = await fetch('/order-limit');
     let limit = data.toString();
     document.getElementById("order-limit").placeholder = limit;
