@@ -76,4 +76,108 @@ loadAdminResource('admin-home-styles.css', "layout/admin-page/admin-home/admin-h
 loadAdminResource('admin-ingredients-styles.css', "layout/admin-page/admin-ingredients/admin-ingredients-styles.css");
 loadAdminResource('admin-users-styles.css', "layout/admin-page/admin-users/admin-users-styles.css");
 
+
+// Routes for form submissions
+
+// handle post request when ingredients form submitted
+app.post('/submit-ingredients', (req, res) => {
+  // get the values of the checked checkboxes
+  let ingredients = req.body.ingredients;
+  // turn it into a comma separated list
+  let ingredientsText = "";
+  if (ingredients != undefined) {
+    ingredientsText += ingredients[0];
+    for (let i = 1; i < ingredients.length; i++) {
+      ingredientsText += "," + ingredients[i];
+    }
+  }
+  // replace whatever is in out-of-stock.txt with the new comma separated list
+  fs.writeFile(path.join(__dirname, "data", "admin", "out-of-stock.txt"), ingredientsText, (err) => {
+    if (err) {
+      console.log(err);
+    }
+    console.log("yippee");
+  })
+
+  // go back to ingredients page
+  res.redirect("/admin/ingredients");
+});
+
+// handle post request when open/close switch toggled
+app.post('/open-close', (req, res) => {
+  openToday = !openToday;
+  res.redirect('/admin/users');
+});
+
+// get open status
+app.get('/open-close', (req, res) => {
+  res.json({ open: openToday.toString() });
+})
+
+// change the order limit from the users page
+app.post('/change-order-limit', (req, res) => {
+  orderLimit = req.body.limit;
+  console.log(orderLimit);
+  res.redirect('/admin/users');
+})
+
+// handle post request when users form submitted
+app.post('/submit-users', (req, res) => {
+  // handle when a user is ADDED to the list
+  var bannedUser = req.body.banned;
+  // append the data to the file with a comma before if it's not empty
+  if (bannedUser != null) {
+    if (fs.statSync(path.join(__dirname, "data", "admin", "ban-list.txt")).size != 0) {
+      fs.appendFile(path.join(__dirname, "data", "admin", "ban-list.txt"), "," + bannedUser, (err) => {
+        if (err) {
+          throw err;
+        }
+      })
+    } else {
+      // otherwise just append the data
+      fs.appendFile(path.join(__dirname, "data", "admin", "ban-list.txt"), bannedUser, (err) => {
+        if (err) {
+          throw err;
+        }
+      });
+    }
+  }
+  // handle when a user should be REMOVED from the list
+  var toBeRemoved = req.body.hidden;
+
+  if (toBeRemoved != null) {
+    // read the banned users list and split by commas
+    fs.readFile(path.join(__dirname, "data", "admin", "ban-list.txt"), (err, data) => {
+      var commaSplit = data.toString().split(",");
+      // check which user name matches the user to be removed
+      // and remove it from the list
+      for (guy in commaSplit) {
+        if (commaSplit[guy] == req.body.hidden) {
+          commaSplit.splice(guy, 1);
+        }
+      }
+      // recreate the file with the user removed based on length
+      if (commaSplit.length == 0) {
+        // if there's no users left, just make the file empty
+        fs.writeFileSync(path.join(__dirname, "data", "admin", "ban-list.txt"), "");
+      } else if (commaSplit.length == 1) {
+        // if there's one user left, just write their name
+        fs.writeFileSync(path.join(__dirname, "data", "admin", "ban-list.txt"), commaSplit[0]);
+      } else if (commaSplit.length > 1) {
+        // if there's 2+ users left, write the first user then append all the other users with commas before
+        fs.writeFileSync(path.join(__dirname, "data", "admin", "ban-list.txt"), commaSplit[0]);
+        // do not add empty names
+        for (let i = 1; i < commaSplit.length; i++) {
+          if (commaSplit[i] != "" && commaSplit[i] != undefined) {
+            fs.appendFileSync(path.join(__dirname, "data", "admin", "ban-list.txt"), "," + commaSplit[i]);
+          }
+        }
+      }
+    });
+  }
+  // redirect back to the users page
+  res.redirect('/admin/users');
+});
+
+
 module.exports = { admin_router: router };

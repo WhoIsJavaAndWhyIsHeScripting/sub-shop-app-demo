@@ -34,12 +34,12 @@
     <main>
         <h1>Manage Users</h1>
         <p>To enable/disable student pre-ordering, click the button below.</p>
-        <form id="open-close" action="/open-close" method="POST">
+        <form id="open-close" action="/admin/open-close" method="POST">
             <button id="close-button" onclick="document.forms['open-close'].submit()"></button>
         </form>
         <hr>
         <p>Change order limit:</p>
-        <form id="change-order-limit" action="/change-order-limit" method="POST">
+        <form id="change-order-limit" action="/admin/change-order-limit" method="POST">
             &nbsp;&nbsp;&nbsp;<input type="text" id="order-limit" name="limit"></input><button type="submit">Save Changes</button>
         </form>
         <hr>
@@ -59,7 +59,7 @@
             no-access list.
         </p>
         <hr>
-        <form id="users-form" action="/submit2" method="POST">
+        <form id="users-form" action="/submit-users" method="POST">
             <label for="banned-name">Name of student to add:
                 <input type="text" id="banned-name" name="banned"></label> <button type="submit">Add User</button>
         </form>
