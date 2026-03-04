@@ -1,17 +1,21 @@
 <!DOCTYPE html>
 <html lang="en-US">
-    <head>
-        <title>Manage Users</title>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="admin-users-styles.css" rel="stylesheet">
-        <link href="/boilerplate" rel="stylesheet">
-        <!--import Montserrat font-->
-        <link rel="preconnect" href="https://fsonts.googleapis.com">
-         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-         <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-         <script src="/admin-users-script"></script>
-    </head>
+
+<head>
+    <title>Manage Users</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="admin-users-styles.css" rel="stylesheet">
+    <link href="/boilerplate" rel="stylesheet">
+    <!--import Montserrat font-->
+    <link rel="preconnect" href="https://fsonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <script src="admin-users-script"></script>
+</head>
+
+<body>
     <script>
         var data;
         // fetches the text content from out-of-stock.txt
@@ -23,51 +27,51 @@
             return data;
         }
     </script>
-    <body>
-        <header>
-            <div class="headerbar"><img src="bearbiteslogo.png"><a href="/admin-home">Bear Bites</a></div>
-        </header>
-        <main>
-            <h1>Manage Users</h1>
-            <p>To enable/disable student pre-ordering, click the button below.</p>
-            <form id="open-close" action="/open-close" method="POST">
-                <button id="close-button" onclick="document.forms['open-close'].submit()"></button>
-            </form>
-            <hr>
-            <p>Change order limit:</p>
-            <form id="change-order-limit" action="/change-order-limit" method = "POST">
-                <input type="text" id="order-limit" name="limit"></input><button type="submit">Save Changes</button>
-            </form>
-            <hr>
-            <script>
-                updateCloseButton()
-                getCurrentLimit()
-            </script>
-            <p>
-                If a student ordered a sandwich and 
-                did not come to the sub shop to pay 
-                for it, type in their full name to add 
-                them to the no-access list. Students on
-                the no-access list will not be able to order
-                online, but they will still be able to buy
-                subs in person. <br><br>Click "Save Changes" 
-                when you are done to save your changes to the 
-                no-access list.
-            </p>
-            <hr>
-            <form id="users-form" action="/submit2" method="POST">
-                <label for="banned-name">Name of student to add: 
+
+    <header>
+        <div class="headerbar"><img src="/bearbiteslogo.png"><a href="/admin/home">Bear Bites</a></div>
+    </header>
+    <main>
+        <h1>Manage Users</h1>
+        <p>To enable/disable student pre-ordering, click the button below.</p>
+        <form id="open-close" action="/open-close" method="POST">
+            <button id="close-button" onclick="document.forms['open-close'].submit()"></button>
+        </form>
+        <hr>
+        <p>Change order limit:</p>
+        <form id="change-order-limit" action="/change-order-limit" method="POST">
+            &nbsp;&nbsp;&nbsp;<input type="text" id="order-limit" name="limit"></input><button type="submit">Save Changes</button>
+        </form>
+        <hr>
+        <script>
+            updateCloseButton()
+            getCurrentLimit()
+        </script>
+        <p>
+            If a student ordered a sandwich and
+            did not come to the sub shop to pay
+            for it, type in their full name to add
+            them to the no-access list. Students on
+            the no-access list will not be able to order
+            online, but they will still be able to buy
+            subs in person. <br><br>Click "Save Changes"
+            when you are done to save your changes to the
+            no-access list.
+        </p>
+        <hr>
+        <form id="users-form" action="/submit2" method="POST">
+            <label for="banned-name">Name of student to add:
                 <input type="text" id="banned-name" name="banned"></label> <button type="submit">Add User</button>
-            </form>
-            <h2>No-access list</h2>
-            <p>
-                In the case of a mistake, you can click on 
-                the "X" next to a student's name to 
-                remove them from the no-access list.
-            </p>
-            <ul id="ban-list"></ul>
-        </main>
-    </body>
+        </form>
+        <h2>No-access list</h2>
+        <p>
+            In the case of a mistake, you can click on
+            the "X" next to a student's name to
+            remove them from the no-access list.
+        </p>
+        <ul id="ban-list"></ul>
+    </main>
+
     <script>
         var swag;
         fetchy()
@@ -76,39 +80,41 @@
                 swag = dataNew.split(",");
                 // check if the list is not empty before filling with names
                 if (swag[0] != "") {
-                // create a list element for each person on the ban list
-                for (str in swag) {
-                    let list = document.createElement('li');
-                    // the label on the list element will be the banned user's name
-                    let name = document.createTextNode(swag[str]);
-                    list.appendChild(name);
-                    // create remove button
-                    let remover = document.createElement('button');
-                    remover.onclick = function() {
-                        /* create an input element with the name "hidden"
-                        and the value will be the name of the banned user attached to 
-                        the list item clicked.
-                        this will be sent back to the server so they can remove
-                        the user from the list*/
-                        let hiddenInput = document.createElement("input");
-                        let textcontent = remover.parentElement.textContent;
-                        let subtext = textcontent.substring(0, textcontent.length - 1);
-                        hiddenInput.name = "hidden";
-                        let formUsers = document.forms["users-form"];
-                        formUsers["hidden"].value = subtext;
-                        hiddenInput.value = subtext;
-                        formUsers.appendChild(hiddenInput);
-                        formUsers.submit();
-                        // the data sent to the server will be "hidden: [banned user]"
-                    };
-                    remover.class = "remover";
-                    remover.textContent = "X";
-                    // add the list item to the ban list
-                    let banlist = document.getElementById("ban-list");
-                    list.appendChild(remover);
-                    banlist.appendChild(list);
-            }
-            }
+                    // create a list element for each person on the ban list
+                    for (str in swag) {
+                        let list = document.createElement('li');
+                        // the label on the list element will be the banned user's name
+                        let name = document.createTextNode(swag[str]);
+                        list.appendChild(name);
+                        // create remove button
+                        let remover = document.createElement('button');
+                        remover.onclick = function () {
+                            /* create an input element with the name "hidden"
+                            and the value will be the name of the banned user attached to 
+                            the list item clicked.
+                            this will be sent back to the server so they can remove
+                            the user from the list*/
+                            let hiddenInput = document.createElement("input");
+                            let textcontent = remover.parentElement.textContent;
+                            let subtext = textcontent.substring(0, textcontent.length - 1);
+                            hiddenInput.name = "hidden";
+                            let formUsers = document.forms["users-form"];
+                            formUsers["hidden"].value = subtext;
+                            hiddenInput.value = subtext;
+                            formUsers.appendChild(hiddenInput);
+                            formUsers.submit();
+                            // the data sent to the server will be "hidden: [banned user]"
+                        };
+                        remover.class = "remover";
+                        remover.textContent = "X";
+                        // add the list item to the ban list
+                        let banlist = document.getElementById("ban-list");
+                        list.appendChild(remover);
+                        banlist.appendChild(list);
+                    }
+                }
             })
     </script>
+</body>
+
 </html>

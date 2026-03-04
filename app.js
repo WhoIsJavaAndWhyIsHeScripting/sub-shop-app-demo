@@ -1,8 +1,12 @@
+/* Main server file */
+
 // for node instance creation
 const express = require('express');
 
 // the node instance
 const app = express();
+// use express middleware for parsing url POST requests
+app.use(express.urlencoded({ extended: true }));
 
 // for file reading
 const fs = require('fs');
@@ -24,6 +28,8 @@ const session = require('cookie-session');
 
 // generate a random string of numbers and letters for every session
 const { randomUUID } = require('crypto');
+
+let { admin_router } = require('./admin');
 
 // initialize session
 app.use(session({
@@ -87,6 +93,14 @@ function getClosedReason() {
 app.use(express.static(path.join(__dirname, 'assets')));
 // if adding more paths here, never let __dirname be served directly! 
 
+// serve admin pages
+app.use("/admin", admin_router);
+
+// redirect to login for backward compatability
+app.get('/admin-home', (req, res) => {
+  res.redirect("/admin/log-in");
+});
+
 // function for sending a file to a path
 // route - the actual path on the server/the subpage on the internet (subshop-dev.uaschools.io/route)
 // path - the path for the file that will be sent
@@ -118,6 +132,31 @@ app.get('/order-limit', (req, res) => {
 // route for home page
 loadPage('/', path.join(__dirname, 'layout', 'subShopFront.html'), false);
 
+// create route for css boilerplate
+app.get('/boilerplate', (req, res) => {
+  res.sendFile(path.join(__dirname, 'layout', 'styles', 'boilerplate.css'));
+});
+
+// create route for css boilerplate for main pages
+app.get('/main-pages-css', (req, res) => {
+  res.sendFile(path.join(__dirname, 'layout', 'styles', 'main-pages.css'));
+});
+
+// route for functions.js
+app.get('/functions-js', (req, res) => {
+  res.sendFile(path.join(__dirname, 'functions.js'));
+});
+
+// route for order-scripts.js
+app.get('/order-scripts-js', (req, res) => {
+  res.sendFile(path.join(__dirname, 'layout', 'order-scripts.js'));
+});
+
+// create route for out of stock file
+app.get('/out-of-stock', (req, res) => {
+  res.sendFile(path.join(__dirname, 'data', 'admin', 'out-of-stock.txt'));
+});
+
 // route for order page
 app.get('/order', (req, res) => {
   updateOpenStatus();
@@ -133,99 +172,6 @@ loadPage('/credits', path.join(__dirname, 'layout', 'credits-page.html'), false)
 
 // route for contact page
 loadPage('/contact-us', path.join(__dirname, 'layout', 'contact-us.html'), false);
-
-// route for log in page
-loadPage('/log-in', path.join(__dirname, 'layout', 'admin-page', 'log-in', 'log-in.html'), false);
-
-loadPage('/admin-users-script', path.join(__dirname, 'layout', 'admin-page', 'admin-users', 'admin-users-script.js'));
-
-// create request body thing i don't really know how this works
-app.use(express.urlencoded({ extended: true }));
-
-// check if the password entered was correct and log in user if so
-app.post('/check-password', (req, res) => {
-  if (req.body.password == "PASSWORD_REMOVED") {
-    req.session.user = { username: "admin" };
-  }
-  res.redirect('/admin-home');
-})
-// function for pages with admin verification
-// path - the path name
-// file - the folder name
-function loadAdminPage(filePath, file) {
-  app.get('/' + filePath, (req, res) => {
-    if (req.session.user != undefined) {
-      if (req.session.user.username == "admin") {
-        res.sendFile(path.join(__dirname, 'layout', 'admin-page', file, file + ".html"));
-      } else {
-        res.redirect('/log-in');
-      }
-    } else {
-      res.redirect('/log-in');
-    }
-  })
-}
-
-// Similar to load admin page, but it does not add any prefixes or suffixes
-function loadAdminResource(filePath, file) {
-  app.get('/' + filePath, (req, res) => {
-    if (req.session.user != undefined) {
-      if (req.session.user.username == "admin") {
-        res.sendFile(path.join(__dirname, file));
-      } else {
-        res.redirect('/log-in');
-      }
-    } else {
-      res.redirect('/log-in');
-    }
-  })
-}
-
-// Route for admin home
-loadAdminPage('admin-home', 'admin-home');
-
-// route for ingredients page
-loadAdminPage('ingredients', 'admin-ingredients');
-
-// route for users page
-loadAdminPage('users', 'admin-users');
-// change the order limit from the users page
-app.post('/change-order-limit', (req, res) => {
-  orderLimit = req.body.limit;
-  console.log(orderLimit);
-  res.redirect('/users');
-})
-
-// create route for css boilerplate
-app.get('/boilerplate', (req, res) => {
-  res.sendFile(path.join(__dirname, 'layout', 'styles', 'boilerplate.css'));
-});
-
-// create route for css boilerplate for main pages
-app.get('/main-pages-css', (req, res) => {
-  res.sendFile(path.join(__dirname, 'layout', 'styles', 'main-pages.css'));
-});
-
-// create route for out of stock file
-app.get('/out-of-stock', (req, res) => {
-  res.sendFile(path.join(__dirname, 'data', 'admin', 'out-of-stock.txt'));
-});
-
-// route for order-scripts.js
-app.get('/order-scripts-js', (req, res) => {
-  res.sendFile(path.join(__dirname, 'layout', 'order-scripts.js'));
-});
-
-loadAdminResource('ban-list.txt', "data/admin/ban-list.txt");
-loadAdminResource('out-of-stock.txt', "data/admin/out-of-stock.txt");
-loadAdminResource('admin-home-styles.css', "layout/admin-page/admin-home/admin-home-styles.css");
-loadAdminResource('admin-ingredients-styles.css', "layout/admin-page/admin-ingredients/admin-ingredients-styles.css");
-loadAdminResource('admin-users-styles.css', "layout/admin-page/admin-users/admin-users-styles.css");
-
-// route for functions.js
-app.get('/functions-js', (req, res) => {
-  res.sendFile(path.join(__dirname, 'functions.js'));
-});
 
 // handle post request when ingredients form submitted
 app.post('/submit', (req, res) => {
@@ -248,17 +194,27 @@ app.post('/submit', (req, res) => {
   })
 
   // go back to ingredients page
-  res.redirect("/ingredients");
+  res.redirect("/admin/ingredients");
 });
+
 // handle post request when open/close switch toggled
 app.post('/open-close', (req, res) => {
   openToday = !openToday;
-  res.redirect('/users');
+  res.redirect('/admin/users');
 });
+
 // get open status
 app.get('/open-close', (req, res) => {
   res.json({ open: openToday.toString() });
 })
+
+// change the order limit from the users page
+app.post('/change-order-limit', (req, res) => {
+  orderLimit = req.body.limit;
+  console.log(orderLimit);
+  res.redirect('/admin/users');
+})
+
 // handle post request when users form submitted
 app.post('/submit2', (req, res) => {
   // handle when a user is ADDED to the list
@@ -314,7 +270,7 @@ app.post('/submit2', (req, res) => {
     });
   }
   // redirect back to the users page
-  res.redirect('/users');
+  res.redirect('/admin/users');
 });
 
 
