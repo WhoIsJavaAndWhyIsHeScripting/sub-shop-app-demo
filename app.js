@@ -106,11 +106,6 @@ app.get('/closed-reason', (req, res) => {
   res.json({closedReason : reason});
 })
 
-app.post('/change-order-limit', (req, res) => {
-  orderLimit = req.body.limit;
-  console.log(orderLimit);
-})
-
 app.get('/order-limit', (req, res) => {
   res.send(orderLimit);
 })
@@ -173,6 +168,11 @@ loadAdminPage('ingredients', 'admin-ingredients');
 
 // route for users page
 loadAdminPage('users', 'admin-users');
+// change the order limit from the users page
+app.post('/change-order-limit', (req, res) => {
+  orderLimit = req.body.limit;
+  console.log(orderLimit);
+})
 
 // create route for css boilerplate
 app.get('/boilerplate', (req, res) => {
