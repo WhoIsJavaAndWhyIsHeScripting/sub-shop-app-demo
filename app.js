@@ -107,7 +107,7 @@ app.get('/closed-reason', (req, res) => {
 })
 
 app.post('/change-order-limit', (req, res) => {
-  orderLimit = parseInt(req.body["order-limit"]);
+  orderLimit = parseInt(req.body.limit);
   console.log(orderLimit);
 })
 
