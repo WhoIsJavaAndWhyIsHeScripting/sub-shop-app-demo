@@ -14,10 +14,10 @@ const path = require('path');
 const http = require('http');
 
 // https credentials, uses symbolic links to point to the following credential files
-const credentials = {
-  key: fs.readFileSync('privkey.pem', 'utf-8'),
-  cert: fs.readFileSync('fullchain.pem', 'utf-8'),
-};
+// const credentials = {
+//   key: fs.readFileSync('privkey.pem', 'utf-8'),
+//   cert: fs.readFileSync('fullchain.pem', 'utf-8'),
+// };
 
 // creates a session that stores the user email
 const session = require('cookie-session');
@@ -33,9 +33,9 @@ app.use(session({
 }))
 
 // for verifying Google ID_TOKENs
-const { OAuth2Client } = require('google-auth-library');
-const CLIENT_ID = "702804890232-pj9j2siaa55563pild655ev156i36un5.apps.googleusercontent.com";
-const client = new OAuth2Client(CLIENT_ID);
+// const { OAuth2Client } = require('google-auth-library');
+// const CLIENT_ID = "702804890232-pj9j2siaa55563pild655ev156i36un5.apps.googleusercontent.com";
+// const client = new OAuth2Client(CLIENT_ID);
 
 // this variable controls whether you can access the order page
 var isOpen = false;
@@ -53,14 +53,14 @@ function updateOpenStatus() {
   var minute = currentTime.getMinutes();
   hour += minute / 60;
   // count the number of lines sub-orders.csv has
-  var data = fs.readFileSync(path.join(__dirname, "layout", "data", "sub-orders.csv"));
+  var data = fs.readFileSync(path.join(__dirname, "data", "sub-orders.csv"));
   var newLineMatch = data.toString().match(/\n/g);
   if (newLineMatch != null) {
     lines = newLineMatch.length;
   } else {
     lines = 0;
   }
-  if ((hour >= 7.5 && hour < 9) && (lines < orderLimit) && openToday) {
+  if ((hour >= 7.5 && hour < 21) && (lines < orderLimit) && openToday) {
     isOpen = true;
   } else {
     isOpen = false;
@@ -82,10 +82,8 @@ function getClosedReason() {
     return "Unknown reason. This may be due to an error. If you are seeing this message, you can fill out the feedback form on the contacts page to report the issue.";
   }
 }
+
 // Serve static files from the 'public' folder
-app.use(express.static(path.join(__dirname, 'layout', 'admin-page', 'admin-ingredients')));
-app.use(express.static(path.join(__dirname, 'layout', 'admin-page', 'admin-home')));
-app.use(express.static(path.join(__dirname, 'layout', 'admin-page', 'admin-users')));
 app.use(express.static(path.join(__dirname, 'assets')));
 // if adding more paths here, never let __dirname be served directly! 
 
@@ -116,6 +114,7 @@ app.get('/closed-reason', (req, res) => {
 app.get('/order-limit', (req, res) => {
   res.json({ limit: orderLimit });
 })
+
 // route for home page
 loadPage('/', path.join(__dirname, 'layout', 'subShopFront.html'), false);
 
@@ -166,6 +165,22 @@ function loadAdminPage(filePath, file) {
     }
   })
 }
+
+// Similar to load admin page, but it does not add any prefixes or suffixes
+function loadAdminResource(filePath, file) {
+  app.get('/' + filePath, (req, res) => {
+    if (req.session.user != undefined) {
+      if (req.session.user.username == "admin") {
+        res.sendFile(path.join(__dirname, file));
+      } else {
+        res.redirect('/log-in');
+      }
+    } else {
+      res.redirect('/log-in');
+    }
+  })
+}
+
 // Route for admin home
 loadAdminPage('admin-home', 'admin-home');
 
@@ -193,13 +208,19 @@ app.get('/main-pages-css', (req, res) => {
 
 // create route for out of stock file
 app.get('/out-of-stock', (req, res) => {
-  res.sendFile(path.join(__dirname, 'layout', 'admin-page', 'admin-ingredients', 'out-of-stock.txt'));
+  res.sendFile(path.join(__dirname, 'data', 'admin', 'out-of-stock.txt'));
 });
 
 // route for order-scripts.js
 app.get('/order-scripts-js', (req, res) => {
   res.sendFile(path.join(__dirname, 'layout', 'order-scripts.js'));
 });
+
+loadAdminResource('ban-list.txt', "data/admin/ban-list.txt");
+loadAdminResource('out-of-stock.txt', "data/admin/out-of-stock.txt");
+loadAdminResource('admin-home-styles.css', "layout/admin-page/admin-home/admin-home-styles.css");
+loadAdminResource('admin-ingredients-styles.css', "layout/admin-page/admin-ingredients/admin-ingredients-styles.css");
+loadAdminResource('admin-users-styles.css', "layout/admin-page/admin-users/admin-users-styles.css");
 
 // route for functions.js
 app.get('/functions-js', (req, res) => {
@@ -455,6 +476,6 @@ app.use((req, res) => {
 
 // check if a value is undefined, then remove it
 // Start the server
-http.createServer(credentials, app).listen(3000, "localhost", () => {
+http.createServer(app).listen(3000, "localhost", () => {
   console.log('Server listening on port 3000');
 });
