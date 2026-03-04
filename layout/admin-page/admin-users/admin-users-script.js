@@ -22,9 +22,9 @@ async function updateCloseButton() {
 }
 
 async function getCurrentLimit() {
-    let data = await fetch('/order-limit');
-    let limit = data.toString();
-    document.getElementById("order-limit").placeholder = limit;
+    const data = await fetch('/order-limit');
+    const json = await data.json();
+    document.getElementById("order-limit").placeholder = json.limit;
 }
 // remove a list item
 function remove(e) {

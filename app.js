@@ -107,7 +107,7 @@ app.get('/closed-reason', (req, res) => {
 })
 
 app.get('/order-limit', (req, res) => {
-  res.send(orderLimit);
+  res.json({limit : orderLimit});
 })
 // route for home page
 loadPage('/', path.join(__dirname, 'layout', 'subShopFront.html'), false);
