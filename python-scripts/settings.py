@@ -5,6 +5,7 @@ from logging import DEBUG, INFO, WARNING, ERROR, CRITICAL  # noqa: F401
 # General Specifications
 CSV_PATH = "../data/sub-orders.csv"
 PDF_PATH = "../data/orders.pdf"
+HISTORY_FILE = "../data/history.csv"
 # CSV_PATH = "./orders.csv"
 SORT_CSV = True
 

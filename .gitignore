@@ -10,3 +10,5 @@ python-scripts/__pycache__/
 .vscode/
 .idea/
 log.txt
+data/history.csv
+data/orders.pdf

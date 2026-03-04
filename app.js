@@ -14,10 +14,10 @@ const path = require('path');
 const http = require('http');
 
 // https credentials, uses symbolic links to point to the following credential files
-// const credentials = {
-//   key: fs.readFileSync('privkey.pem', 'utf-8'),
-//   cert: fs.readFileSync('fullchain.pem', 'utf-8'),
-// };
+const credentials = {
+  key: fs.readFileSync('privkey.pem', 'utf-8'),
+  cert: fs.readFileSync('fullchain.pem', 'utf-8'),
+};
 
 // creates a session that stores the user email
 const session = require('cookie-session');
@@ -33,9 +33,9 @@ app.use(session({
 }))
 
 // for verifying Google ID_TOKENs
-// const { OAuth2Client } = require('google-auth-library');
-// const CLIENT_ID = "702804890232-pj9j2siaa55563pild655ev156i36un5.apps.googleusercontent.com";
-// const client = new OAuth2Client(CLIENT_ID);
+const { OAuth2Client } = require('google-auth-library');
+const CLIENT_ID = "702804890232-pj9j2siaa55563pild655ev156i36un5.apps.googleusercontent.com";
+const client = new OAuth2Client(CLIENT_ID);
 
 // this variable controls whether you can access the order page
 var isOpen = false;
@@ -476,6 +476,6 @@ app.use((req, res) => {
 
 // check if a value is undefined, then remove it
 // Start the server
-http.createServer(app).listen(3000, "localhost", () => {
+http.createServer(credentials, app).listen(3000, "localhost", () => {
   console.log('Server listening on port 3000');
 });

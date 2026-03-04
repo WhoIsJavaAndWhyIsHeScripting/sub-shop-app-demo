@@ -110,7 +110,7 @@ if __name__ == "__main__":  # i.e. if not imported as a module
             logging.debug("Emailed PDF.")
 
         # Saves the number of orders to a CSV file.
-        with open("history.csv", "a") as f:
+        with open(settings.HISTORY_FILE, "a") as f:
             f.write(f"{datetime.date.today()}, {order_count}\n")
 
         if settings.CLEAR_CSV:
