@@ -14,11 +14,9 @@ deploy-job:
     - '[ -d "/srv/SubShopApp/.git" ] && (cd /srv/SubShopApp && git pull) || (git clone https://oauth2:$GITLAB_WEB_TOKEN@gitlab-student.uaschools.org/compsci-club/subshopapp.git SubShopApp)'
     - cd /srv/SubShopApp
     - ln -sf /etc/letsencrypt/live/subshop-dev.uaschools.io/fullchain.pem fullchain.pem
-    - ln -sf /etc/letsencrypt/live/subshop-dev.uaschools.io/privkey.pem 
+    - ln -sf /etc/letsencrypt/live/subshop-dev.uaschools.io/privkey.pem
     - /usr/bin/npm install
-    - chmod 777 ./layout/sub-orders.csv
-    - chmod 777 ./layout/admin-page/admin-ingredients/out-of-stock.txt
-    - chmod 777 ./layout/admin-page/admin-users/ban-list.txt
+    - chmod 666 -R ./data
     - echo "Application successfully deployed."
     - sudo /usr/bin/systemctl restart subshopapp.service
   rules: 
