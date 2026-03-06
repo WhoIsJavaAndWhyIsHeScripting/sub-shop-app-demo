@@ -1,11 +1,15 @@
+/* Main server file */
+
 // for node instance creation
 const express = require('express');
 
-// for file reading
-const fs = require('fs');
-
 // the node instance
 const app = express();
+// use express middleware for parsing url POST requests
+app.use(express.urlencoded({ extended: true }));
+
+// for file reading
+const fs = require('fs');
 
 // for file paths
 const path = require('path');
@@ -25,11 +29,14 @@ const session = require('cookie-session');
 // generate a random string of numbers and letters for every session
 const { randomUUID } = require('crypto');
 
+// import router from admin.js
+let { admin_router } = require('./admin');
+
 // initialize session
 app.use(session({
   name: 'session',
   secret: randomUUID(),
-  maxAge: 24*60*60*1000 // session expires after 24 hrs
+  maxAge: 24 * 60 * 60 * 1000 // session expires after 24 hrs
 }))
 
 // for verifying Google ID_TOKENs
@@ -45,6 +52,7 @@ var openToday = true;
 var lines = 0;
 // order limit for the day
 var orderLimit = 10;
+
 // check the server time and open/close the server at given times
 function updateOpenStatus() {
   var currentTime = new Date();
@@ -52,35 +60,68 @@ function updateOpenStatus() {
   var minute = currentTime.getMinutes();
   hour += minute / 60;
   // count the number of lines sub-orders.csv has
-    var data = fs.readFileSync(path.join(__dirname, 'layout', 'sub-orders.csv'));
-    var newLineMatch = data.toString().match(/\n/g);
-    if (newLineMatch != null) {
-      lines = newLineMatch.length;
-    } else {
-      lines = 0;
-    }
-    if ((hour >= 7.5 && hour < 9) && (lines < orderLimit) && openToday) {
-      isOpen = true;
-    } else {
-      isOpen = false;
-    }
+  var data = fs.readFileSync(path.join(__dirname, "data", "sub-orders.csv"));
+  var newLineMatch = data.toString().match(/\n/g);
+  if (newLineMatch != null) {
+    lines = newLineMatch.length;
+  } else {
+    lines = 0;
   }
+  if ((hour >= 7.5 && hour < 9) && (lines < orderLimit) && openToday) {
+    isOpen = true;
+  } else {
+    isOpen = false;
+  }
+}
+
 // gets the reason the sub shop is closed
 // returns a string of the reason the shop is closed
 function getClosedReason() {
   var time = new Date();
-  var formattedTime = time.getHours() + time.getMinutes()/60;
-  if (formattedTime < 7.5 || formattedTime > 9) return "You are attempting to order outside the time window (7:30-9:00 AM). Come back tomorrow!";
-  else if (!openToday) return "The staff have chosen to close the sub shop for the day (this is usually due to staffing issues). Try again tomorrow!";
-  else if (lines >= orderLimit) return "The order limit has been reached for the day. Try coming back earlier tomorrow!";
-  else return "Unknown reason. This may be due to an error. If you are seeing this message, you can fill out the feedback form on the contacts page to report the issue.";
+  var formattedTime = time.getHours() + time.getMinutes() / 60;
+  if (formattedTime < 7.5 || formattedTime > 9) {
+    return "You are attempting to order outside the time window (7:30-9:00 AM). Come back tomorrow!";
+  } else if (!openToday) {
+    return "The staff have chosen to close the sub shop for the day (this is usually due to staffing issues). Try again tomorrow!";
+  } else if (lines >= orderLimit) {
+    return "The order limit has been reached for the day. Try coming back earlier tomorrow!";
+  } else {
+    return "Unknown reason. This may be due to an error. If you are seeing this message, you can fill out the feedback form on the contacts page to report the issue.";
+  }
 }
+
 // Serve static files from the 'public' folder
-app.use(express.static(path.join(__dirname, 'layout', 'admin-page', 'admin-ingredients')));
-app.use(express.static(path.join(__dirname, 'layout', 'admin-page', 'admin-home')));
-app.use(express.static(path.join(__dirname, 'layout', 'admin-page', 'admin-users')));
 app.use(express.static(path.join(__dirname, 'assets')));
 // if adding more paths here, never let __dirname be served directly! 
+
+// serve admin pages
+app.use("/admin", admin_router);
+
+// redirect to login for backward compatability
+app.get('/admin-home', (req, res) => {
+  res.redirect("/admin/log-in");
+});
+
+// The following three routes work with global variables and therefore are here
+//  instead of in admin.js.
+
+// handle post request when open/close switch toggled
+app.post('/open-close', (req, res) => {
+  openToday = !openToday;
+  res.redirect('/admin/users');
+});
+
+// get open status
+app.get('/open-close', (req, res) => {
+  res.json({ open: openToday.toString() });
+})
+
+// change the order limit from the users page
+app.post('/change-order-limit', (req, res) => {
+  orderLimit = req.body.limit;
+  console.log(orderLimit);
+  res.redirect('/admin/users');
+})
 
 // function for sending a file to a path
 // route - the actual path on the server/the subpage on the internet (subshop-dev.uaschools.io/route)
@@ -103,14 +144,40 @@ function loadPage(route, sendPath, verify) {
 
 app.get('/closed-reason', (req, res) => {
   let reason = getClosedReason();
-  res.json({closedReason : reason});
+  res.json({ closedReason: reason });
 })
 
 app.get('/order-limit', (req, res) => {
-  res.json({limit : orderLimit});
+  res.json({ limit: orderLimit });
 })
+
 // route for home page
 loadPage('/', path.join(__dirname, 'layout', 'subShopFront.html'), false);
+
+// create route for css boilerplate
+app.get('/boilerplate', (req, res) => {
+  res.sendFile(path.join(__dirname, 'layout', 'styles', 'boilerplate.css'));
+});
+
+// create route for css boilerplate for main pages
+app.get('/main-pages-css', (req, res) => {
+  res.sendFile(path.join(__dirname, 'layout', 'styles', 'main-pages.css'));
+});
+
+// route for functions.js
+app.get('/functions-js', (req, res) => {
+  res.sendFile(path.join(__dirname, 'functions.js'));
+});
+
+// route for order-scripts.js
+app.get('/order-scripts-js', (req, res) => {
+  res.sendFile(path.join(__dirname, 'layout', 'order-scripts.js'));
+});
+
+// create route for out of stock file
+app.get('/out-of-stock', (req, res) => {
+  res.sendFile(path.join(__dirname, 'data', 'admin', 'out-of-stock.txt'));
+});
 
 // route for order page
 app.get('/order', (req, res) => {
@@ -127,168 +194,6 @@ loadPage('/credits', path.join(__dirname, 'layout', 'credits-page.html'), false)
 
 // route for contact page
 loadPage('/contact-us', path.join(__dirname, 'layout', 'contact-us.html'), false);
-
-// route for log in page
-loadPage('/log-in', path.join(__dirname, 'layout', 'admin-page', 'log-in', 'log-in.html'), false);
-
-loadPage('/admin-users-script', path.join(__dirname, 'layout', 'admin-page', 'admin-users', 'admin-users-script.js'));
-
-// create request body thing i don't really know how this works
-app.use(express.urlencoded({ extended: true }));
-
-// check if the password entered was correct and log in user if so
-app.post('/check-password', (req, res) => {
-  if (req.body.password == "PASSWORD_REMOVED") {
-    req.session.user = { username: "admin" };
-  }
-  res.redirect('/admin-home');
-})
-// function for pages with admin verification
-// path - the path name
-// file - the folder name
-function loadAdminPage(filePath, file) {
-  app.get('/' + filePath, (req, res) => {
-    if (req.session.user != undefined) {
-      if (req.session.user.username == "admin") {
-        res.sendFile(path.join(__dirname, 'layout', 'admin-page', file, file + ".html"));
-      } else {
-        res.redirect('/log-in');
-      }
-    } else {
-      res.redirect('/log-in');
-    }
-  })
-}
-// Route for admin home
-loadAdminPage('admin-home', 'admin-home');
-
-// route for ingredients page
-loadAdminPage('ingredients', 'admin-ingredients');
-
-// route for users page
-loadAdminPage('users', 'admin-users');
-// change the order limit from the users page
-app.post('/change-order-limit', (req, res) => {
-  orderLimit = req.body.limit;
-  console.log(orderLimit);
-  res.redirect('/users');
-})
-
-// create route for css boilerplate
-app.get('/boilerplate', (req, res) => {
-  res.sendFile(path.join(__dirname, 'layout', 'styles', 'boilerplate.css'));
-});
-
-// create route for css boilerplate for main pages
-app.get('/main-pages-css', (req, res) => {
-  res.sendFile(path.join(__dirname, 'layout', 'styles', 'main-pages.css'));
-});
-
-// create route for out of stock file
-app.get('/out-of-stock', (req, res) => {
-  res.sendFile(path.join(__dirname, 'layout', 'admin-page', 'admin-ingredients', 'out-of-stock.txt'));
-});
-
-// route for order-scripts.js
-app.get('/order-scripts-js', (req, res) => {
-  res.sendFile(path.join(__dirname, 'layout', 'order-scripts.js'));
-});
-
-// route for functions.js
-app.get('/functions-js', (req, res) => {
-  res.sendFile(path.join(__dirname, 'functions.js'));
-});
-
-// handle post request when ingredients form submitted
-app.post('/submit', (req, res) => {
-  // get the values of the checked checkboxes
-  let ingredients = req.body.ingredients;
-  // turn it into a comma separated list
-  let ingredientsText = "";
-  if (ingredients != undefined) {
-    ingredientsText += ingredients[0];
-    for (let i = 1; i < ingredients.length; i++) {
-      ingredientsText += "," + ingredients[i];
-    }
-  }
-  // replace whatever is in out-of-stock.txt with the new comma separated list
-  fs.writeFile(path.join(__dirname, "layout", "admin-page", "admin-ingredients", "out-of-stock.txt"), ingredientsText, (err) => {
-    if (err) {
-      console.log(err);
-    }
-    console.log("yippee");
-  })
-
-  // go back to ingredients page
-  res.redirect("/ingredients");
-});
-// handle post request when open/close switch toggled
-app.post('/open-close', (req, res) => {
-  openToday = !openToday;
-  res.redirect('/users');
-});
-// get open status
-app.get('/open-close', (req, res) => {
-  res.json({open: openToday.toString()});
-})
-// handle post request when users form submitted
-app.post('/submit2', (req, res) => {
-  // handle when a user is ADDED to the list
-  var bannedUser = req.body.banned;
-  // append the data to the file with a comma before if it's not empty
-  if (bannedUser != null) {
-    if (fs.statSync(path.join(__dirname, "layout", "admin-page", "admin-users", "ban-list.txt")).size != 0) {
-      fs.appendFile(path.join(__dirname, "layout", "admin-page", "admin-users", "ban-list.txt"), "," + bannedUser, (err) => {
-        if (err) {
-          throw err;
-        }
-      })
-    } else {
-      // otherwise just append the data
-      fs.appendFile(path.join(__dirname, "layout", "admin-page", "admin-users", "ban-list.txt"), bannedUser, (err) => {
-        if (err) {
-          throw err;
-        }
-      });
-    }
-  }
-  // handle when a user should be REMOVED from the list
-  var toBeRemoved = req.body.hidden;
-
-  if (toBeRemoved != null) {
-    // read the banned users list and split by commas
-    fs.readFile(path.join(__dirname, "layout", "admin-page", "admin-users", "ban-list.txt"), (err, data) => {
-      var commaSplit = data.toString().split(",");
-      // check which user name matches the user to be removed
-      // and remove it from the list
-      for (guy in commaSplit) {
-        if (commaSplit[guy] == req.body.hidden) {
-          commaSplit.splice(guy, 1);
-        }
-      }
-      // recreate the file with the user removed based on length
-      if (commaSplit.length == 0) {
-        // if there's no users left, just make the file empty
-        fs.writeFileSync(path.join(__dirname, "layout", "admin-page", "admin-users", "ban-list.txt"), "");
-      } else if (commaSplit.length == 1) {
-        // if there's one user left, just write their name
-        fs.writeFileSync(path.join(__dirname, "layout", "admin-page", "admin-users", "ban-list.txt"), commaSplit[0]);
-      } else if (commaSplit.length > 1) {
-        // if there's 2+ users left, write the first user then append all the other users with commas before
-        fs.writeFileSync(path.join(__dirname, "layout", "admin-page", "admin-users", "ban-list.txt"), commaSplit[0]);
-        // do not add empty names
-        for (let i = 1; i < commaSplit.length; i++) {
-          if (commaSplit[i] != "" && commaSplit[i] != undefined) {
-            fs.appendFileSync(path.join(__dirname, "layout", "admin-page", "admin-users", "ban-list.txt"), "," + commaSplit[i]);
-          }
-        }
-      }
-    });
-  }
-  // redirect back to the users page
-  res.redirect('/users');
-});
-
 
 //redirect to order page after successful Google authentication
 app.post('/order', (req, res) => {
@@ -398,9 +303,11 @@ app.post('/order-submit', (req, res) => {
   base += bread;
   arrayize[2] = base;
   if ("" + name != "undefined") {
-    fs.appendFile(path.join(__dirname, "layout", "sub-orders.csv"), `\n${arrayize[0]};${arrayize[1]};${arrayize[2]};${arrayize[3]};${arrayize[4]};${arrayize[5]};${arrayize[6]}`, () => {
-      res.redirect('/');
-    });
+    fs.appendFile(
+      path.join(__dirname, "data", "sub-orders.csv"),
+      `\n${arrayize[0]};${arrayize[1]};${arrayize[2]};${arrayize[3]};${arrayize[4]};${arrayize[5]};${arrayize[6]}`, () => {
+        res.redirect('/');
+      });
   } else {
     res.send("ERROR: Order denied. You attempted to send an order without an order name. Please try again.\n\nIf you believe this is an error, submit a bug report (linked on the contacts page). If you're trying to hack us... go away >:(");
   }
@@ -409,7 +316,7 @@ app.post('/order-submit', (req, res) => {
 app.get('/check-user', async (req, res) => {
   let username = req.session.name;
   try {
-    let banned_data = await fs.promises.readFile(path.join(__dirname, "layout", "admin-page", "admin-users", "ban-list.txt"));
+    let banned_data = await fs.promises.readFile(path.join(__dirname, "data", "admin", "ban-list.txt"));
     let banned = banned_data.toString().split(",");
     let is_banned = false;
     for (const guy of banned) {
@@ -418,7 +325,7 @@ app.get('/check-user', async (req, res) => {
       }
     }
 
-    let order_data = await fs.promises.readFile(path.join(__dirname, "layout", "sub-orders.csv"));
+    let order_data = await fs.promises.readFile(path.join(__dirname, "data", "sub-orders.csv"));
     let orders = order_data.toString().split("\n");
     let has_ordered = false
     for (const item of orders) {
