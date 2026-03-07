@@ -20,9 +20,10 @@ For now, our data (orders as well as admin settings) is stored in plain text in 
 
 ## File Structure
 
-- layout - the folder for all of our frontend stuff. This includes HTML, CSS and frontend JS files. Our 3 main pages visible to users are in the top level folder. The file sub-orders.csv contains the actual orders (the copy on Gitlab should only have the headers).
+- layout - the folder for all our frontend stuff. This includes HTML, CSS and frontend JS files. Our 3 main pages visible to users are in the top level folder. The file sub-orders.csv contains the actual orders (the copy on Gitlab should only have the headers).
   - admin-page - the folder for the three admin pages.
   - styles - this is where we put any CSS that isn't specific to one page.
+- data - this is were live data like the actual sub orders are saved -- the files in the repository will be empty or only have a header
 - assets - this is where we keep our images.  
 - python-scripts - this is where all our python is contained, which handles turning the CSV order data into a PDF and emailing it.  
 - app.js - this is where our server is. This is where routing and some form validation are handled.
@@ -31,11 +32,11 @@ For now, our data (orders as well as admin settings) is stored in plain text in 
 
 ## Resources
 
-- [https://developer.mozilla.org/en-US/](https://developer.mozilla.org/en-US/) fantastic tutorials for javascript, node.js, and basically anything frontend related.
+- [https://developer.mozilla.org/en-US/](https://developer.mozilla.org/en-US/) fantastic tutorials for Javascript, Node.js, and basically anything frontend related.
 - [https://ww.w3schools.com/](https://www.w3schools.com/) good tutorials for HTML, CSS and Javascript.
 Stack Overflow - Great website if you're stuck. If you have a bug, someone else here has probably already had the same problem and knows how to fix it.
 Google - this will literally be your most useful resource as a developer. Paste your error messages in here. Search up dumb questions about your language of choice. Try to find a function that does something specific. Literally almost ANY question you have can be answered online. IT'S NOT CHEATING. USE IT.  
-- [https://docs.python.org/](https://docs.python.org/) Probably not the best place to learn Python, but if you need to reference a function or module's documentation, this is the place to go  (for the package that makes the PDFs, see [https://docs.reportlab.com/reportlab/userguide/ch1_intro/](https://docs.reportlab.com/reportlab/userguide/ch1_intro/)).
+- [https://docs.python.org/](https://docs.python.org/) Probably not the best place to learn Python, but if you need to reference a function or module's documentation, this is the place to go (for the package that makes the PDFs, see [https://docs.reportlab.com/reportlab/userguide/ch1_intro/](https://docs.reportlab.com/reportlab/userguide/ch1_intro/)).
 
 ## Contributing
 

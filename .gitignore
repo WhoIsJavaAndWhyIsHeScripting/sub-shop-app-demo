@@ -1,14 +1,12 @@
 .DS_Store
+.vscode/
+.idea/
 node_modules/
 .venv
 *.pem
-layout/sub-orders.csv
-python-scripts/history.csv
 python-scripts/orders.pdf
 python-scripts/__pycache__/
 *.pyc
-.vscode/
-.idea/
 log.txt
 data/history.csv
 data/orders.pdf

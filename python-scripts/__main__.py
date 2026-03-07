@@ -8,6 +8,10 @@ THIS SCRIPT NEEDS TO BE RUN FROM ITS CONTAINING DIRECTORY!
 
 Written March 2025."""
 
+# Standard library modules
+import datetime
+import logging
+
 # Various constants and settings for the scripts
 import settings
 
@@ -16,9 +20,6 @@ import sort_csv
 import csv_to_pdf
 import email_pdf
 
-# Standard library modules
-import datetime
-import logging
 
 if __name__ == "__main__":  # i.e. if not imported as a module
     if settings.LOG_FILE:
@@ -51,7 +52,6 @@ if __name__ == "__main__":  # i.e. if not imported as a module
             logging.error("Exception occurred sorting csv.")
             logging.error(e)
             errors = True
-            # traceback.print_exc(file=settings.LOG_FILE)
         else:
             logging.debug("Sorted CSV file.")
 
@@ -70,7 +70,6 @@ if __name__ == "__main__":  # i.e. if not imported as a module
             logging.error("Exception occurred emailing no orders message.")
             logging.error(e)
             errors = True
-            # traceback.print_exc(file=settings.LOG_FILE)
         else:
             logging.debug("Emailed no orders message.")
 
@@ -89,7 +88,6 @@ if __name__ == "__main__":  # i.e. if not imported as a module
             logging.error("Exception occurred making pdf.")
             logging.error(e)
             errors = True
-            # traceback.print_exc(file=settings.LOG_FILE)
         else:
             logging.debug("Made PDF.")
 
@@ -105,7 +103,6 @@ if __name__ == "__main__":  # i.e. if not imported as a module
             logging.error("Exception occurred emailing pdf.")
             logging.error(e)
             errors = True
-            # traceback.print_exc(file=settings.LOG_FILE)
         else:
             logging.debug("Emailed PDF.")
 
