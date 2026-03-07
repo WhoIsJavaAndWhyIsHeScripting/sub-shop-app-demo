@@ -11,7 +11,8 @@
     <!--add in Montserrat font, font used on the uaschools website-->
     <link rel="preconnect" href="https://fsonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
     <script src="/order-scripts-js"></script>
     <script src="https://accounts.google.com/gsi/client" async defer onload="googleLibraryLoaded()"></script>
     <style>
@@ -30,6 +31,7 @@
         elm.style.display = "none";
         document.addEventListener("DOMContentLoaded", function (event) { elm.style.display = "block"; });
     </script>
+
     <header>
         <div class="headerbar"><a href="/"><img src="bearbiteslogo.png">Bear Bites</a></div>
     </header>
@@ -195,7 +197,8 @@
                             <fieldset>
                                 <legend>Condiment Options</legend>
                                 <label>
-                                    <input type="checkbox" id="italian-dressing" name="condiments" value="Italian Dressing"> Italian Dressing
+                                    <input type="checkbox" id="italian-dressing" name="condiments"
+                                        value="Italian Dressing"> Italian Dressing
                                 </label>
                                 <label>
                                     <input type="checkbox" id="ranch" name="condiments" value="Ranch"> Ranch
@@ -225,16 +228,17 @@
 
         </form>
     </div>
-</body>
-<script>
-    document.getElementById("form").addEventListener("submit", submitOrder);
-    window.onload = () => {
-        loadOrder();
-        var params = new URLSearchParams(window.location.search);
-        if (params.get("loggedIn") == "true") {
-            responsiveSummary();
+
+    <script>
+        document.getElementById("form").addEventListener("submit", submitOrder);
+        window.onload = () => {
+            loadOrder();
+            var params = new URLSearchParams(window.location.search);
+            if (params.get("loggedIn") == "true") {
+                responsiveSummary();
+            }
         }
-    }
-</script>
+    </script>
+</body>
 
 </html>

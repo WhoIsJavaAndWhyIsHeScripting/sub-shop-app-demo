@@ -2,6 +2,7 @@
 
 from logging import DEBUG, INFO, WARNING, ERROR, CRITICAL  # noqa: F401
 
+
 # General Specifications
 CSV_PATH = "../data/sub-orders.csv"
 PDF_PATH = "../data/orders.pdf"
@@ -16,8 +17,8 @@ SORT_BY = [
     #        extracts last names
     ("NAME", lambda x: x.split()[-1]),
 ]
-BOLD = [field[0] for field in SORT_BY]  # Bold increase font of these values
-SKIP = ["TIME"]  # Skip omits these values on the labels
+BOLD = [field[0] for field in SORT_BY]  # Bold and increase the font of these values
+SKIP = ["TIME"]  # Omits these values on the labels
 
 RECIPIENTS = [
     # Computer Science people
@@ -32,7 +33,6 @@ RECIPIENTS = [
 ]
 
 CLEAR_CSV = True
-# CLEAR_CSV = False
 
 CSV_DELIMITER = ";"
 
@@ -71,7 +71,6 @@ PDF_VARS = {
 # For email_pdf.py
 EMAIL_VARS = {
     "port": 25,
-    # "server_address" : "smtp.uaschools.org",
-    "server_address": "localhost",  # the server now has an SMTP server on the local machine
+    "server_address": "localhost",  # the server has an SMTP server on the local machine
     "sender_email": "subshopapp@subshop-dev.uaschools.io",
 }

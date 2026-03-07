@@ -18,7 +18,7 @@ async function updateCloseButton() {
     } else {
         alert(status);
     }
-    
+
 }
 
 async function getCurrentLimit() {
@@ -26,6 +26,7 @@ async function getCurrentLimit() {
     const json = await data.json();
     document.getElementById("order-limit").placeholder = json.limit;
 }
+
 // remove a list item
 function remove(e) {
     let hiddenInput = document.createElement("input");

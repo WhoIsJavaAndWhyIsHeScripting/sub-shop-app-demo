@@ -14,6 +14,7 @@ import csv
 import datetime
 import math
 
+# reportlab is the module for generating the PDFs
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
 from reportlab.lib.units import inch
@@ -35,7 +36,7 @@ def main(
 
     Args:
         csv_file : filename of the CSV file from which the PDF shall be made
-        settings : a dictionary of various dimensions for making the PDF (for format, see settings.py)
+        settings : a dictionary of various dimensions for making the PDF (for spec., see settings.py)
         pdf_file : the path to write the PDF to; if None, then "orders.pdf" will be used
         skip : headers (and their values) to omit from the PDF
         bold : headers (and values) to place first and in bold on the PDF
@@ -142,7 +143,7 @@ def main(
     pdf.save()
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":  # i.e. if not imported as a module
     from settings import PDF_VARS, SKIP, BOLD
 
     print(f"Running csv_to_pdf.py at {str(datetime.datetime.now())}.")

@@ -19,7 +19,6 @@ from pathlib import Path
 
 # For smtp
 import smtplib
-# import ssl # No ssl needed for the server's SMTP server.
 
 # For email and attachments
 from email import encoders
@@ -41,10 +40,6 @@ def main(pdf_file, settings, recipients, csv_file="", debug=False):
             attached. Defaults to "", or no csv file.
         debug (bool, optional): For debugging. Defaults to False.
     """
-    # Configuration for the SMTP server. - now uses settings.py
-    # port = 25
-    # server_address = "smtp.uaschools.org"
-    # sender_email = "EMAIL REMOVED"
 
     # Should probably move into settings.py
     date = datetime.date.today().strftime("%B %d, %Y")

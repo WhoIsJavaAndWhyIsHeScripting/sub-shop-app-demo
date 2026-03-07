@@ -11,6 +11,7 @@ const fs = require('fs');
 // for file paths
 const path = require('path');
 
+// client side javascript for the users page 
 router.get('/admin-users-script', (req, res) => {
     res.sendFile(path.join(__dirname, 'layout', 'admin-page', 'admin-users', 'admin-users-script.js'));
 });
@@ -26,11 +27,13 @@ router.post('/check-password', (req, res) => {
         req.session.user = { username: "admin" };
     }
     res.redirect('/admin/home');
-})
+});
 
-// function for pages with admin verification
-// path - the path name
-// file - the folder name
+/** Function for serving pages with admin verification
+ * 
+ * @param path the path name
+ * @param file the folder name
+*/
 function loadAdminPage(filePath, file) {
     router.get('/' + filePath, (req, res) => {
         if (req.session.user != undefined) {
@@ -42,10 +45,11 @@ function loadAdminPage(filePath, file) {
         } else {
             res.redirect('/admin/log-in');
         }
-    })
+    });
 }
 
-// Similar to load admin page, but it does not add any prefixes or suffixes
+
+// Similar to loadAdminPage, but it does not add any prefixes or suffixes
 function loadAdminResource(filePath, file) {
     router.get('/' + filePath, (req, res) => {
         if (req.session.user != undefined) {
@@ -57,10 +61,10 @@ function loadAdminResource(filePath, file) {
         } else {
             res.redirect('admin/log-in');
         }
-    })
+    });
 }
 
-// Route for admin home
+// route for admin home
 loadAdminPage('home', 'admin-home');
 
 // route for ingredients page
@@ -96,8 +100,8 @@ router.post('/submit-ingredients', (req, res) => {
         if (err) {
             console.log(err);
         }
-        console.log("yippee");
-    })
+        // console.log("yippee");
+    });
 
     // go back to ingredients page
     res.redirect("/admin/ingredients");

@@ -1,3 +1,4 @@
+/** A collection of functions for client side form verification and submission. */
 
 // get the file that lists out of stock ingredients
 async function fetchy() {
@@ -181,9 +182,9 @@ async function check_user() {
     data_obj = await data.json();
 
     if (data_obj.has_ordered || data_obj.is_banned) {
-        return false; 
+        return false;
     } else {
-        return true; 
+        return true;
     }
 }
 

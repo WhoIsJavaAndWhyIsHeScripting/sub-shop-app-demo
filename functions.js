@@ -1,3 +1,5 @@
+/** These are functions for Google authentication. They run on the client side. */
+
 function googleLibraryLoaded() {
   googleAuth();
 }
@@ -11,8 +13,8 @@ function googleAuth() {
     login_uri: "https://subshop-dev.uaschools.io/order"
   });
   google.accounts.id.renderButton(
-        document.getElementById("proceed"),
-        { theme: "outline", size: "large" }  // customization attributes
+    document.getElementById("proceed"),
+    { theme: "outline", size: "large" }  // customization attributes
   );
 }
 
@@ -22,10 +24,10 @@ function handleCredentialResponse(response) {
    *   
    * } else {
    */
-  console.log("Google ID token: " + response.credential);
+  // console.log("Google ID token: " + response.credential);
   document.cookie = "email=" + parseJwt(response.credential).email + "; path=/order";
 }
 
-function isValidAccount(userEmail){
-    return userEmail.split('@')[1] === 'uaschools.org';
+function isValidAccount(userEmail) {
+  return userEmail.split('@')[1] === 'uaschools.org';
 }

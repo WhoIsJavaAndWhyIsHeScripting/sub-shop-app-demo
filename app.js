@@ -37,7 +37,7 @@ app.use(session({
   name: 'session',
   secret: randomUUID(),
   maxAge: 24 * 60 * 60 * 1000 // session expires after 24 hrs
-}))
+}));
 
 // for verifying Google ID_TOKENs
 const { OAuth2Client } = require('google-auth-library');
@@ -94,7 +94,7 @@ function getClosedReason() {
 app.use(express.static(path.join(__dirname, 'assets')));
 // if adding more paths here, never let __dirname be served directly! 
 
-// serve admin pages
+// Serve admin pages
 app.use("/admin", admin_router);
 
 // redirect to login for backward compatability
@@ -119,14 +119,19 @@ app.get('/open-close', (req, res) => {
 // change the order limit from the users page
 app.post('/change-order-limit', (req, res) => {
   orderLimit = req.body.limit;
-  console.log(orderLimit);
+  console.log("New order limit: " + orderLimit);
   res.redirect('/admin/users');
 })
 
-// function for sending a file to a path
-// route - the actual path on the server/the subpage on the internet (subshop-dev.uaschools.io/route)
-// path - the path for the file that will be sent
-// verify - boolean, whether you should verify if the shop is open when sending the file
+
+/** 
+ * Function for sending a file to a path. If verify is true and the website is 
+ * closed, layout/sorry.html is sent.
+ * 
+ * @param route the actual path on the server/the subpage on the internet (subshop-dev.uaschools.io/route)
+ * @param path the path for the file that will be sent
+ * @param verify boolean, whether you should verify if the shop is open when sending the file
+*/
 function loadPage(route, sendPath, verify) {
   app.get(route, (req, res) => {
     if (verify) {
@@ -139,17 +144,17 @@ function loadPage(route, sendPath, verify) {
     } else {
       res.sendFile(path.join(sendPath));
     }
-  })
+  });
 }
 
 app.get('/closed-reason', (req, res) => {
   let reason = getClosedReason();
   res.json({ closedReason: reason });
-})
+});
 
 app.get('/order-limit', (req, res) => {
   res.json({ limit: orderLimit });
-})
+});
 
 // route for home page
 loadPage('/', path.join(__dirname, 'layout', 'subShopFront.html'), false);
@@ -195,7 +200,8 @@ loadPage('/credits', path.join(__dirname, 'layout', 'credits-page.html'), false)
 // route for contact page
 loadPage('/contact-us', path.join(__dirname, 'layout', 'contact-us.html'), false);
 
-//redirect to order page after successful Google authentication
+
+// redirect to order page after successful Google authentication
 app.post('/order', (req, res) => {
   var credential = parseJwt(req.body.credential);
 
@@ -213,8 +219,7 @@ app.post('/order', (req, res) => {
     }
     req.session.name = name;
 
-    console.log(email);
-    console.log(name);
+    console.log("Order recieved from " + email);
 
     res.cookie('email', email, {
       httpOnly: false,
@@ -236,6 +241,7 @@ app.post('/order', (req, res) => {
     res.status(401).send("Invalid token");
   }
 });
+
 
 // verify Google ID_TOKEN before using its information
 function verifyToken(token) {
@@ -346,10 +352,12 @@ app.get('/check-user', async (req, res) => {
   }
 });
 
+
 // 404 error handler
 app.use((req, res) => {
   res.status(404).sendFile(path.join(__dirname, 'layout', '404.html'));
 });
+
 
 // check if a value is undefined, then remove it
 // Start the server
