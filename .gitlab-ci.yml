@@ -16,7 +16,8 @@ deploy-job:
     - ln -sf /etc/letsencrypt/live/subshop-dev.uaschools.io/fullchain.pem fullchain.pem
     - ln -sf /etc/letsencrypt/live/subshop-dev.uaschools.io/privkey.pem
     - /usr/bin/npm ci --no-fund
-    - chmod -R 777 ./data
+    - sudo /usr/bin/chgrp -R subshopapp-data /srv/SubShopApp/data/
+    - sudo /usr/bin/chmod 664 -R /srv/SubShopApp/data/
     - echo "Application successfully deployed."
     - sudo /usr/bin/systemctl restart subshopapp.service
   rules: 
