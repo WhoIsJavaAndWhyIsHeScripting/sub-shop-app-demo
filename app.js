@@ -67,7 +67,7 @@ function updateOpenStatus() {
   } else {
     lines = 0;
   }
-  if ((hour >= 7.5 && hour < 9) && (lines < orderLimit) && openToday) {
+  if ((hour >= 7.5 && hour < 10.5) && (lines < orderLimit) && openToday) {
     isOpen = true;
   } else {
     isOpen = false;
