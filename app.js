@@ -67,7 +67,7 @@ function updateOpenStatus() {
   } else {
     lines = 0;
   }
-  if ((hour >= 7.5 && hour < 9) && (lines < orderLimit) && openToday) {
+  if ((hour >= 7.5 && hour < 10.25) && (lines < orderLimit) && openToday) {
     isOpen = true;
   } else {
     isOpen = false;
@@ -79,7 +79,7 @@ function updateOpenStatus() {
 function getClosedReason() {
   var time = new Date();
   var formattedTime = time.getHours() + time.getMinutes() / 60;
-  if (formattedTime < 7.5 || formattedTime > 9) {
+  if (formattedTime < 7.5 || formattedTime > 10.25) {
     return "You are attempting to order outside the time window (7:30-9:00 AM). Come back tomorrow!";
   } else if (!openToday) {
     return "The staff have chosen to close the sub shop for the day (this is usually due to staffing issues). Try again tomorrow!";
