@@ -1,7 +1,7 @@
 /* Main server file */
 
 // for node instance creation
-const express = require('express');
+const express = require("express");
 
 // the node instance
 const app = express();
@@ -9,39 +9,42 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 
 // for file reading
-const fs = require('fs');
+const fs = require("fs");
 
 // for file paths
-const path = require('path');
+const path = require("path");
 
-// using http support to create the node instance, https is handled 
-const http = require('http');
+// using http support to create the node instance, https is handled
+const http = require("http");
 
 // https credentials, uses symbolic links to point to the following credential files
 const credentials = {
-  key: fs.readFileSync('privkey.pem', 'utf-8'),
-  cert: fs.readFileSync('fullchain.pem', 'utf-8'),
+  key: fs.readFileSync("privkey.pem", "utf-8"),
+  cert: fs.readFileSync("fullchain.pem", "utf-8"),
 };
 
 // creates a session that stores the user email
-const session = require('cookie-session');
+const session = require("cookie-session");
 
 // generate a random string of numbers and letters for every session
-const { randomUUID } = require('crypto');
+const { randomUUID } = require("crypto");
 
 // import router from admin.js
-let { admin_router } = require('./admin');
+let { admin_router } = require("./admin");
 
 // initialize session
-app.use(session({
-  name: 'session',
-  secret: randomUUID(),
-  maxAge: 24 * 60 * 60 * 1000 // session expires after 24 hrs
-}));
+app.use(
+  session({
+    name: "session",
+    secret: randomUUID(),
+    maxAge: 24 * 60 * 60 * 1000, // session expires after 24 hrs
+  }),
+);
 
 // for verifying Google ID_TOKENs
-const { OAuth2Client } = require('google-auth-library');
-const CLIENT_ID = "702804890232-pj9j2siaa55563pild655ev156i36un5.apps.googleusercontent.com";
+const { OAuth2Client } = require("google-auth-library");
+const CLIENT_ID =
+  "702804890232-pj9j2siaa55563pild655ev156i36un5.apps.googleusercontent.com";
 const client = new OAuth2Client(CLIENT_ID);
 
 // this variable controls whether you can access the order page
@@ -52,6 +55,11 @@ var openToday = true;
 var lines = 0;
 // order limit for the day
 var orderLimit = 10;
+
+// when order page becomes available (in hours after midnight)
+const OPEN_TIME = 7.5;
+// when order page closes (in hours after midnight)
+const CLOSE_TIME = 9;
 
 // check the server time and open/close the server at given times
 function updateOpenStatus() {
@@ -67,11 +75,22 @@ function updateOpenStatus() {
   } else {
     lines = 0;
   }
-  if ((hour >= 7.5 && hour < 10.25) && (lines < orderLimit) && openToday) {
-    isOpen = true;
-  } else {
-    isOpen = false;
-  }
+  isOpen = (
+    hour >= OPEN_TIME &&
+    hour < CLOSE_TIME &&
+    lines < orderLimit &&
+    openToday
+  );
+}
+
+// This is for formatting the opening and closing times for getClosedReason().
+const formatter = new Intl.DateTimeFormat('en-US', {
+  hour: '2-digit',
+  minute: '2-digit',
+  hour12: true
+});
+function getTimeString(hours) {
+  return formatter.format(new Date(1970, 0, 1, 0, hours * 60, 0));
 }
 
 // gets the reason the sub shop is closed
@@ -79,8 +98,8 @@ function updateOpenStatus() {
 function getClosedReason() {
   var time = new Date();
   var formattedTime = time.getHours() + time.getMinutes() / 60;
-  if (formattedTime < 7.5 || formattedTime > 10.25) {
-    return "You are attempting to order outside the time window (7:30-9:00 AM). Come back tomorrow!";
+  if (formattedTime < OPEN_TIME || formattedTime > CLOSE_TIME) {
+    return `You are attempting to order outside the time window (${getTimeString(OPEN_TIME)} - ${getTimeString(CLOSE_TIME)}). Come back tomorrow!`;
   } else if (!openToday) {
     return "The staff have chosen to close the sub shop for the day (this is usually due to staffing issues). Try again tomorrow!";
   } else if (lines >= orderLimit) {
@@ -91,14 +110,14 @@ function getClosedReason() {
 }
 
 // Serve static files from the 'public' folder
-app.use(express.static(path.join(__dirname, 'assets')));
-// if adding more paths here, never let __dirname be served directly! 
+app.use(express.static(path.join(__dirname, "assets")));
+// if adding more paths here, never let __dirname be served directly!
 
 // Serve admin pages
 app.use("/admin", admin_router);
 
 // redirect to login for backward compatability
-app.get('/admin-home', (req, res) => {
+app.get("/admin-home", (req, res) => {
   res.redirect("/admin/log-in");
 });
 
@@ -106,32 +125,31 @@ app.get('/admin-home', (req, res) => {
 //  instead of in admin.js.
 
 // handle post request when open/close switch toggled
-app.post('/open-close', (req, res) => {
+app.post("/open-close", (req, res) => {
   openToday = !openToday;
-  res.redirect('/admin/users');
+  res.redirect("/admin/users");
 });
 
 // get open status
-app.get('/open-close', (req, res) => {
+app.get("/open-close", (req, res) => {
   res.json({ open: openToday.toString() });
-})
+});
 
 // change the order limit from the users page
-app.post('/change-order-limit', (req, res) => {
+app.post("/change-order-limit", (req, res) => {
   orderLimit = req.body.limit;
   console.log("New order limit: " + orderLimit);
-  res.redirect('/admin/users');
-})
+  res.redirect("/admin/users");
+});
 
-
-/** 
- * Function for sending a file to a path. If verify is true and the website is 
+/**
+ * Function for sending a file to a path. If verify is true and the website is
  * closed, layout/sorry.html is sent.
- * 
+ *
  * @param route the actual path on the server/the subpage on the internet (subshop-dev.uaschools.io/route)
  * @param path the path for the file that will be sent
  * @param verify boolean, whether you should verify if the shop is open when sending the file
-*/
+ */
 function loadPage(route, sendPath, verify) {
   app.get(route, (req, res) => {
     if (verify) {
@@ -139,7 +157,7 @@ function loadPage(route, sendPath, verify) {
       if (isOpen) {
         res.sendFile(sendPath);
       } else {
-        res.sendFile(path.join(__dirname, 'layout', 'sorry.html'));
+        res.sendFile(path.join(__dirname, "layout", "sorry.html"));
       }
     } else {
       res.sendFile(path.join(sendPath));
@@ -147,62 +165,69 @@ function loadPage(route, sendPath, verify) {
   });
 }
 
-app.get('/closed-reason', (req, res) => {
+app.get("/closed-reason", (req, res) => {
   let reason = getClosedReason();
   res.json({ closedReason: reason });
 });
 
-app.get('/order-limit', (req, res) => {
+app.get("/order-limit", (req, res) => {
   res.json({ limit: orderLimit });
 });
 
 // route for home page
-loadPage('/', path.join(__dirname, 'layout', 'subShopFront.html'), false);
+loadPage("/", path.join(__dirname, "layout", "subShopFront.html"), false);
 
 // create route for css boilerplate
-app.get('/boilerplate', (req, res) => {
-  res.sendFile(path.join(__dirname, 'layout', 'styles', 'boilerplate.css'));
+app.get("/boilerplate", (req, res) => {
+  res.sendFile(path.join(__dirname, "layout", "styles", "boilerplate.css"));
 });
 
 // create route for css boilerplate for main pages
-app.get('/main-pages-css', (req, res) => {
-  res.sendFile(path.join(__dirname, 'layout', 'styles', 'main-pages.css'));
+app.get("/main-pages-css", (req, res) => {
+  res.sendFile(path.join(__dirname, "layout", "styles", "main-pages.css"));
 });
 
 // route for functions.js
-app.get('/functions-js', (req, res) => {
-  res.sendFile(path.join(__dirname, 'functions.js'));
+app.get("/functions-js", (req, res) => {
+  res.sendFile(path.join(__dirname, "functions.js"));
 });
 
 // route for order-scripts.js
-app.get('/order-scripts-js', (req, res) => {
-  res.sendFile(path.join(__dirname, 'layout', 'order-scripts.js'));
+app.get("/order-scripts-js", (req, res) => {
+  res.sendFile(path.join(__dirname, "layout", "order-scripts.js"));
 });
 
 // create route for out of stock file
-app.get('/out-of-stock', (req, res) => {
-  res.sendFile(path.join(__dirname, 'data', 'admin', 'out-of-stock.txt'));
+app.get("/out-of-stock", (req, res) => {
+  res.sendFile(path.join(__dirname, "data", "admin", "out-of-stock.txt"));
 });
 
 // route for order page
-app.get('/order', (req, res) => {
+app.get("/order", (req, res) => {
   updateOpenStatus();
   if (isOpen) {
-    res.sendFile(path.join(__dirname, 'layout', 'subShopOrder.html'));
+    res.sendFile(path.join(__dirname, "layout", "subShopOrder.html"));
   } else {
-    res.sendFile(path.join(__dirname, 'layout', 'sorry.html'));
+    res.sendFile(path.join(__dirname, "layout", "sorry.html"));
   }
 });
 
 // route for credits page
-loadPage('/credits', path.join(__dirname, 'layout', 'credits-page.html'), false);
+loadPage(
+  "/credits",
+  path.join(__dirname, "layout", "credits-page.html"),
+  false,
+);
 
 // route for contact page
-loadPage('/contact-us', path.join(__dirname, 'layout', 'contact-us.html'), false);
-
+loadPage(
+  "/contact-us",
+  path.join(__dirname, "layout", "contact-us.html"),
+  false,
+);
 
 // redirect to order page after successful Google authentication
-app.post('/order', (req, res) => {
+app.post("/order", (req, res) => {
   var credential = parseJwt(req.body.credential);
 
   try {
@@ -221,27 +246,25 @@ app.post('/order', (req, res) => {
 
     console.log("Order recieved from " + email);
 
-    res.cookie('email', email, {
+    res.cookie("email", email, {
       httpOnly: false,
       secure: true,
-      sameSite: 'Lax',
-      maxAge: 1000 * 60 * 60 * 24
+      sameSite: "Lax",
+      maxAge: 1000 * 60 * 60 * 24,
     });
-    res.cookie('name', name, {
+    res.cookie("name", name, {
       httpOnly: false,
       secure: true,
-      sameSite: 'Lax',
-      maxAge: 1000 * 60 * 60 * 24
+      sameSite: "Lax",
+      maxAge: 1000 * 60 * 60 * 24,
     });
 
-    res.redirect('/order?loggedIn=true');
-
+    res.redirect("/order?loggedIn=true");
   } catch (err) {
     console.error("Token verification failed:", err);
     res.status(401).send("Invalid token");
   }
 });
-
 
 // verify Google ID_TOKEN before using its information
 function verifyToken(token) {
@@ -256,17 +279,22 @@ function verifyToken(token) {
 
 // parse Google ID_TOKEN
 function parseJwt(token) {
-  const base64Url = token.split('.')[1];
-  const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-  const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
-    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-  }).join(''));
+  const base64Url = token.split(".")[1];
+  const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+  const jsonPayload = decodeURIComponent(
+    atob(base64)
+      .split("")
+      .map(function (c) {
+        return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+      })
+      .join(""),
+  );
 
   return JSON.parse(jsonPayload);
 }
 
 // populate the sub order csv with the form data
-app.post('/order-submit', (req, res) => {
+app.post("/order-submit", (req, res) => {
   let time = new Date();
   let dateAndTime = time.toLocaleString("en-US");
   let lunchPeriod = req.body.period;
@@ -300,7 +328,6 @@ app.post('/order-submit', (req, res) => {
         arrayize[i] = spacedEntry;
       }
     }
-
   }
   // conglomerate length, base type and toasted into one "base" cell
   if ("" + inch != "undefined") {
@@ -311,18 +338,24 @@ app.post('/order-submit', (req, res) => {
   if ("" + name != "undefined") {
     fs.appendFile(
       path.join(__dirname, "data", "sub-orders.csv"),
-      `\n${arrayize[0]};${arrayize[1]};${arrayize[2]};${arrayize[3]};${arrayize[4]};${arrayize[5]};${arrayize[6]}`, () => {
-        res.redirect('/');
-      });
+      `\n${arrayize[0]};${arrayize[1]};${arrayize[2]};${arrayize[3]};${arrayize[4]};${arrayize[5]};${arrayize[6]}`,
+      () => {
+        res.redirect("/");
+      },
+    );
   } else {
-    res.send("ERROR: Order denied. You attempted to send an order without an order name. Please try again.\n\nIf you believe this is an error, submit a bug report (linked on the contacts page). If you're trying to hack us... go away >:(");
+    res.send(
+      "ERROR: Order denied. You attempted to send an order without an order name. Please try again.\n\nIf you believe this is an error, submit a bug report (linked on the contacts page). If you're trying to hack us... go away >:(",
+    );
   }
 });
 
-app.get('/check-user', async (req, res) => {
+app.get("/check-user", async (req, res) => {
   let username = req.session.name;
   try {
-    let banned_data = await fs.promises.readFile(path.join(__dirname, "data", "admin", "ban-list.txt"));
+    let banned_data = await fs.promises.readFile(
+      path.join(__dirname, "data", "admin", "ban-list.txt"),
+    );
     let banned = banned_data.toString().split(",");
     let is_banned = false;
     for (const guy of banned) {
@@ -331,11 +364,13 @@ app.get('/check-user', async (req, res) => {
       }
     }
 
-    let order_data = await fs.promises.readFile(path.join(__dirname, "data", "sub-orders.csv"));
+    let order_data = await fs.promises.readFile(
+      path.join(__dirname, "data", "sub-orders.csv"),
+    );
     let orders = order_data.toString().split("\n");
-    let has_ordered = false
+    let has_ordered = false;
     for (const item of orders) {
-      if ((item.split(";")[0]).trim() == username) {
+      if (item.split(";")[0].trim() == username) {
         has_ordered = true;
         break;
       }
@@ -345,22 +380,19 @@ app.get('/check-user', async (req, res) => {
       has_ordered: has_ordered,
       is_banned: is_banned,
     });
-
   } catch (error) {
-    console.error('Error fetching data:', error);
-    res.status(500).send('Internal Server Error');
+    console.error("Error fetching data:", error);
+    res.status(500).send("Internal Server Error");
   }
 });
 
-
 // 404 error handler
 app.use((req, res) => {
-  res.status(404).sendFile(path.join(__dirname, 'layout', '404.html'));
+  res.status(404).sendFile(path.join(__dirname, "layout", "404.html"));
 });
-
 
 // check if a value is undefined, then remove it
 // Start the server
 http.createServer(credentials, app).listen(3000, "localhost", () => {
-  console.log('Server listening on port 3000');
+  console.log("Server listening on port 3000");
 });

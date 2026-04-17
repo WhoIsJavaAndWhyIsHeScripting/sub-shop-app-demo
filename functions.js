@@ -1,5 +1,6 @@
 /** These are functions for Google authentication. They run on the client side. */
 
+// This is called on subShopOrder.html when the Google client is loaded. 
 function googleLibraryLoaded() {
   googleAuth();
 }
@@ -28,6 +29,8 @@ function handleCredentialResponse(response) {
   document.cookie = "email=" + parseJwt(response.credential).email + "; path=/order";
 }
 
+// Verifying the domain of the email is done by Google Auth itself, so this
+// function is not actually needed. 
 function isValidAccount(userEmail) {
   return userEmail.split('@')[1] === 'uaschools.org';
 }
