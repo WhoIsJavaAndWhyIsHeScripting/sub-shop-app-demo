@@ -17,7 +17,9 @@ SORT_BY = [
     #        extracts last names
     ("NAME", lambda x: x.split()[-1]),
 ]
-BOLD = [field[0] for field in SORT_BY]  # Bold and increase the font of these values
+BOLD = [
+    field[0] for field in SORT_BY
+]  # Bold and increase the font of these values
 SKIP = ["TIME"]  # Omits these values on the labels
 
 RECIPIENTS = [
@@ -37,7 +39,7 @@ CLEAR_CSV = True
 CSV_DELIMITER = ";"
 
 # Logging
-LOG_FILE = "log.txt"  # use an empty string for the console
+LOG_FILE = "../data/python-log.txt"  # use an empty string for the console
 LOG_LEVEL = DEBUG
 
 

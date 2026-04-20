@@ -57,7 +57,7 @@ if __name__ == "__main__":  # i.e. if not imported as a module
 
     # Counts the number of orders in csv file.
     with open(settings.CSV_PATH) as f:
-        order_count = sum(1 for line in f) - 1
+        order_count = sum(1 for line in f if line.strip()) - 1
 
     logging.debug(f"There were {order_count} order(s) in the CSV file.")
 
