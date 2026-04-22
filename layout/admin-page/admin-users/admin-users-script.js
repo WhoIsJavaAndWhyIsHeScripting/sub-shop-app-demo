@@ -9,7 +9,7 @@ async function getOpenStatus() {
 async function getCloseTime() {
     const data = await fetch('/get-closing-time');
     const json = await data.json();
-    document.getElementById("current-time").textContent = json.closetime;
+    document.getElementById("current-time").textContent = json.closingtime;
 }
 // update button text based on whether the store is open or closed
 async function updateCloseButton() {

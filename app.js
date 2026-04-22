@@ -180,7 +180,8 @@ app.post("/change-closing-time", (req, res) => {
 })
 
 app.get("/get-closing-time", (req, res) => {
-  res.json({closingtime: CLOSE_TIME});
+  let closeTimeFormatted = "" + Math.floor(CLOSE_TIME) + ":" + (CLOSE_TIME % 1.0 * 60);
+  res.json({closingtime: closeTimeFormatted});
 })
 
 // route for home page
