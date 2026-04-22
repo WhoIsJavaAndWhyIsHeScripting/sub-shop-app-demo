@@ -345,11 +345,15 @@ app.post("/order-submit", (req, res) => {
     );
   } else {
     res.send(
-      "ERROR: Order denied. You attempted to send an order without an order name. Please try again.\n\nIf you believe this is an error, submit a bug report (linked on the contacts page). If you're trying to hack us... go away >:(",
+      "ERROR: Order denied. "
+      + "You attempted to send an order without an order name. "
+      + "Please try again.\n\nIf you believe this is an error, submit a bug report (linked on the contacts page). "
+      + "If you're trying to hack us... go away >:(",
     );
   }
 });
 
+// check if the user is banned or has already ordered
 app.get("/check-user", async (req, res) => {
   let username = req.session.name;
   try {
@@ -391,7 +395,6 @@ app.use((req, res) => {
   res.status(404).sendFile(path.join(__dirname, "layout", "404.html"));
 });
 
-// check if a value is undefined, then remove it
 // Start the server
 http.createServer(credentials, app).listen(3000, "localhost", () => {
   console.log("Server listening on port 3000");
