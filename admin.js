@@ -189,7 +189,7 @@ router.post("/submit-users", (req, res) => {
                 var commaSplit = data.toString().split(",");
                 // check which user name matches the user to be removed
                 // and remove it from the list
-                for (guy in commaSplit) {
+                for (const guy in commaSplit) {
                     if (commaSplit[guy] == req.body.hidden) {
                         commaSplit.splice(guy, 1);
                     }

@@ -171,6 +171,7 @@ function responsiveSummary() {
         checkbox.addEventListener("change", loadSummary);
     });
 }
+
 // Submitting order 
 
 async function check_user() {
@@ -179,7 +180,7 @@ async function check_user() {
         throw new Error('Error from server: ' + data);
     }
     //console.log(data.status); 
-    data_obj = await data.json();
+    const data_obj = await data.json();
 
     if (data_obj.has_ordered || data_obj.is_banned) {
         return false;

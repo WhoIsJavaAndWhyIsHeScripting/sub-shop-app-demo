@@ -178,17 +178,33 @@ app.post("/change-closing-time", (req, res) => {
   let closingTimeData = req.body.closingtime;
   let closeHours = parseInt(closingTimeData.substring(0, 2));
   let closeMinutes = parseInt(closingTimeData.substring(3, 5));
-  CLOSE_TIME = closeHours + closeMinutes/60;
+  CLOSE_TIME = closeHours + closeMinutes / 60;
+  writeCronTask(CLOSE_TIME);
+
   res.redirect("/admin/users");
-})
+});
 
 app.get("/get-closing-time", (req, res) => {
   let closeHours = Math.floor(CLOSE_TIME);
   let closeMinutes = Math.round(CLOSE_TIME % 1.0 * 60);
   let closeTimeFormatted = "" + closeHours + ":" + ((closeMinutes >= 10) ? closeMinutes : "0" + closeMinutes);
-  
-  res.json({closingtime: closeTimeFormatted});
-})
+
+  res.json({ closingtime: closeTimeFormatted });
+});
+
+/** Writes out a new crontab file to be copied for running the python scripts. */
+function writeCronTask(time) {
+  const command = ". /srv/SubShopApp/.venv/bin/activate "
+    + "&& cd /srv/SubShopApp/python-scripts/ && python3 /srv/SubShopApp/python-scripts/__main__.py";
+  let closeHours = Math.floor(CLOSE_TIME);
+  let closeMinutes = Math.round(CLOSE_TIME % 1.0 * 60);
+  let task = closeMinutes + " " + closeHours + " * * 1-5 " + command;
+  fs.writeFile("./data/admin/temporary_crontab.txt", task, (err) => {
+    if (err) console.error("error occured writing new crontab");
+    console.log('Temporary crontab waiting to be copied.');
+  });
+
+}
 
 // route for home page
 loadPage("/", path.join(__dirname, "layout", "subShopFront.html"), false);
@@ -219,14 +235,11 @@ app.get("/out-of-stock", (req, res) => {
 });
 
 // route for order page
-app.get("/order", (req, res) => {
-  updateOpenStatus();
-  if (isOpen) {
-    res.sendFile(path.join(__dirname, "layout", "subShopOrder.html"));
-  } else {
-    res.sendFile(path.join(__dirname, "layout", "sorry.html"));
-  }
-});
+loadPage(
+  "/order",
+  path.join(__dirname, "layout", "subShopOrder.html"),
+  true,
+);
 
 // route for credits page
 loadPage(
