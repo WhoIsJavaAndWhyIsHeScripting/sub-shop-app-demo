@@ -175,7 +175,10 @@ app.get("/order-limit", (req, res) => {
 });
 
 app.post("/change-closing-time", (req, res) => {
-  CLOSE_TIME = req.body.closingtime;
+  let closingTimeData = req.body.closingtime;
+  let closeHours = parseInt(closingTimeData.substring(0, 2));
+  let closeMinutes = parseInt(closingTimeData.substring(3, 5));
+  CLOSE_TIME = closeHours + closeMinutes/60;
   res.redirect("/admin/users");
 })
 
