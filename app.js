@@ -184,7 +184,7 @@ app.post("/change-closing-time", (req, res) => {
 
 app.get("/get-closing-time", (req, res) => {
   let closeHours = Math.floor(CLOSE_TIME);
-  let closeMinutes = CLOSE_TIME % 1.0 * 30;
+  let closeMinutes = Math.floor(CLOSE_TIME % 1.0 * 60);
   let closeTimeFormatted = "" + closeHours + ":" + ((closeMinutes >= 10) ? closeMinutes : "0" + closeMinutes);
   
   res.json({closingtime: closeTimeFormatted});
