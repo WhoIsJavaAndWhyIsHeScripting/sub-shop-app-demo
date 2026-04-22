@@ -8,7 +8,6 @@ async function getOpenStatus() {
 
 async function getCloseTime() {
     const data = await fetch('/get-closing-time');
-    if (!data.ok) throw err;
     const json = await data.json();
     document.getElementById("current-time").textContent = json.closetime;
 }
