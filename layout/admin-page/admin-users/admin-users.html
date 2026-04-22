@@ -45,9 +45,16 @@
             <button type="submit">Save Changes</button>
         </form>
         <hr>
+        <p>Change the time at which ordering closes (and the order email is sent): </p>
+        <form id="change-closing-time" action="/change-closing-time"method="POST">
+            <input type="time" id="closing-time" name="closingtime" min="8:00" max="12:00"></input>
+            <button type="submit">Save Changes</button>
+        </form>
+        <hr>
         <script>
             updateCloseButton()
             getCurrentLimit()
+            getCloseTime();
         </script>
         <p>
             If a student ordered a sandwich and

@@ -5,6 +5,13 @@ async function getOpenStatus() {
     const json = await data.json();
     return json.open;
 }
+
+async function getCloseTime() {
+    const data = await fetch('/get-closing-time');
+    if (!data.ok) throw err;
+    const json = await data.json();
+    document.getElementById("closing-time").placeholder = json.closetime;
+}
 // update button text based on whether the store is open or closed
 async function updateCloseButton() {
     let closeButton = document.getElementById("close-button");
@@ -23,6 +30,7 @@ async function updateCloseButton() {
 
 async function getCurrentLimit() {
     const data = await fetch('/order-limit');
+    if (!data.ok) throw err;
     const json = await data.json();
     document.getElementById("order-limit").placeholder = json.limit;
 }

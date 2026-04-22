@@ -59,7 +59,7 @@ var orderLimit = 10;
 // when order page becomes available (in hours after midnight)
 const OPEN_TIME = 7.5;
 // when order page closes (in hours after midnight)
-const CLOSE_TIME = 9;
+var CLOSE_TIME = 9;
 
 // check the server time and open/close the server at given times
 function updateOpenStatus() {
@@ -173,6 +173,15 @@ app.get("/closed-reason", (req, res) => {
 app.get("/order-limit", (req, res) => {
   res.json({ limit: orderLimit });
 });
+
+app.post("/change-closing-time", (req, res) => {
+  CLOSE_TIME = req.body.closingtime;
+  res.redirect("/admin/users");
+})
+
+app.get("/get-closing-time", (req, res) => {
+  res.json({closingtime: CLOSE_TIME});
+})
 
 // route for home page
 loadPage("/", path.join(__dirname, "layout", "subShopFront.html"), false);
