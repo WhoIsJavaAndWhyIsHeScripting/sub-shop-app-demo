@@ -4,13 +4,25 @@
 <head>
     <title>Log In</title>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width; initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale = 1.0">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" type="text/css" href="/main-pages-css">
+    <link rel="preconnect" href="https://fsonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+
+    <style>
+        body {
+            margin-top: unset;
+        }
+    </style>
 </head>
 
 <body>
     <h1>Please enter the password.</h1>
     <form action="/admin/check-password" method="POST">
-        <input type="text" name="password" id="password">
+        <input type="password" name="password" id="password" required>
         <input type="submit">
     </form>
 </body>

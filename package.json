@@ -9,11 +9,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "(https://gitlab-student.uaschools.org/compsci-club/subshopapp.git)"
+    "url": "https://gitlab-student.uaschools.org/compsci-club/subshopapp.git"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "cookie-session": "^2.1.1",
     "express": "^5.1.0",
     "express-session": "^1.18.2",
