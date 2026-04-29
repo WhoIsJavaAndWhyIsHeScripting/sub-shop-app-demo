@@ -229,6 +229,11 @@ app.get("/order-scripts-js", (req, res) => {
   res.sendFile(path.join(__dirname, "layout", "order-scripts.js"));
 });
 
+// route for changing page color based on the server's hostname
+app.get("/hostname-signal-js", (req, res) => {
+  res.sendFile(path.join(__dirname, "layout", "styles", "hostname-signal.js"));
+});
+
 // create route for out of stock file
 app.get("/out-of-stock", (req, res) => {
   res.sendFile(path.join(__dirname, "data", "admin", "out-of-stock.txt"));

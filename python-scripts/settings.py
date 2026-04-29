@@ -1,6 +1,7 @@
 """This file includes various constants and settings for the other python scripts."""
 
 from logging import DEBUG, INFO, WARNING, ERROR, CRITICAL  # noqa: F401
+import socket
 
 
 # General Specifications
@@ -74,5 +75,5 @@ PDF_VARS = {
 EMAIL_VARS = {
     "port": 25,
     "server_address": "localhost",  # the server has an SMTP server on the local machine
-    "sender_email": "subshopapp@subshop-dev.uaschools.io",
+    "sender_email": f"subshopapp@{socket.getfqdn()}",
 }
