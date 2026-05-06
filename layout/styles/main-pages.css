@@ -20,7 +20,7 @@ body {
    top: 0;
    left: 0;
    display: flex;
-   background-color: var(--ua-gold);
+   background-color: green;
    padding: 5px;
    width: 100%;
    font-weight: 500;
