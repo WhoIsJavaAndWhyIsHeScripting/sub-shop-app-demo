@@ -1,6 +1,8 @@
+/* This is still used for the admin pages! */
+
 :root {
     --ua-gold: #f8d000;
-    --ua-teal:  #017d8f;
+    --ua-teal: #017d8f;
 }
 
 * {
@@ -18,29 +20,29 @@ html {
     top: 0;
     left: 0;
     display: flex;
-    background-color: green;
+    background-color: var(--ua-gold);
     padding: 5px;
     width: 100%;
     font-weight: 500;
     font-size: 1.75em;
     align-items: center;
 }
+
 /* get rid of default link styles for header bar */
 .headerbar a {
     margin: 5px;
     color: black;
-    text-decoration: none; 
+    text-decoration: none;
     display: flex;
-    align-items: center; 
+    align-items: center;
 }
 
 .headerbar img {
     height: 80px;
     margin: 5px;
-    
+
 }
 
 main {
     margin-top: 110px;
 }
-
