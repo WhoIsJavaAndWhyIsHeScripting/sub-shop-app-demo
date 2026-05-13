@@ -32,6 +32,7 @@ const { randomUUID } = require("crypto");
 // import router from admin.js
 let { admin_router } = require("./admin");
 
+
 // initialize session
 app.use(
   session({
@@ -61,12 +62,19 @@ const OPEN_TIME = 7.5;
 // when order page closes (in hours after midnight)
 var CLOSE_TIME = 9;
 
-// check the server time and open/close the server at given times
+
+/** Checks the server time and opens/closes the server at given times */
 function updateOpenStatus() {
+  // check time
   var currentTime = new Date();
   var hour = currentTime.getHours();
   var minute = currentTime.getMinutes();
   hour += minute / 60;
+
+  // check day 
+  let dayOfWeek = currentTime.getDay();
+  let isWeekend = (dayOfWeek === 0 || dayOfWeek === 7);
+
   // count the number of lines sub-orders.csv has
   var data = fs.readFileSync(path.join(__dirname, "data", "sub-orders.csv"));
   var newLineMatch = data.toString().match(/\n/g);
@@ -75,9 +83,11 @@ function updateOpenStatus() {
   } else {
     lines = 0;
   }
+
   isOpen = (
     hour >= OPEN_TIME &&
     hour < CLOSE_TIME &&
+    !isWeekend &&
     lines < orderLimit &&
     openToday
   );
@@ -89,17 +99,26 @@ const formatter = new Intl.DateTimeFormat('en-US', {
   minute: '2-digit',
   hour12: true
 });
+/**
+ * Formats, to the minute, a time in hours since midnight as a string.
+ * @param {number} hours
+ */
 function getTimeString(hours) {
   return formatter.format(new Date(1970, 0, 1, 0, hours * 60, 0));
 }
 
-// gets the reason the sub shop is closed
-// returns a string of the reason the shop is closed
+/**
+* Gets the reason the sub shop is closed
+* @returns {string} the reason the shop is closed
+*/
 function getClosedReason() {
   var time = new Date();
   var formattedTime = time.getHours() + time.getMinutes() / 60;
+  let dayOfWeek = time.getDay();
   if (formattedTime < OPEN_TIME || formattedTime > CLOSE_TIME) {
     return `You are attempting to order outside the time window (${getTimeString(OPEN_TIME)} - ${getTimeString(CLOSE_TIME)}). Come back tomorrow!`;
+  } else if (dayOfWeek === 0 || dayOfWeek === 7) {
+    return "You can't ordered subs on the weekend!";
   } else if (!openToday) {
     return "The staff have chosen to close the sub shop for the day (this is usually due to staffing issues). Try again tomorrow!";
   } else if (lines >= orderLimit) {
@@ -145,10 +164,10 @@ app.post("/change-order-limit", (req, res) => {
 /**
  * Function for sending a file to a path. If verify is true and the website is
  * closed, layout/sorry.html is sent.
- *
- * @param route the actual path on the server/the subpage on the internet (subshop-dev.uaschools.io/route)
- * @param path the path for the file that will be sent
- * @param verify boolean, whether you should verify if the shop is open when sending the file
+ * 
+ * @param {string} route the actual path on the server/the subpage on the internet (subshop-dev.uaschools.io/route)
+ * @param {boolean} verify boolean, whether you should verify if the shop is open when sending the file
+ * @param {string} sendPath the path for the file that will be sent
  */
 function loadPage(route, sendPath, verify) {
   app.get(route, (req, res) => {
@@ -192,7 +211,10 @@ app.get("/get-closing-time", (req, res) => {
   res.json({ closingtime: closeTimeFormatted });
 });
 
-/** Writes out a new crontab file to be copied for running the python scripts. */
+/**
+ * Writes out a new crontab file to be copied for running the Python scripts.
+ * @param {number} time
+ */
 function writeCronTask(time) {
   const command = ". /srv/SubShopApp/.venv/bin/activate "
     + "&& cd /srv/SubShopApp/python-scripts/ && python3 /srv/SubShopApp/python-scripts/__main__.py";
@@ -201,9 +223,8 @@ function writeCronTask(time) {
   let task = closeMinutes + " " + closeHours + " * * 1-5 " + command;
   fs.writeFile("./data/admin/temporary_crontab.txt", task, (err) => {
     if (err) console.error("error occured writing new crontab");
-    console.log('Temporary crontab waiting to be copied.');
+    else console.log('Temporary crontab waiting to be copied.');
   });
-
 }
 
 // route for home page
@@ -265,7 +286,7 @@ app.post("/order", (req, res) => {
   var credential = parseJwt(req.body.credential);
 
   try {
-    const user = verifyToken(credential);
+    const user = credential;
 
     var email = credential.email;
     var name = credential.given_name + " ";
@@ -300,18 +321,10 @@ app.post("/order", (req, res) => {
   }
 });
 
-// verify Google ID_TOKEN before using its information
-function verifyToken(token) {
-  /*const ticket = client.verifyIdToken({ ****Commented out b/c the Google Auth Library is buggin****
-    idToken: token,
-    audience: CLIENT_ID
-  });
-  return ticket.idToken;*/ // contains user info
-
-  return token;
-}
-
-// parse Google ID_TOKEN
+/**
+ * Parses Google ID_TOKEN
+ * @param {string} token
+ */
 function parseJwt(token) {
   const base64Url = token.split(".")[1];
   const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
