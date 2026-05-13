@@ -29,15 +29,21 @@ RECIPIENTS = [
     "EMAIL REMOVED",
     "EMAIL REMOVED",
     "EMAIL REMOVED",
-    # Sub Shop people
-    # "EMAIL REMOVED",
-    # "EMAIL REMOVED",
-    # "EMAIL REMOVED",
 ]
+# Add sub shop people if this is the production server.
+if socket.getfqdn() == "subshop.uaschools.io":
+    RECIPIENTS.extend(
+        [
+            "EMAIL REMOVED",
+            "EMAIL REMOVED",
+            "EMAIL REMOVED",
+        ]
+    )
 
 CLEAR_CSV = True
 
 CSV_DELIMITER = ";"
+
 
 # Logging
 LOG_FILE = "../data/python-log.txt"  # use an empty string for the console
