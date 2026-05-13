@@ -77,12 +77,8 @@ function updateOpenStatus() {
 
   // count the number of lines sub-orders.csv has
   var data = fs.readFileSync(path.join(__dirname, "data", "sub-orders.csv"));
-  var newLineMatch = data.toString().match(/\n/g);
-  if (newLineMatch != null) {
-    lines = newLineMatch.length;
-  } else {
-    lines = 0;
-  }
+  let newLineMatch = data.toString().split(/\n/);
+  let lines = newLineMatch.length - 1; // decrease by one because of the header
 
   isOpen = (
     hour >= OPEN_TIME &&
