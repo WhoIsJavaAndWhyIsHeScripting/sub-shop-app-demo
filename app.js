@@ -98,7 +98,7 @@ function getTimeString(hours) {
 function getClosedReason() {
   var time = new Date();
   var formattedTime = time.getHours() + time.getMinutes() / 60;
-  if (formattedTime < OPEN_TIME || formattedTime > CLOSE_TIME) {
+  if (formattedTime < OPEN_TIME || formattedTime >= CLOSE_TIME) {
     return `You are attempting to order outside the time window (${getTimeString(OPEN_TIME)} - ${getTimeString(CLOSE_TIME)}). Come back tomorrow!`;
   } else if (!openToday) {
     return "The staff have chosen to close the sub shop for the day (this is usually due to staffing issues). Try again tomorrow!";
