@@ -3,7 +3,7 @@
 // get the file that lists out of stock ingredients
 async function fetchy() {
     const fetcher = await fetch("/out-of-stock");
-    data = await fetcher.text();
+    let data = await fetcher.text();
     return data;
 }
 
@@ -12,7 +12,7 @@ fetchy()
         var dataSplit = data.split(",");
         var checkboxes = document.querySelectorAll("input[type='checkbox'], input[type='radio']");
         checkboxes.forEach((checkbox) => {
-            for (i in dataSplit) {
+            for (let i in dataSplit) {
                 // for each checkbox, iterate thru the list of out of stock ingredients, and if it matches one, disable it
                 if (dataSplit[i] == checkbox.id.trim()) {
                     checkbox.disabled = true;
@@ -46,13 +46,13 @@ function disableElement(element, bool) {
 var itemList = ["period", "inch", "bread", "toasted", "protein", "veggies", "condiments"];
 // saves the current boxes checked to localStorage
 function saveOrder() {
-    for (itemName of itemList) {
+    for (let itemName of itemList) {
         localStorage.setItem(itemName, findChecked(`input[name="${itemName}"]`));
     }
 }
 // loads the order from localStorage and adds event listeners to checkboxes to save it when the order is changed
 function loadOrder() {
-    for (itemName of itemList) {
+    for (let itemName of itemList) {
         var checkedItems = localStorage.getItem(itemName);
         if (checkedItems != null && checkedItems.length > 0) {
             //split the list of ingredients checked into an array
@@ -192,7 +192,11 @@ async function check_user() {
 // checks to see if the user has ordered today and stores the result in a global 
 check_user()
     .then((result) => {
-        window.ALLOWED_TO_ORDER = result;
+        Object.defineProperty(window, "ALLOWED_TO_ORDER", {
+            value: result,
+            writable: false,
+            configurable: false
+        });
     });
 
 // check if the user has an email entered
@@ -225,7 +229,7 @@ function submitOrder(event) {
             // delete all order cookies
             var cookieList = ["period", "inch", "bread", "toasted", "protein", "veggies", "condiments"];
             var date = new Date("1-1-1923");
-            for (cookieName of cookieList) {
+            for (let cookieName of cookieList) {
                 document.cookie = `${cookieName}=; expires=${date}`;
             }
             localStorage.clear();

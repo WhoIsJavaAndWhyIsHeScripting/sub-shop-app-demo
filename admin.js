@@ -14,6 +14,7 @@ const fs = require("fs");
 // for file paths
 const path = require("path");
 
+
 // client side javascript for the users page
 router.get("/admin-users-script", (req, res) => {
     res.sendFile(
@@ -55,10 +56,14 @@ router.post("/check-password", (req, res) => {
     });
 });
 
-/** Function for serving pages with admin verification
- *
- * @param path the path name
- * @param file the folder name
+
+/**
+ * Function for serving pages with admin verification
+ * 
+ * This assumes the source file is at ./layout/admin/{filePath}/{filePath}.html.
+ * 
+ * @param {string} filePath the path in the client side URL
+ * @param {string} file the name of the source on the server
  */
 function loadAdminPage(filePath, file) {
     router.get("/" + filePath, (req, res) => {
@@ -76,7 +81,12 @@ function loadAdminPage(filePath, file) {
     });
 }
 
-// Similar to loadAdminPage, but it does not add any prefixes or suffixes
+/**
+ * Similar to loadAdminPage, but it does not add any prefixes or suffixes. 
+ * 
+ * @param {string} filePath the path in the client side URL
+ * @param {string} file the path to the source file on the server
+ */
 function loadAdminResource(filePath, file) {
     router.get("/" + filePath, (req, res) => {
         if (req.session.user != undefined) {
@@ -116,6 +126,7 @@ loadAdminResource(
     "layout/admin-page/admin-users/admin-users-styles.css",
 );
 
+
 // Routes for form submissions
 
 // handle post request when ingredients form submitted
@@ -153,8 +164,9 @@ router.post("/submit-users", (req, res) => {
     // append the data to the file with a comma before if it's not empty
     if (bannedUser != null) {
         if (
-            fs.statSync(path.join(__dirname, "data", "admin", "ban-list.txt")).size !=
-            0
+            fs.statSync(
+                path.join(__dirname, "data", "admin", "ban-list.txt")
+            ).size != 0
         ) {
             fs.appendFile(
                 path.join(__dirname, "data", "admin", "ban-list.txt"),
@@ -178,6 +190,7 @@ router.post("/submit-users", (req, res) => {
             );
         }
     }
+
     // handle when a user should be REMOVED from the list
     var toBeRemoved = req.body.hidden;
 
@@ -189,9 +202,9 @@ router.post("/submit-users", (req, res) => {
                 var commaSplit = data.toString().split(",");
                 // check which user name matches the user to be removed
                 // and remove it from the list
-                for (const guy in commaSplit) {
-                    if (commaSplit[guy] == req.body.hidden) {
-                        commaSplit.splice(guy, 1);
+                for (let i = 0; i < commaSplit.length; i++) {
+                    if (commaSplit[i] == req.body.hidden) {
+                        commaSplit.splice(i, 1);
                     }
                 }
                 // recreate the file with the user removed based on length

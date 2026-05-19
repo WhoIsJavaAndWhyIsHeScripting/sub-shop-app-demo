@@ -1,7 +1,7 @@
 // get open status
 async function getOpenStatus() {
     const data = await fetch('/open-close');
-    if (!data.ok) throw err;
+    if (!data.ok) throw new Error("issue getting open status");
     const json = await data.json();
     return json.open;
 }
@@ -11,6 +11,7 @@ async function getCloseTime() {
     const json = await data.json();
     document.getElementById("current-time").textContent = json.closingtime;
 }
+
 // update button text based on whether the store is open or closed
 async function updateCloseButton() {
     let closeButton = document.getElementById("close-button");
@@ -29,7 +30,7 @@ async function updateCloseButton() {
 
 async function getCurrentLimit() {
     const data = await fetch('/order-limit');
-    if (!data.ok) throw err;
+    if (!data.ok) throw new Error("issue getting order limit");
     const json = await data.json();
     document.getElementById("order-limit").placeholder = json.limit;
 }
@@ -45,4 +46,4 @@ function remove(e) {
     hiddenInput.value = subtext;
     formUsers.appendChild(hiddenInput);
     formUsers.submit();
-}   
+}
