@@ -36,13 +36,23 @@
     <header>
         <div class="headerbar"><a href="/"><img src="bearbiteslogo.png">Bear Bites</a></div>
     </header>
-    <div>
-        <br><br><br><br>
-        <h2 style="color: red">
-            Notice: This is now only the development website. Actual orders should go to <a
-                href="https://subshop.uaschools.io">here.</a>
+
+    <div id="dev-warning">
+        <!-- Warn users if this not the production website. -->
+        <br><br><br><br> <!-- These breaks prevent the header from hiding the message. -->
+        <h2 style="color: red; display: none">
+            Notice: This is now only the development website. Actual orders should go to
+            <a href="https://subshop.uaschools.io">here</a>.
         </h2>
     </div>
+    <script>
+        // Enable the warning if this is not the real website.
+        if (window.location.hostname !== "subshop.uaschools.io") {
+            let warningBox = document.getElementById("dev-warning");
+            warningBox.style.display = "block";
+        }
+    </script>
+
     <div class="box">
         <br><br>
         <h1>Order A Sub for Today's Lunch</h1>
@@ -234,6 +244,7 @@
                 </a>
                 <div id="goBack" class="end"></div>
             </div>
+
             <!--Only appears if there is no Javascript.-->
             <noscript>
                 <h4><i>Javascript is needed to submit this form.</i></h4>

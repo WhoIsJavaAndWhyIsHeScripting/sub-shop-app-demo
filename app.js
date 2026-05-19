@@ -111,7 +111,8 @@ function getClosedReason() {
   var time = new Date();
   var formattedTime = time.getHours() + time.getMinutes() / 60;
   let dayOfWeek = time.getDay();
-  if (formattedTime < OPEN_TIME || formattedTime > CLOSE_TIME) {
+  
+  if (formattedTime < OPEN_TIME || formattedTime >= CLOSE_TIME) {
     return `You are attempting to order outside the time window (${getTimeString(OPEN_TIME)} - ${getTimeString(CLOSE_TIME)}). Come back tomorrow!`;
   } else if (dayOfWeek === 0 || dayOfWeek === 7) {
     return "You can't ordered subs on the weekend!";
