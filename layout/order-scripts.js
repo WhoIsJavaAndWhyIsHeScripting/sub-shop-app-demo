@@ -212,11 +212,11 @@ function submitOrder(event) {
     //alert("Form being checked."); 
 
     // verify that the user has not already submitted an order 
-    if (/*checkLoginStatus() == false*/) {
+    if (/*checkLoginStatus() == false*/false) {
         alert("Error: You are not logged in. Please try again.");
         event.preventDefault();
         return;
-    } else if (!window.ALLOWED_TO_ORDER) {
+    } else if (/*!window.ALLOWED_TO_ORDER*/false) {
         alert("Sorry, you are not allowed to order. Users are limited to one order per day.");
         event.preventDefault();
         return;
