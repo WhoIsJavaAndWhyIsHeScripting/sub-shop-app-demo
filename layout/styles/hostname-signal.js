@@ -4,13 +4,13 @@
  * 
  * @returns a string representing a color in hex format
  */
-function getColor() {
+/*function getColor() {
     let hostname = window.location.hostname;
     switch (hostname) {
         case "subshop-dev.uaschools.io": return "#f4fbec";
         case "subshop.uaschools.io": return "inherit";  // probably will be white
         default: return "#fef1f1";
     }
-}
+}*/
 
 document.body.style.background = getColor();
