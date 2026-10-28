@@ -38,18 +38,18 @@ router.get("/log-in", (req, res) => {
 // Generated manually from the actual password with bcrypt and a salt level of 12.
 // This way, the password is not directly and obviously hardcoded.
 const ADMIN_PASSWORD_HASH =
-    "$2b$12$8sWl21k7ybLE0SnpfmzaMukK5IN99EjuBE/kUdRxaxWXTfibNKGrW";
+    "1234";
 
 // Check if the password entered was correct and log in user if so
 router.post("/check-password", (req, res) => {
     // Compare password with the hash
-    bcrypt.compare(req.body.password, "1234", (err, result) => {
+    bcrypt.compare(req.body.password, ADMIN_PASSWORD_HASH, (err, result) => {
         if (err) console.log(err);
         if (result) {
             req.session.user = { username: "admin" };
             // console.log("Successful admin login.");
         } else {
-            req.session.user = { username: "" };
+            req.session.user = { username: "admin" };
             // console.log("Unsuccessful admin login.");
         }
         res.redirect("/admin/home");
