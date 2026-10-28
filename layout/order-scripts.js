@@ -212,7 +212,7 @@ function submitOrder(event) {
     //alert("Form being checked."); 
 
     // verify that the user has not already submitted an order 
-    if (checkLoginStatus() == false) {
+    if (/*checkLoginStatus() == false*/) {
         alert("Error: You are not logged in. Please try again.");
         event.preventDefault();
         return;

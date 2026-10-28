@@ -379,7 +379,7 @@ app.post("/order-submit", (req, res) => {
   }
   base += bread;
   arrayize[2] = base;
-  if ("" + name != "undefined") {
+  if (/*"" + name != "undefined"*/true) {
     fs.appendFile(
       path.join(__dirname, "data", "sub-orders.csv"),
       `\n${arrayize[0]};${arrayize[1]};${arrayize[2]};${arrayize[3]};${arrayize[4]};${arrayize[5]};${arrayize[6]}`,
