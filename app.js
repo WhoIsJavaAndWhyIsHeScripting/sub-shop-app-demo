@@ -49,7 +49,7 @@ const CLIENT_ID =
 const client = new OAuth2Client(CLIENT_ID);
 
 // this variable controls whether you can access the order page
-var isOpen = false;
+var isOpen = true;
 // this variable represents whether the nutrition staff have chosen to open or close the sub shop
 var openToday = true;
 // the number of orders currently placed
@@ -65,7 +65,7 @@ var CLOSE_TIME = 9;
 
 /** Checks the server time and opens/closes the server at given times */
 function updateOpenStatus() {
-  // check time
+  /*// check time
   var currentTime = new Date();
   var hour = currentTime.getHours();
   var minute = currentTime.getMinutes();
@@ -86,7 +86,7 @@ function updateOpenStatus() {
     !isWeekend &&
     lines < orderLimit &&
     openToday
-  );
+  );*/
 }
 
 // This is for formatting the opening and closing times for getClosedReason().
