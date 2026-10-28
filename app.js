@@ -18,10 +18,10 @@ const path = require("path");
 const http = require("http");
 
 // https credentials, uses symbolic links to point to the following credential files
-const credentials = {
+/*const credentials = {
   key: fs.readFileSync("privkey.pem", "utf-8"),
   cert: fs.readFileSync("fullchain.pem", "utf-8"),
-};
+};*/
 
 // creates a session that stores the user email
 const session = require("cookie-session");
@@ -440,6 +440,6 @@ app.use((req, res) => {
 });
 
 // Start the server
-http.createServer(credentials, app).listen(3000, "localhost", () => {
+http.createServer(app).listen(3000, "localhost", () => {
   console.log("Server listening on port 3000");
 });
