@@ -2,11 +2,11 @@
 
 // This is called on subShopOrder.html when the Google client is loaded. 
 function googleLibraryLoaded() {
-  googleAuth();
+  //googleAuth();
 }
 
 function googleAuth() {
-  console.log("googleAuth is running!");
+  /*console.log("googleAuth is running!");
   let currentUrl = window.location.href;
 
   google.accounts.id.initialize({
@@ -17,7 +17,7 @@ function googleAuth() {
   google.accounts.id.renderButton(
     document.getElementById("proceed"),
     { theme: "outline", size: "large" }  // customization attributes
-  );
+  );*/
 }
 
 function handleCredentialResponse(response) {
